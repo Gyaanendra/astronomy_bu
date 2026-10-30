@@ -1,8 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Archival Nocturne Design Tokens */
+  --background: #09090b;
+  --foreground: #f5efeb;
+
+  --color-void: #09090b;
+  --color-surface-base: #111113;
+  --color-surface-elevated: #18181b;
+  --color-surface-sunken: #050507;
+
+  --color-hairline: rgba(245, 239, 235, 0.12);
+  --color-hairline-strong: rgba(245, 239, 235, 0.25);
+
+  --color-bone-pure: #fcfbf9;
+  --color-bone-primary: #f5efeb;
+  --color-bone-muted: #a39e93;
+  --color-bone-faint: #635e57;
+
+  --color-accent-bone: #eae5d9;
+  --color-accent-starlight: #d4af37;
+  --color-accent-alert: #e06c75;
 }
 
 @theme inline {
@@ -10,17 +28,78 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-serif);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-void);
+  color: var(--color-bone-primary);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Selection */
+::selection {
+  background: #eae5d9;
+  color: #09090b;
+}
+
+/* Serif font utility */
+.font-editorial-serif {
+  font-family: var(--font-serif), "Cormorant Garamond", "Times New Roman", serif;
+}
+
+/* Tracking utility for archival typography */
+.tracking-archival {
+  letter-spacing: 0.22em;
+}
+
+.tracking-wide-mono {
+  letter-spacing: 0.16em;
+}
+
+/* Hairline border utilities */
+.border-hairline {
+  border-color: var(--color-hairline);
+}
+
+.border-hairline-strong {
+  border-color: var(--color-hairline-strong);
+}
+
+/* Subtle archival film grain background */
+.bg-grain {
+  background-image: radial-gradient(rgba(245, 239, 235, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Stippled text glow effect */
+.stipple-glow {
+  text-shadow: 0 0 20px rgba(245, 239, 235, 0.35);
+}
+
+/* Custom archival scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
 }
