@@ -16,7 +16,7 @@
   --color-bone-pure: #fcfbf9;
   --color-bone-primary: #f5efeb;
   --color-bone-muted: #a39e93;
-  --color-bone-faint: #635e57;
+  --color-bone-faint: #8a847a;       /* Captions, numbers, coordinates (AA on void) */
 
   --color-accent-bone: #eae5d9;
   --color-accent-starlight: #d4af37;
@@ -53,7 +53,8 @@ body {
 
 /* Serif font utility */
 .font-editorial-serif {
-  font-family: var(--font-serif), "Cormorant Garamond", "Times New Roman", serif;
+  font-family:
+    var(--font-serif), "Cormorant Garamond", "Times New Roman", serif;
 }
 
 /* Tracking utility for archival typography */
@@ -76,13 +77,65 @@ body {
 
 /* Subtle archival film grain background */
 .bg-grain {
-  background-image: radial-gradient(rgba(245, 239, 235, 0.04) 1px, transparent 0);
+  background-image: radial-gradient(
+    rgba(245, 239, 235, 0.04) 1px,
+    transparent 0
+  );
   background-size: 24px 24px;
 }
 
 /* Stippled text glow effect */
 .stipple-glow {
-  text-shadow: 0 0 20px rgba(245, 239, 235, 0.35);
+  text-shadow:
+    0 0 25px rgba(245, 239, 235, 0.4),
+    0 0 50px rgba(245, 239, 235, 0.15);
+}
+
+/* Radial bone bloom used behind floating celestial plates */
+.glow-radial-bone {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(245, 239, 235, 0.12) 0%,
+    rgba(245, 239, 235, 0.05) 42%,
+    transparent 72%
+  );
+}
+
+/* Floating keyframe for astral bodies */
+@keyframes floatCelestial {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.5deg);
+  }
+}
+
+.animate-float-celestial {
+  animation: floatCelestial 7s ease-in-out infinite;
+}
+
+/* Ambient slow rotation for archival mandala plates */
+.animate-ambient-spin {
+  animation: ambientSpin 180s linear infinite;
+}
+
+@keyframes ambientSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Respect reduced-motion preferences across ambient animations */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-celestial,
+  .animate-ambient-spin {
+    animation: none;
+  }
 }
 
 /* Custom archival scrollbar */

@@ -22,8 +22,8 @@ export function DualHorizonCalendar() {
   ].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   return (
-    <div className="w-full py-16 px-4 sm:px-8 bg-[#09090b]">
-      <div className="max-w-7xl mx-auto">
+    <div className="w-full py-16 sm:py-24 px-6 sm:px-12 lg:px-20 xl:px-24 bg-[#09090b]">
+      <div className="w-full max-w-[1800px] mx-auto">
         {/* Header */}
         <div className="pb-12 border-b border-[rgba(245,239,235,0.12)]">
           <span className="font-mono text-[10px] tracking-archival text-[#a39e93] block mb-2">
@@ -39,7 +39,7 @@ export function DualHorizonCalendar() {
           {/* Scope Switcher: All vs Global vs Bennett */}
           <div className="mt-10 flex flex-wrap items-center justify-between gap-6 pt-6 border-t border-[rgba(245,239,235,0.08)]">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[11px] text-[#635e57] mr-2">HORIZON VIEW:</span>
+              <span className="font-mono text-[11px] text-[#8a847a] mr-2">HORIZON VIEW:</span>
               <button
                 onClick={() => setActiveScope("all")}
                 className={`px-3 py-1.5 font-mono text-[11px] uppercase transition-all ${
@@ -89,7 +89,7 @@ export function DualHorizonCalendar() {
         {/* Local Horizon Observatory Conditions Card */}
         <div className="mt-12 p-8 border border-[rgba(245,239,235,0.15)] bg-[#111113] grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <span className="font-mono text-[10px] tracking-archival text-[#635e57] block mb-1">
+            <span className="font-mono text-[10px] tracking-archival text-[#8a847a] block mb-1">
               OBSERVATION STATION
             </span>
             <p className="font-mono text-sm text-[#f5efeb] font-semibold">
@@ -101,7 +101,7 @@ export function DualHorizonCalendar() {
           </div>
 
           <div>
-            <span className="font-mono text-[10px] tracking-archival text-[#635e57] block mb-1">
+            <span className="font-mono text-[10px] tracking-archival text-[#8a847a] block mb-1">
               SKY QUALITY &amp; BORTLE
             </span>
             <p className="font-mono text-sm text-[#f5efeb] font-semibold">
@@ -113,7 +113,7 @@ export function DualHorizonCalendar() {
           </div>
 
           <div>
-            <span className="font-mono text-[10px] tracking-archival text-[#635e57] block mb-1">
+            <span className="font-mono text-[10px] tracking-archival text-[#8a847a] block mb-1">
               LUNAR EPHEMERIS
             </span>
             <div className="flex items-center gap-2">
@@ -130,7 +130,7 @@ export function DualHorizonCalendar() {
           </div>
 
           <div>
-            <span className="font-mono text-[10px] tracking-archival text-[#635e57] block mb-1">
+            <span className="font-mono text-[10px] tracking-archival text-[#8a847a] block mb-1">
               CAMPUS TELESCOPE DEPLOYMENT
             </span>
             <p className="font-mono text-xs text-[#eae5d9] font-medium">
@@ -148,7 +148,7 @@ export function DualHorizonCalendar() {
             <span className="font-mono text-xs tracking-archival text-[#a39e93]">
               UPCOMING CELESTIAL TRANSITS ({displayedEvents.length} EVENTS LOADED)
             </span>
-            <span className="font-mono text-[11px] text-[#635e57]">
+            <span className="font-mono text-[11px] text-[#8a847a]">
               SORTED BY PROXIMITY
             </span>
           </div>
@@ -198,7 +198,7 @@ export function DualHorizonCalendar() {
                 </div>
 
                 {/* Equipment & Peak Time */}
-                <div className="md:col-span-3 flex flex-col justify-between h-full font-mono text-[11px] text-[#635e57] pt-1">
+                <div className="md:col-span-3 flex flex-col justify-between h-full font-mono text-[11px] text-[#8a847a] pt-1">
                   {item.peakTime && (
                     <div className="mb-2">
                       <span className="text-[#a39e93] block">PEAK VISIBILITY:</span>

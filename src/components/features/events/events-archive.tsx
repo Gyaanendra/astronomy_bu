@@ -27,8 +27,8 @@ export function EventsArchive() {
   });
 
   return (
-    <div className="w-full py-16 px-4 sm:px-8 bg-[#09090b]">
-      <div className="max-w-7xl mx-auto">
+    <div className="w-full py-16 sm:py-24 px-6 sm:px-12 lg:px-20 xl:px-24 bg-[#09090b]">
+      <div className="w-full max-w-[1800px] mx-auto">
         {/* Header */}
         <div className="pb-12 border-b border-[rgba(245,239,235,0.12)]">
           <span className="font-mono text-[10px] tracking-archival text-[#a39e93] block mb-2">
@@ -45,7 +45,7 @@ export function EventsArchive() {
           <div className="mt-10 flex flex-wrap items-center justify-between gap-6 pt-6 border-t border-[rgba(245,239,235,0.08)]">
             {/* Tenure Selector */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="font-mono text-[11px] text-[#635e57] mr-2">TENURE:</span>
+              <span className="font-mono text-[11px] text-[#8a847a] mr-2">TENURE:</span>
               {tenures.map((tenure) => (
                 <button
                   key={tenure}
@@ -63,7 +63,7 @@ export function EventsArchive() {
 
             {/* Category Selector */}
             <div className="flex flex-wrap items-center gap-1.5">
-              <span className="font-mono text-[11px] text-[#635e57] mr-2">DISCIPLINE:</span>
+              <span className="font-mono text-[11px] text-[#8a847a] mr-2">DISCIPLINE:</span>
               {categories.map((cat) => (
                 <button
                   key={cat}
@@ -71,7 +71,7 @@ export function EventsArchive() {
                   className={`px-2.5 py-1 font-mono text-[10px] uppercase transition-all ${
                     selectedCategory === cat
                       ? "border border-[#f5efeb] text-[#f5efeb] bg-[#18181b]"
-                      : "text-[#635e57] hover:text-[#a39e93]"
+                      : "text-[#8a847a] hover:text-[#a39e93]"
                   }`}
                 >
                   {cat}

@@ -18,8 +18,8 @@ export function JournalShowcase() {
       : journalArticles.filter((art) => art.category === selectedCategory);
 
   return (
-    <div className="w-full py-16 px-4 sm:px-8 bg-[#09090b]">
-      <div className="max-w-7xl mx-auto">
+    <div className="w-full py-16 sm:py-24 px-6 sm:px-12 lg:px-20 xl:px-24 bg-[#09090b]">
+      <div className="w-full max-w-[1800px] mx-auto">
         {/* Header */}
         <div className="pb-12 border-b border-[rgba(245,239,235,0.12)]">
           <span className="font-mono text-[10px] tracking-archival text-[#a39e93] block mb-2">
@@ -34,7 +34,7 @@ export function JournalShowcase() {
 
           {/* Category Filter Pills */}
           <div className="mt-10 flex flex-wrap items-center gap-2 pt-6 border-t border-[rgba(245,239,235,0.08)]">
-            <span className="font-mono text-[11px] text-[#635e57] mr-2">TOPIC:</span>
+            <span className="font-mono text-[11px] text-[#8a847a] mr-2">TOPIC:</span>
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -104,7 +104,7 @@ export function JournalShowcase() {
                   <span className="font-mono text-xs text-[#f5efeb] font-medium block">
                     {article.author.name}
                   </span>
-                  <span className="font-mono text-[10px] text-[#635e57]">
+                  <span className="font-mono text-[10px] text-[#8a847a]">
                     {article.author.role}
                   </span>
                 </div>
@@ -141,7 +141,7 @@ export function JournalShowcase() {
               {activeArticle.subtitle}
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 pb-6 border-b border-[rgba(245,239,235,0.12)] font-mono text-xs text-[#635e57]">
+            <div className="flex flex-wrap items-center gap-4 pb-6 border-b border-[rgba(245,239,235,0.12)] font-mono text-xs text-[#8a847a]">
               <span>AUTHOR: {activeArticle.author.name} ({activeArticle.author.role})</span>
               <span>·</span>
               <span>DATE: {activeArticle.date}</span>
@@ -169,7 +169,7 @@ export function JournalShowcase() {
 
             {/* Tags */}
             <div className="mt-12 pt-6 border-t border-[rgba(245,239,235,0.12)] flex flex-wrap items-center gap-2">
-              <span className="font-mono text-xs text-[#635e57] mr-2">TAGS:</span>
+              <span className="font-mono text-xs text-[#8a847a] mr-2">TAGS:</span>
               {activeArticle.tags.map((tag) => (
                 <span
                   key={tag}

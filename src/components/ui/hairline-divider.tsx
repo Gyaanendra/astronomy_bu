@@ -9,7 +9,7 @@ export function HairlineDivider({ className = "", withCrosshair = false, label }
     <div className={`relative w-full flex items-center ${className}`}>
       <div className="flex-1 border-t border-[rgba(245,239,235,0.12)]" />
       {withCrosshair && (
-        <span className="px-2 font-mono text-[10px] text-[#635e57] select-none">
+        <span className="px-2 font-mono text-[10px] text-[#8a847a] select-none">
           +
         </span>
       )}

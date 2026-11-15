@@ -2,109 +2,196 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
+
+const DOME_SLIDES = [
+  {
+    tag: "CURATORIAL SEQUENCE // 01",
+    headline:
+      "INSIDE THE DOME, PROJECTED CONSTELLATIONS GRADUALLY FORM AND DISSOLVE, SHIFTING BETWEEN CLARITY AND FRAGMENTATION.",
+    body: "Visual sequences move from structured star maps to dispersed fields, accompanied by minimal narration and sound. The experience unfolds slowly, allowing visitors to observe the moment where pattern emerges—and where it disappears.",
+    image: "/images/assets/dome-experience-vortex-master.jpg",
+    alt: "A lone stargazer silhouette standing before a colossal swirling cosmic maelstrom",
+    session: "BENNETT OBSERVATORY DOME // SESSION 08",
+  },
+  {
+    tag: "CURATORIAL SEQUENCE // 02",
+    headline:
+      "NIGHT-SKY SENSOR CAPTURES UNVEIL THE INVISIBLE: DEEP EMISSION NEBULAE, STELLAR LIGHT CURVES, AND THE MOON'S SHIFTING TERMINATOR.",
+    body: "Led by astrophysics keynote speaker Dr. Pratyush Pranav and guest artist Virendra Adhikari, our optical programs combine 8-inch Dobsonian telemetry with deep space sensor calibration at Bennett University.",
+    image: "/images/assets/dome-experience-vortex-master.jpg",
+    alt: "Deep cosmic vortex void projection",
+    session: "ASTROPHOTOGRAPHY & COSMOLOGY // GREATER NOIDA",
+  },
+];
+
+const OTHER_PROGRAMS = [
+  {
+    id: "01",
+    title: "DISTANCE BETWEEN STARS",
+    description:
+      "An exploration of how cultures interpret spatial relationships in the night sky, turning distance into narrative and meaning.",
+    image: "/images/assets/lunar-crater-master.jpg",
+    href: "/events",
+  },
+  {
+    id: "02",
+    title: "ORION ACROSS CULTURES",
+    description:
+      "A comparative reading of Orion, tracing how one constellation becomes multiple figures across myth traditions.",
+    image: "/images/assets/orion-across-cultures.jpg",
+    href: "/events",
+  },
+  {
+    id: "03",
+    title: "NEWTON'S CENOTAPH",
+    description:
+      "Examines Étienne-Louis Boullée's visionary monument to Newton as a speculative space where architecture and astronomy converge.",
+    image: "/images/assets/newtons-cenotaph-master.jpg",
+    href: "/events",
+  },
+  {
+    id: "04",
+    title: "BEFORE THE STAR MAPS",
+    description:
+      "An examination of early celestial mapping, where imagination shaped the structure of the sky.",
+    image: "/images/assets/constellations-chart-master.jpg",
+    href: "/events",
+  },
+];
 
 export function ObservatoryArchitecture() {
   const [slideIndex, setSlideIndex] = useState(0);
-
-  const slides = [
-    {
-      col1Title: "[01]",
-      col1Text:
-        "AstronomyBU unfolds through a series of restrained observation terraces leading into the main celestial dome. The architecture remains minimal and austere, allowing light, shadow, and optical telemetry to define the space.",
-      col2Title: "[02]",
-      col2Text:
-        "Inside the dome, celestial spectra and archival visuals are cast across curved surfaces, surrounding observers in slow narrative sequences. Each session uses optical tracking and stillness to transform the cosmos into a living sky—both observed and imagined.",
-    },
-    {
-      col1Title: "[03]",
-      col1Text:
-        "Our telemetry array integrates high-magnification Dobsonian reflectors with narrowband CMOS sensors, permitting deep-sky captures of emission nebulae even through suburban light distribution.",
-      col2Title: "[04]",
-      col2Text:
-        "Students participate in synchronized Messier catalog marathons, tracking planetary conjunctions and measuring variable star light curves during late autumn and winter observation windows.",
-    },
-  ];
-
-  const currentSlide = slides[slideIndex];
+  const slide = DOME_SLIDES[slideIndex];
 
   return (
-    <section className="relative w-full bg-[#09090b] pt-16 pb-0 overflow-hidden border-t border-[rgba(245,239,235,0.1)]">
-      {/* Centered Top Action Button */}
-      <div className="flex justify-center mb-12">
-        <Link
-          href="/events"
-          className="px-6 py-2.5 bg-[#eae5d9] text-[#09090b] font-mono text-[11px] font-semibold tracking-archival uppercase hover:bg-white transition-colors"
-        >
-          All Programs [03]
-        </Link>
-      </div>
+    <section
+      id="dome"
+      className="w-full bg-[#09090b] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24 overflow-hidden"
+    >
+      <div className="w-full max-w-[1800px] mx-auto">
+        {/* ============================================================== */}
+        {/* PART 1: DOME EXPERIENCE (Matching Pinterest Reference 2 & 7)   */}
+        {/* ============================================================== */}
+        <div className="flex items-center justify-between pb-8 sm:pb-12 border-b border-[rgba(245,239,235,0.12)]">
+          <div>
+            <h2 className="font-editorial-serif italic text-4xl sm:text-6xl text-[#f5efeb] tracking-tight">
+              DOME EXPERIENCE
+            </h2>
+          </div>
 
-      {/* Main Archival Stage with Floating Dark Box & Monumental Dome Backdrop */}
-      <div className="relative w-full">
-        {/* Central Floating Dark Editorial Container */}
-        <div className="relative z-20 max-w-4xl mx-auto bg-[#09090b] border border-[rgba(245,239,235,0.12)] p-8 sm:p-12 shadow-2xl">
-          {/* Main Statement */}
-          <p className="font-mono text-xs sm:text-sm tracking-[0.14em] text-[#f5efeb] leading-relaxed uppercase text-center mb-10">
-            SET WITHIN A QUIET, IMMERSIVE SPACE, ASTRONOMYBU INVITES STUDENTS AND RESEARCHERS TO
-            SLOW DOWN AND ENGAGE WITH THE NIGHT AS A SHARED ARCHIVE — ONE THAT CONTINUES TO SHIFT
-            WITH TIME, PERSPECTIVE, AND INTERPRETATION.
-          </p>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() =>
+                setSlideIndex((prev) => (prev === 0 ? DOME_SLIDES.length - 1 : prev - 1))
+              }
+              className="p-2.5 sm:p-3 border border-[rgba(245,239,235,0.2)] text-[#a39e93] hover:text-[#f5efeb] hover:border-[#f5efeb] transition-colors"
+              aria-label="Previous slide"
+            >
+              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                setSlideIndex((prev) => (prev === DOME_SLIDES.length - 1 ? 0 : prev + 1))
+              }
+              className="p-2.5 sm:p-3 border border-[rgba(245,239,235,0.2)] text-[#a39e93] hover:text-[#f5efeb] hover:border-[#f5efeb] transition-colors"
+              aria-label="Next slide"
+            >
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+          </div>
+        </div>
 
-          {/* Sub-columns & Directional Arrows */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start pt-6 border-t border-[rgba(245,239,235,0.08)]">
-            {/* Arrows */}
-            <div className="md:col-span-2 flex items-center gap-3">
-              <button
-                onClick={() => setSlideIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1))}
-                className="p-1.5 border border-[rgba(245,239,235,0.2)] text-[#a39e93] hover:text-[#f5efeb] hover:border-[#f5efeb] transition-colors"
-                aria-label="Previous slide"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-              </button>
-              <button
-                onClick={() => setSlideIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1))}
-                className="p-1.5 border border-[rgba(245,239,235,0.2)] text-[#a39e93] hover:text-[#f5efeb] hover:border-[#f5efeb] transition-colors"
-                aria-label="Next slide"
-              >
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+        {/* 2-Column Dome Experience Stage */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-20 py-12 sm:py-16 items-center">
+          {/* Left Column: Narrative Headline + Body + Ticket Button */}
+          <div className="lg:col-span-5 flex flex-col justify-between space-y-8">
+            <div className="space-y-6">
+              <h3 className="font-mono text-xs sm:text-sm xl:text-[15px] tracking-[0.14em] text-[#f5efeb] uppercase leading-relaxed font-semibold">
+                {slide.headline}
+              </h3>
+              <p className="font-sans text-xs sm:text-sm text-[#a39e93] leading-relaxed">
+                {slide.body}
+              </p>
             </div>
 
-            {/* Column 1 */}
-            <div className="md:col-span-5 font-mono text-[11px] text-[#a39e93] leading-relaxed">
-              <span className="text-[#f5efeb] font-semibold block mb-1">
-                {currentSlide.col1Title}
-              </span>
-              <p>{currentSlide.col1Text}</p>
+            <div className="pt-2">
+              <Link
+                href="/calendar"
+                className="inline-block px-8 sm:px-10 py-3.5 bg-[#eae5d9] text-[#09090b] font-mono text-xs tracking-archival font-semibold uppercase hover:bg-white transition-colors shadow-2xl"
+              >
+                BUY TICKET
+              </Link>
             </div>
+          </div>
 
-            {/* Column 2 */}
-            <div className="md:col-span-5 font-mono text-[11px] text-[#a39e93] leading-relaxed">
-              <span className="text-[#f5efeb] font-semibold block mb-1">
-                {currentSlide.col2Title}
-              </span>
-              <p>{currentSlide.col2Text}</p>
+          {/* Right Column: Monumental Swirling Galaxy Vortex Artwork */}
+          <div className="lg:col-span-7">
+            <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] border border-[rgba(245,239,235,0.15)] bg-[#111113] overflow-hidden group shadow-2xl">
+              <Image
+                src={slide.image}
+                alt={slide.alt}
+                fill
+                priority
+                className="object-cover filter contrast-110 brightness-95 group-hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 1024px) 100vw, 58vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#09090b]/60 via-transparent to-transparent pointer-events-none" />
             </div>
           </div>
         </div>
 
-        {/* Monumental Brutalist Concrete Observatory Dome (Matching Image 1) */}
-        <div className="relative w-full -mt-24 sm:-mt-32 pt-28 sm:pt-36 pb-0 overflow-hidden">
-          <div className="relative w-full h-[420px] sm:h-[540px] lg:h-[620px] filter contrast-125 brightness-95">
-            <Image
-              src="/images/observatory-dome.jpg"
-              alt="Monumental Concrete Observatory Dome"
-              fill
-              priority
-              className="object-cover object-bottom"
-              sizes="100vw"
-            />
-            {/* Top gradient blend into the dark container */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#09090b] via-transparent to-transparent opacity-95" />
-            {/* Bottom edge vignette */}
-            <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#09090b] to-transparent opacity-90" />
+        {/* ============================================================== */}
+        {/* PART 2: OTHER PROGRAMS (Matching Pinterest Reference 2 Bottom) */}
+        {/* ============================================================== */}
+        <div className="pt-16 sm:pt-24 border-t border-[rgba(245,239,235,0.12)]">
+          <div className="flex items-center justify-between pb-8 sm:pb-12 border-b border-[rgba(245,239,235,0.12)]">
+            <h2 className="font-editorial-serif italic text-3xl sm:text-5xl text-[#f5efeb] tracking-tight">
+              OTHER PROGRAMS
+            </h2>
+
+            <Link
+              href="/events"
+              className="p-2 sm:p-2.5 border border-[rgba(245,239,235,0.2)] text-[#a39e93] hover:text-[#f5efeb] hover:border-[#f5efeb] transition-colors"
+              aria-label="View all other programs"
+            >
+              <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5" />
+            </Link>
+          </div>
+
+          {/* 4-Card Horizontal Program Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border border-[rgba(245,239,235,0.12)] divide-y sm:divide-y-0 sm:divide-x divide-[rgba(245,239,235,0.12)] bg-[#09090b] my-8">
+            {OTHER_PROGRAMS.map((item) => (
+              <Link
+                key={item.id}
+                href={item.href}
+                className="p-6 sm:p-8 flex flex-col justify-between group hover:bg-[#111113] transition-colors"
+              >
+                <div>
+                  {/* Thumbnail Image */}
+                  <div className="relative w-full aspect-square border border-[rgba(245,239,235,0.12)] bg-[#111113] overflow-hidden mb-6">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className="object-cover filter contrast-110 brightness-90 group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    />
+                  </div>
+
+                  <h3 className="font-mono text-xs sm:text-sm font-semibold tracking-wider text-[#f5efeb] uppercase mb-3 group-hover:text-[#eae5d9] transition-colors">
+                    {item.title}
+                  </h3>
+
+                  <p className="font-sans text-xs text-[#a39e93] leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </div>

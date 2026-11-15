@@ -1,147 +1,125 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
-import { getMoonPhase, MoonPhaseInfo } from "@/lib/astronomy";
 
 export function Navbar() {
-  const pathname = usePathname();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [moon, setMoon] = useState<MoonPhaseInfo | null>(null);
-
-  useEffect(() => {
-    setMoon(getMoonPhase(new Date()));
-  }, []);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const navLinks = [
-    { label: "OVERVIEW", href: "/" },
-    { label: "MEMBERS & HEADS", href: "/team" },
-    { label: "EVENTS & TENURE", href: "/events" },
-    { label: "COSMIC CALENDAR", href: "/calendar" },
-    { label: "ARTICLES & LOGS", href: "/journal" },
+    { label: "ABOUT", href: "#sanctuary" },
+    { label: "STRUCTURE", href: "#structure" },
+    { label: "DOME", href: "#dome" },
+    { label: "PROGRAMS", href: "#programs" },
+    { label: "MEMBERSHIP", href: "#membership" },
+    { label: "ARCHIVE", href: "#archive" },
+    { label: "JOURNAL", href: "#journal" },
   ];
 
   return (
-    <nav className="w-full bg-[#09090b]/95 backdrop-blur-md border-b border-[rgba(245,239,235,0.08)] sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 h-20 flex items-center justify-between">
-        {/* Brand */}
-        <Link href="/" className="flex items-center gap-3.5 group">
-          <div className="relative w-7 h-9 flex-shrink-0 group-hover:scale-105 transition-transform">
-            <Image
-              src="/images/logo.png"
-              alt="AstronomyBU Official Logo"
-              fill
-              className="object-contain brightness-110"
-              priority
-            />
-          </div>
-          <div className="flex flex-col">
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-sm tracking-archival font-bold text-[#f5efeb] whitespace-nowrap">
-                ASTRONOMY<span className="text-[#a39e93]">BU</span>
-              </span>
-              <span className="hidden sm:inline font-mono text-[10px] text-[#635e57] tracking-wider whitespace-nowrap shrink-0">
-                [28.46° N]
-              </span>
-            </div>
-            <span className="font-mono text-[9px] tracking-widest text-[#635e57] uppercase">
-              Bennett Observatory
+    <>
+      <header className="w-full bg-[#09090b]/92 backdrop-blur-md border-b border-[rgba(245,239,235,0.08)] sticky top-0 z-50 transition-all">
+        <div className="w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-20 xl:px-24 h-20 sm:h-24 flex items-center justify-between">
+          {/* Left: Star Glyph + Wordmark (Exact Noctra Brand Treatment) */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <span className="font-editorial-serif text-2xl sm:text-3xl text-[#f5efeb] select-none leading-none">
+              ✱
             </span>
-          </div>
-        </Link>
-
-        {/* Desktop Links with generous spacing */}
-        <div className="hidden lg:flex items-center gap-10">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`font-mono text-[11px] tracking-archival transition-colors relative py-1.5 ${
-                  isActive
-                    ? "text-[#f5efeb] font-semibold"
-                    : "text-[#a39e93] hover:text-[#f5efeb]"
-                }`}
-              >
-                {link.label}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#eae5d9]" />
-                )}
-              </Link>
-            );
-          })}
-        </div>
-
-        {/* Right Info: Live Moon Phase + External Atlas */}
-        <div className="hidden md:flex items-center gap-6">
-          {moon && (
-            <div className="flex items-center gap-2 text-[11px] font-mono text-[#a39e93]">
-              <span className="text-sm leading-none">{moon.icon}</span>
-              <span className="tracking-wider uppercase text-[10px] text-[#f5efeb]">
-                {moon.name} ({moon.illumination}%)
+            <div className="flex flex-col">
+              <span className="font-editorial-serif italic text-2xl sm:text-3xl tracking-tight text-[#f5efeb] group-hover:text-white transition-colors leading-none">
+                Astronomy<span className="font-sans font-normal text-xs tracking-[0.25em] text-[#a39e93] uppercase ml-1.5 align-middle">BU</span>
+              </span>
+              <span className="font-mono text-[9px] tracking-widest text-[#8a847a] uppercase mt-0.5">
+                Bennett University Observatory
               </span>
             </div>
-          )}
+          </Link>
 
-          <a
-            href="https://stellarium-web.org/?lat=28.4595&lon=77.5046&projection=stereo&constellations=true"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 border border-[rgba(245,239,235,0.2)] text-[11px] font-mono tracking-archival text-[#f5efeb] hover:bg-[#eae5d9] hover:text-[#09090b] transition-all"
-          >
-            <span>STELLARIUM ATLAS</span>
-            <ArrowUpRight className="w-3 h-3 text-[#a39e93]" />
-          </a>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 text-[#f5efeb] hover:text-[#eae5d9]"
-          aria-label="Toggle navigation menu"
-        >
-          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
-      </div>
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#09090b] border-b border-[rgba(245,239,235,0.12)] px-8 py-6 flex flex-col gap-4">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.href}
+          {/* Center: Quiet, Spaced Editorial Navigation */}
+          <nav className="hidden lg:flex items-center gap-8 xl:gap-12">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`font-mono text-xs tracking-archival py-2 border-b border-[rgba(245,239,235,0.06)] ${
-                  isActive ? "text-[#f5efeb] font-bold" : "text-[#a39e93]"
-                }`}
+                className="font-mono text-[11px] xl:text-xs tracking-[0.22em] text-[#a39e93] hover:text-[#f5efeb] transition-colors uppercase py-1"
               >
                 {link.label}
-              </Link>
-            );
-          })}
-          {moon && (
-            <div className="py-2 text-[11px] font-mono text-[#a39e93] flex items-center gap-2">
-              <span>{moon.icon}</span>
-              <span>{moon.name} ({moon.illumination}%)</span>
+              </a>
+            ))}
+          </nav>
+
+          {/* Right: Language Toggle & Solid Cream [ CONTACTS ] Button */}
+          <div className="flex items-center gap-4 sm:gap-6">
+            <span className="hidden sm:inline font-mono text-[11px] tracking-widest text-[#8a847a] cursor-pointer hover:text-[#f5efeb] transition-colors">
+              EN ▾
+            </span>
+
+            <a
+              href="#newsletter"
+              className="px-5 sm:px-6 py-2.5 bg-[#eae5d9] text-[#09090b] font-mono text-xs tracking-archival font-semibold uppercase hover:bg-white transition-colors"
+            >
+              CONTACTS
+            </a>
+
+            {/* Mobile Hamburger */}
+            <button
+              type="button"
+              onClick={() => setDrawerOpen(true)}
+              aria-label="Open navigation drawer"
+              className="lg:hidden p-2 text-[#f5efeb] hover:text-white"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Full-Screen Archival Navigation Drawer for Mobile & Tablet */}
+      {drawerOpen && (
+        <div className="fixed inset-0 z-50 bg-[#09090b]/98 backdrop-blur-2xl flex flex-col justify-between p-8 sm:p-14 lg:p-20 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between border-b border-[rgba(245,239,235,0.12)] pb-6">
+            <div className="flex items-center gap-3">
+              <span className="font-editorial-serif text-2xl text-[#f5efeb]">✱</span>
+              <span className="font-editorial-serif italic text-2xl text-[#f5efeb]">AstronomyBU</span>
             </div>
-          )}
-          <a
-            href="https://stellarium-web.org/?lat=28.4595&lon=77.5046&projection=stereo&constellations=true"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-2 text-center py-2.5 px-4 bg-[#eae5d9] text-[#09090b] font-mono text-xs font-semibold uppercase tracking-wider"
-          >
-            Open Stellarium Atlas [↗]
-          </a>
+            <button
+              type="button"
+              onClick={() => setDrawerOpen(false)}
+              aria-label="Close drawer"
+              className="p-2 border border-[rgba(245,239,235,0.2)] text-[#f5efeb] hover:bg-[#18181b]"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          <div className="my-auto py-8 flex flex-col gap-6">
+            <span className="font-mono text-[10px] tracking-archival text-[#8a847a] uppercase">
+              Archival Observatory Index
+            </span>
+            <ul className="flex flex-col gap-5">
+              {navLinks.map((link, idx) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    onClick={() => setDrawerOpen(false)}
+                    className="flex items-center gap-4 text-3xl sm:text-5xl font-editorial-serif italic text-[#a39e93] hover:text-[#f5efeb] transition-colors"
+                  >
+                    <span className="font-mono text-xs text-[#635e57]">[0{idx + 1}]</span>
+                    <span>{link.label}</span>
+                    <ArrowUpRight className="w-5 h-5 opacity-60" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="border-t border-[rgba(245,239,235,0.1)] pt-6 flex flex-col sm:flex-row justify-between gap-4 font-mono text-[11px] text-[#8a847a]">
+            <span>STATION: 28.4595° N, 77.5046° E · BENNETT UNIVERSITY</span>
+            <span>GREATER NOIDA · ELEVATION 208M MSL</span>
+          </div>
         </div>
       )}
-    </nav>
+    </>
   );
 }

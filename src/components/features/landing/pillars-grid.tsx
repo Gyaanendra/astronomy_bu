@@ -46,7 +46,7 @@ export function PillarsGrid() {
                 <div>
                   <div className="flex items-center justify-between mb-8">
                     <Icon className="w-5 h-5 text-[#eae5d9] group-hover:scale-110 transition-transform" />
-                    <span className="font-mono text-[10px] tracking-archival text-[#635e57]">
+                    <span className="font-mono text-[10px] tracking-archival text-[#8a847a]">
                       [{pillar.id}]
                     </span>
                   </div>
@@ -57,7 +57,7 @@ export function PillarsGrid() {
                     {pillar.description}
                   </p>
                 </div>
-                <div className="mt-8 pt-4 border-t border-[rgba(245,239,235,0.06)] font-mono text-[9px] tracking-widest text-[#635e57]">
+                <div className="mt-8 pt-4 border-t border-[rgba(245,239,235,0.06)] font-mono text-[9px] tracking-widest text-[#8a847a]">
                   DISCIPLINE // 0{pillar.id}
                 </div>
               </div>

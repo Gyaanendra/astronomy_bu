@@ -38,11 +38,11 @@ export function StatusTicker() {
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             <span className="text-[#f5efeb] font-semibold">OBSERVATORY HORIZON</span>
           </div>
-          <span className="text-[#635e57]">/</span>
+          <span className="text-[#8a847a]">/</span>
           <span>{BENNETT_COORDINATES.name.toUpperCase()}</span>
-          <span className="text-[#635e57]">/</span>
+          <span className="text-[#8a847a]">/</span>
           <span className="text-[#e8dfc8]">28.4595° N, 77.5046° E</span>
-          <span className="hidden md:inline text-[#635e57]">/</span>
+          <span className="hidden md:inline text-[#8a847a]">/</span>
           <span className="hidden md:inline text-[#a39e93]">BORTLE 6.5</span>
         </div>
 
@@ -51,9 +51,9 @@ export function StatusTicker() {
             <span className="text-base leading-none">{moon ? moon.icon : "🌑"}</span>
             <span className="text-[#f5efeb]">{moon ? `${moon.name.toUpperCase()} (${moon.illumination}%)` : "LUNAR SYNC..."}</span>
           </div>
-          <span className="text-[#635e57]">/</span>
+          <span className="text-[#8a847a]">/</span>
           <span className="text-[#a39e93]">{localTime || "--:--:-- IST"}</span>
-          <span className="hidden sm:inline text-[#635e57]">/</span>
+          <span className="hidden sm:inline text-[#8a847a]">/</span>
           <span className="hidden sm:inline text-[#e8dfc8]">{siderealTime || "--:--:-- LST"}</span>
         </div>
       </div>
