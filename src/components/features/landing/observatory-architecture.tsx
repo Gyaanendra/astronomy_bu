@@ -11,7 +11,7 @@ const DOME_SLIDES = [
     headline:
       "INSIDE THE DOME, PROJECTED CONSTELLATIONS GRADUALLY FORM AND DISSOLVE, SHIFTING BETWEEN CLARITY AND FRAGMENTATION.",
     body: "Visual sequences move from structured star maps to dispersed fields, accompanied by minimal narration and sound. The experience unfolds slowly, allowing visitors to observe the moment where pattern emerges—and where it disappears.",
-    image: "/images/assets/dome-experience-vortex-master.jpg",
+    image: "/images/assets/dome-vortex.jpg",
     alt: "A lone stargazer silhouette standing before a colossal swirling cosmic maelstrom",
     session: "BENNETT OBSERVATORY DOME // SESSION 08",
   },
@@ -20,7 +20,7 @@ const DOME_SLIDES = [
     headline:
       "NIGHT-SKY SENSOR CAPTURES UNVEIL THE INVISIBLE: DEEP EMISSION NEBULAE, STELLAR LIGHT CURVES, AND THE MOON'S SHIFTING TERMINATOR.",
     body: "Led by astrophysics keynote speaker Dr. Pratyush Pranav and guest artist Virendra Adhikari, our optical programs combine 8-inch Dobsonian telemetry with deep space sensor calibration at Bennett University.",
-    image: "/images/assets/dome-experience-vortex-master.jpg",
+    image: "/images/assets/dome-vortex.jpg",
     alt: "Deep cosmic vortex void projection",
     session: "ASTROPHOTOGRAPHY & COSMOLOGY // GREATER NOIDA",
   },
