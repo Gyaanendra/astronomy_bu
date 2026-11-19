@@ -1,5 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 interface JournalEntry {
   date: string;
@@ -41,8 +47,37 @@ const JOURNAL_ENTRIES: JournalEntry[] = [
 ];
 
 export function JournalSection() {
+  const containerRef = useRef<HTMLElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReduced) return;
+
+      if (listRef.current) {
+        gsap.from(listRef.current.children, {
+          autoAlpha: 0,
+          y: 30,
+          stagger: 0.14,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: listRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
+    },
+    { scope: containerRef }
+  );
+
   return (
     <section
+      ref={containerRef}
       id="journal"
       className="w-full bg-[#1D1D1D] text-[#f5efeb] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
     >
@@ -61,7 +96,10 @@ export function JournalSection() {
         </div>
 
         {/* Editorial Rows with top and bottom borders */}
-        <div className="border-t border-b border-[rgba(245,239,235,0.12)] divide-y divide-[rgba(245,239,235,0.12)]">
+        <div
+          ref={listRef}
+          className="border-t border-b border-[rgba(245,239,235,0.12)] divide-y divide-[rgba(245,239,235,0.12)]"
+        >
           {JOURNAL_ENTRIES.map((entry) => (
             <Link
               key={entry.title}

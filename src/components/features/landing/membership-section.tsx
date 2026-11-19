@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Check } from "lucide-react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 type PlanKey = "FIELD" | "CIRCLE" | "ORBIT";
 
@@ -84,9 +87,36 @@ const PLANS: Record<PlanKey, PlanDetails> = {
 export function MembershipSection() {
   const [activePlan, setActivePlan] = useState<PlanKey>("FIELD");
   const plan = PLANS[activePlan];
+  const containerRef = useRef<HTMLElement>(null);
+  const matrixRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReduced) return;
+
+      if (matrixRef.current) {
+        gsap.from(matrixRef.current, {
+          autoAlpha: 0,
+          y: 40,
+          duration: 0.9,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: matrixRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
+    },
+    { scope: containerRef }
+  );
 
   return (
     <section
+      ref={containerRef}
       id="membership"
       className="w-full bg-[#1D1D1D] text-[#f5efeb] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
     >
@@ -123,8 +153,10 @@ export function MembershipSection() {
         </div>
 
         {/* Main Matrix Box */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 border border-[rgba(245,239,235,0.15)] bg-[#1D1D1D]">
-          
+        <div
+          ref={matrixRef}
+          className="grid grid-cols-1 lg:grid-cols-12 border border-[rgba(245,239,235,0.15)] bg-[#1D1D1D]"
+        >
           {/* Left Bone Card (4 Columns) */}
           <div className="lg:col-span-4 bg-[#eae5d9] text-[#1D1D1D] p-8 sm:p-12 flex flex-col justify-between min-h-[460px]">
             <div>
@@ -145,7 +177,6 @@ export function MembershipSection() {
 
           {/* Right Matrix: ACCESS & ENGAGEMENT */}
           <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[rgba(245,239,235,0.12)] p-8 sm:p-12">
-            
             {/* Column 1: ACCESS */}
             <div className="md:pr-8 pb-8 md:pb-0">
               <h4 className="font-mono text-xs sm:text-sm tracking-wider text-[#f5efeb] uppercase font-semibold">

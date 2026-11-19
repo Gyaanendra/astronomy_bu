@@ -4,6 +4,7 @@ import "./globals.css";
 import { StatusTicker } from "@/components/layout/status-ticker";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-serif",
@@ -60,14 +61,16 @@ export default function RootLayout({
         suppressHydrationWarning
         className="min-h-full flex flex-col bg-[#1D1D1D] text-[#f5efeb] selection:bg-[#eae5d9] selection:text-[#1D1D1D]"
       >
-        {/* Unified Archival Header with built-in ephemeris telemetry */}
-        <Navbar />
+        <SmoothScrollProvider>
+          {/* Unified Archival Header with built-in ephemeris telemetry */}
+          <Navbar />
 
-        {/* Main Content Area */}
-        <main className="flex-1 w-full relative">{children}</main>
+          {/* Main Content Area */}
+          <main className="flex-1 w-full relative">{children}</main>
 
-        {/* Archival Editorial Footer */}
-        <Footer />
+          {/* Archival Editorial Footer */}
+          <Footer />
+        </SmoothScrollProvider>
       </body>
     </html>
   );

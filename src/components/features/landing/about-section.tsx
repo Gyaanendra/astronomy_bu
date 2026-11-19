@@ -1,6 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   MessageSquare,
   Search,
@@ -108,8 +112,72 @@ const WORK_STEPS: WorkStep[] = [
 ];
 
 export function AboutSection() {
+  const containerRef = useRef<HTMLElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const catalogRef = useRef<HTMLDivElement>(null);
+  const workflowRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReduced) return;
+
+      // 1. Stats Entrance Stagger
+      if (statsRef.current) {
+        gsap.from(statsRef.current.children, {
+          autoAlpha: 0,
+          y: 35,
+          stagger: 0.12,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: statsRef.current,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
+
+      // 2. Catalog Cards Stagger
+      if (catalogRef.current) {
+        gsap.from(catalogRef.current.children, {
+          autoAlpha: 0,
+          y: 40,
+          stagger: 0.15,
+          duration: 0.85,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: catalogRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
+
+      // 3. Workflow Steps Stagger
+      if (workflowRef.current) {
+        gsap.from(workflowRef.current.children, {
+          autoAlpha: 0,
+          x: 25,
+          stagger: 0.12,
+          duration: 0.7,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: workflowRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
+    },
+    { scope: containerRef }
+  );
+
   return (
     <section
+      ref={containerRef}
       id="about"
       className="w-full bg-[#1D1D1D] text-[#f5efeb] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
     >
@@ -130,7 +198,7 @@ export function AboutSection() {
 
           {/* Right Column: 4 Stats in 2x2 Grid */}
           <div className="lg:col-span-6">
-            <div className="grid grid-cols-2 gap-8 sm:gap-12">
+            <div ref={statsRef} className="grid grid-cols-2 gap-8 sm:gap-12">
               {STATS.map((stat) => (
                 <div key={stat.label} className="flex flex-col">
                   <span className="font-sans font-extrabold text-4xl sm:text-5xl lg:text-6xl text-[#f5efeb] leading-none mb-2">
@@ -175,7 +243,10 @@ export function AboutSection() {
           </div>
 
           {/* 3 Cards Grid with Rounded Corners */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div
+            ref={catalogRef}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+          >
             {CATALOG.map((item) => (
               <div key={item.title} className="group cursor-pointer flex flex-col">
                 {/* Rounded Image Container */}
@@ -262,7 +333,10 @@ export function AboutSection() {
             </div>
 
             {/* Right Column: 5 Step Rows with Circular Badges */}
-            <div className="lg:col-span-7 divide-y divide-[rgba(245,239,235,0.1)] border-b border-[rgba(245,239,235,0.1)]">
+            <div
+              ref={workflowRef}
+              className="lg:col-span-7 divide-y divide-[rgba(245,239,235,0.1)] border-b border-[rgba(245,239,235,0.1)]"
+            >
               {WORK_STEPS.map((step) => {
                 const IconComponent = step.icon;
                 return (

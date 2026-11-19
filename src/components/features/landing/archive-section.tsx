@@ -1,5 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 interface Artifact {
   title: string;
@@ -47,8 +53,38 @@ const ARTIFACTS: Artifact[] = [
 ];
 
 export function ArchiveSection() {
+  const containerRef = useRef<HTMLElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReduced) return;
+
+      if (gridRef.current) {
+        gsap.from(gridRef.current.children, {
+          autoAlpha: 0,
+          y: 35,
+          scale: 0.94,
+          stagger: 0.08,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
+    },
+    { scope: containerRef }
+  );
+
   return (
     <section
+      ref={containerRef}
       id="archive"
       className="w-full bg-[#1D1D1D] text-[#f5efeb] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
     >
@@ -67,12 +103,12 @@ export function ArchiveSection() {
         </div>
 
         {/* 6-Artifact Horizontal Row */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8 lg:gap-6 xl:gap-8 mb-14">
+        <div
+          ref={gridRef}
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8 lg:gap-6 xl:gap-8 mb-14"
+        >
           {ARTIFACTS.map((item) => (
-            <div
-              key={item.title}
-              className="flex flex-col group"
-            >
+            <div key={item.title} className="flex flex-col group">
               {/* Floating transparent artifact specimen */}
               <div className="relative w-full aspect-square flex items-center justify-center mb-5">
                 <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
