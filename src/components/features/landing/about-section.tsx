@@ -1,79 +1,109 @@
+"use client";
+
 import Image from "next/image";
+import {
+  MessageSquare,
+  Search,
+  SlidersHorizontal,
+  FileText,
+  Handshake,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 
 interface StatItem {
   value: string;
   label: string;
-  detail: string;
 }
 
 const STATS: StatItem[] = [
   {
-    value: "1,200+",
-    label: "Active Members & Alumni",
-    detail: "Across engineering, research, and science batches",
+    value: "10+",
+    label: "Years in observational astronomy",
   },
   {
-    value: "50+",
-    label: "Observational Expeditions",
-    detail: "Bennett Cricket Ground and Himalayan dark-sky reserves",
+    value: "1000+",
+    label: "Successful night sky sessions",
   },
   {
-    value: "8-INCH",
-    label: "Dobsonian Optical Rigs",
-    detail: "Motorized tracking mounts & CMOS planetary sensors",
+    value: "4000+",
+    label: "Raw celestial exposures captured",
   },
   {
-    value: "6",
-    label: "Specialized Divisions",
-    detail: "Astrophotography, Tech, PR, Research, Web, Content",
+    value: "95%",
+    label: "Active member satisfaction",
   },
 ];
 
-const AFFILIATIONS = [
-  "BENNETT UNIVERSITY",
-  "TIMES OF INDIA GROUP",
-  "IUCAA SKY NETWORK",
-  "ISRO SPACE TUTOR",
-  "DELHI-NCR ASTRO AMATEURS",
-  "CELESTIAL CARTOGRAPHY LAB",
+const LOGOS = [
+  "✦ BENNETT UNIVERSITY",
+  "✦ TIMES OF INDIA GROUP",
+  "✦ IUCAA SKY NETWORK",
+  "✦ ISRO SPACE TUTOR",
+  "✦ DELHI-NCR ASTRO AMATEURS",
+  "✦ CELESTIAL TELEMETRY LAB",
 ];
 
-interface MethodologyStep {
-  step: string;
+interface CatalogCard {
+  title: string;
+  count: string;
+  image: string;
+}
+
+const CATALOG: CatalogCard[] = [
+  {
+    title: "Dobsonian Optical Rigs",
+    count: "4000+ properties / observation nights",
+    image: "/images/assets/catalog-telescopes.jpg",
+  },
+  {
+    title: "Sensor Astrophotography",
+    count: "1000+ deep-sky sensor stacks",
+    image: "/images/assets/journal-workshop.jpg",
+  },
+  {
+    title: "Himalayan Dark-Sky Reserves",
+    count: "2000+ expedition plots & sites",
+    image: "/images/assets/journal-gathering.jpg",
+  },
+];
+
+interface WorkStep {
+  icon: typeof MessageSquare;
   title: string;
   description: string;
 }
 
-const METHODOLOGY: MethodologyStep[] = [
+const WORK_STEPS: WorkStep[] = [
   {
-    step: "01",
-    title: "Field Telemetry & Apparatus Calibration",
+    icon: MessageSquare,
+    title: "Free consultation",
     description:
-      "Deploying 8-inch Dobsonian optical rigs and calibrating equatorial mounts for deep-sky planetary, lunar terminator, and solar observation.",
+      "Consultation and needs analysis. At this stage, we determine telescope apertures, observation targets, and equipment requirements.",
   },
   {
-    step: "02",
-    title: "Sensor Astrophotography & Exposure Stacking",
+    icon: Search,
+    title: "Search and selection of celestial coordinates",
     description:
-      "Capturing deep-space nebulae and star clusters through low-light CMOS sensor calibration, long-exposure tracking, and dark-frame subtraction.",
+      "We map confirmed sky coordinates, planetary conjunctions, and deep-space Messier objects matching your observational goals.",
   },
   {
-    step: "03",
-    title: "Astrophysics Research & Colloquia",
+    icon: SlidersHorizontal,
+    title: "Telescope viewing and optical assessment",
     description:
-      "Hosting technical inquiry, celestial mechanics modeling, and guest keynote lectures led by astrophysicists and visiting scholars.",
+      "We arrange Dobsonian setup, equatorial alignment, and provide a complete live observation overview under the open sky.",
   },
   {
-    step: "04",
-    title: "Archival Cartography & Pattern Analysis",
+    icon: FileText,
+    title: "Sensor verification and image preparation",
     description:
-      "Investigating historic celestial charts, Babylonian star catalogues, and how diverse civilizations impose structure upon distance.",
+      "We conduct a comprehensive review of all raw astrophotography sensor captures, calibration dark frames, and stacking logs.",
   },
   {
-    step: "05",
-    title: "Public Expeditions & Dark-Sky Tours",
+    icon: Handshake,
+    title: "Expedition and collaboration support",
     description:
-      "Conducting campus-wide celestial observations at Bennett Cricket Ground and guided expeditions to high-altitude Himalayan dark-sky sanctuaries.",
+      "We provide ongoing support in concluding the project, publishing journal papers, and joining seasonal mountain expeditions.",
   },
 ];
 
@@ -83,44 +113,31 @@ export function AboutSection() {
       id="about"
       className="w-full bg-[#1D1D1D] text-[#f5efeb] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
     >
-      <div className="w-full max-w-[1800px] mx-auto">
+      <div className="w-full max-w-[1800px] mx-auto space-y-24 sm:space-y-32">
         {/* ============================================================== */}
-        {/* 1. ABOUT US HEADER & STATS (Reference Top Section)              */}
+        {/* 1. ABOUT US (Exact Layout matching reference top)              */}
         {/* ============================================================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Column: Title & Narrative */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          {/* Left Column: Title + Narrative */}
           <div className="lg:col-span-6 flex flex-col justify-start">
-            <span className="font-mono text-xs tracking-archival text-[#8a847a] uppercase mb-4 block">
-              EST. BENNETT UNIVERSITY // OBSERVATORY COLLECTIVE
-            </span>
-
-            <h2 className="font-editorial-serif italic text-5xl sm:text-7xl xl:text-8xl text-[#f5efeb] tracking-tight leading-[0.95] mb-6">
-              ABOUT US
+            <h2 className="font-sans font-bold text-4xl sm:text-5xl lg:text-6xl text-[#f5efeb] tracking-tight mb-6">
+              About Us
             </h2>
-
-            <div className="space-y-4 font-sans text-xs sm:text-sm text-[#a39e93] leading-relaxed max-w-xl">
-              <p>
-                AstronomyBU is Bennett University&apos;s official astronomical society and space observation collective. Operating under the School of Computer Science & Engineering, we unite passionate skygazers, astrophotographers, and researchers to explore deep space.
-              </p>
-              <p>
-                Under the advisory of Faculty Advisor Shardul Dhekane [𝙎𝙋𝙄𝙍𝙄𝙏] and executive leads Kaavya Kumar Yadav & Abhimanyu Narang, our telemetry expeditions explore celestial mechanics from campus telescopes to remote Himalayan dark-sky sanctuaries.
-              </p>
-            </div>
+            <p className="font-sans text-xs sm:text-sm text-[#a39e93] leading-relaxed max-w-lg">
+              AstronomyBU is Bennett University&apos;s premier astronomical society and space research collective. Operating since 2021 under the School of Computer Science &amp; Engineering, we help students and enthusiasts—from first-year undergraduates to senior researchers—explore, image, and understand deep space. Our team takes care of telescope tracking, sensor calibration, dark-sky expeditions, and observational telemetry until the research is complete.
+            </p>
           </div>
 
-          {/* Right Column: 4 Impact Metrics in 2x2 Grid */}
+          {/* Right Column: 4 Stats in 2x2 Grid */}
           <div className="lg:col-span-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10 border-t border-[rgba(245,239,235,0.12)] pt-8 lg:border-t-0 lg:pt-0">
+            <div className="grid grid-cols-2 gap-8 sm:gap-12">
               {STATS.map((stat) => (
                 <div key={stat.label} className="flex flex-col">
-                  <span className="font-editorial-serif italic text-5xl sm:text-6xl xl:text-7xl text-[#eae5d9] leading-none mb-2">
+                  <span className="font-sans font-extrabold text-4xl sm:text-5xl lg:text-6xl text-[#f5efeb] leading-none mb-2">
                     {stat.value}
                   </span>
-                  <span className="font-mono text-xs text-[#f5efeb] uppercase tracking-wider font-semibold mb-1">
+                  <span className="font-sans text-xs sm:text-sm text-[#a39e93] leading-snug">
                     {stat.label}
-                  </span>
-                  <span className="font-sans text-[11px] text-[#8a847a] leading-relaxed">
-                    {stat.detail}
                   </span>
                 </div>
               ))}
@@ -129,44 +146,103 @@ export function AboutSection() {
         </div>
 
         {/* ============================================================== */}
-        {/* 2. INSTITUTIONAL LOGO & AFFILIATION STRIP (Reference Logo Bar)  */}
+        {/* 2. LOGO BAR (Exact matching reference logo strip)              */}
         {/* ============================================================== */}
-        <div className="border-t border-b border-[rgba(245,239,235,0.12)] py-8 my-16 sm:my-24">
+        <div className="border-t border-b border-[rgba(245,239,235,0.1)] py-8">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8 items-center text-center">
-            {AFFILIATIONS.map((name) => (
+            {LOGOS.map((logo) => (
               <div
-                key={name}
-                className="flex items-center justify-center gap-2 text-[#8a847a] hover:text-[#f5efeb] transition-colors"
+                key={logo}
+                className="font-sans font-semibold text-xs sm:text-sm text-[#8a847a] hover:text-[#f5efeb] transition-colors tracking-wide uppercase"
               >
-                <span className="text-[10px] text-[#eae5d9]">✦</span>
-                <span className="font-mono text-[10px] sm:text-[11px] tracking-wider uppercase">
-                  {name}
-                </span>
+                {logo}
               </div>
             ))}
           </div>
         </div>
 
         {/* ============================================================== */}
-        {/* 3. HOW WE WORK / METHODOLOGY (Reference Bottom Section)         */}
+        {/* 3. CATALOG (3 Cards with Rounded Corners)                      */}
         {/* ============================================================== */}
-        <div className="pt-4">
-          <div className="mb-12 sm:mb-16">
-            <h3 className="font-editorial-serif italic text-3xl sm:text-5xl lg:text-6xl text-[#f5efeb] tracking-tight mb-3">
-              HOW WE OPERATE
+        <div>
+          <div className="mb-8 sm:mb-10">
+            <h3 className="font-sans font-bold text-3xl sm:text-4xl lg:text-5xl text-[#f5efeb] tracking-tight mb-2">
+              Catalog
             </h3>
-            <p className="font-mono text-xs xl:text-[13px] tracking-wide text-[#a39e93] leading-relaxed max-w-xl">
-              We structure our engagement with the night sky across five distinct observational phases.
+            <p className="font-sans text-xs sm:text-sm text-[#a39e93]">
+              A wide selection of optical telemetry and observation rigs for your research
             </p>
           </div>
 
+          {/* 3 Cards Grid with Rounded Corners */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {CATALOG.map((item) => (
+              <div key={item.title} className="group cursor-pointer flex flex-col">
+                {/* Rounded Image Container */}
+                <div className="relative w-full aspect-[4/5] rounded-[24px] sm:rounded-[32px] overflow-hidden bg-[#111113] shadow-2xl mb-4">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
+
+                {/* Title & Property Count below */}
+                <h4 className="font-sans font-bold text-base sm:text-lg text-[#f5efeb] group-hover:text-[#eae5d9] transition-colors">
+                  {item.title}
+                </h4>
+                <p className="font-sans text-xs text-[#8a847a] mt-0.5">
+                  {item.count}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ============================================================== */}
+        {/* 4. HOW WE WORK (Exact layout matching reference bottom)        */}
+        {/* ============================================================== */}
+        <div>
+          {/* Header Row: Title & Arrow Buttons */}
+          <div className="flex items-start justify-between mb-8 sm:mb-12">
+            <div>
+              <h3 className="font-sans font-bold text-3xl sm:text-4xl lg:text-5xl text-[#f5efeb] tracking-tight mb-2">
+                How we work
+              </h3>
+              <p className="font-sans text-xs sm:text-sm text-[#a39e93]">
+                We have made the process of working with us as simple and transparent as possible
+              </p>
+            </div>
+
+            {/* Circular Arrow Navigation Buttons */}
+            <div className="flex items-center gap-3 select-none">
+              <button
+                type="button"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[rgba(245,239,235,0.2)] flex items-center justify-center text-[#a39e93] hover:text-[#f5efeb] hover:border-[#f5efeb] transition-colors"
+                aria-label="Previous step"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                type="button"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#f5efeb] text-[#1D1D1D] flex items-center justify-center hover:bg-white transition-colors"
+                aria-label="Next step"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          {/* 2-Column Main Stage: Rounded Tall Photo Left + 5 Steps Right */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-20 items-start">
-            {/* Left Column: Portrait Eclipse Photograph with Floating Circular Badge */}
+            {/* Left Column: Tall Photo with Rounded Corners & Overlapping Circular Badge */}
             <div className="lg:col-span-5 relative">
-              <div className="relative w-full aspect-[3/4.2] bg-[#111113] overflow-hidden shadow-2xl">
+              <div className="relative w-full aspect-[3/4.4] rounded-[28px] sm:rounded-[36px] overflow-hidden shadow-2xl bg-[#111113]">
                 <Image
                   src="/images/assets/structure-eclipse.jpg"
-                  alt="Total solar eclipse coronal halo over volumetric cloudscape"
+                  alt="Total solar eclipse over cloudscape"
                   fill
                   priority
                   className="object-cover filter contrast-110 brightness-95"
@@ -174,37 +250,43 @@ export function AboutSection() {
                 />
               </div>
 
-              {/* Floating Circular Badge (Matching Russian circular badge in reference) */}
-              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#eae5d9] text-[#1D1D1D] p-3 flex flex-col items-center justify-center text-center font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-tight shadow-2xl absolute -top-4 -right-4 sm:-top-5 sm:-right-5 rotate-6 pointer-events-none">
-                <span>BENNETT</span>
-                <span>OBSERVATORY</span>
-                <span className="text-[8px] text-[#52525b] mt-0.5">TELEMETRY</span>
+              {/* Overlapping Circular Badge (Exact Russian badge position) */}
+              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-[#52525b] text-[#f5efeb] shadow-2xl flex flex-col items-center justify-center text-center p-3 absolute -top-4 -right-4 sm:-top-6 sm:-right-6 z-10 pointer-events-none select-none">
+                <span className="font-sans font-semibold text-xs sm:text-[13px] leading-tight">
+                  Free night
+                </span>
+                <span className="font-sans font-semibold text-xs sm:text-[13px] leading-tight">
+                  sky session
+                </span>
               </div>
             </div>
 
-            {/* Right Column: 5 Process Rows with Badges */}
+            {/* Right Column: 5 Step Rows with Circular Badges */}
             <div className="lg:col-span-7 divide-y divide-[rgba(245,239,235,0.1)] border-b border-[rgba(245,239,235,0.1)]">
-              {METHODOLOGY.map((step) => (
-                <div
-                  key={step.step}
-                  className="py-5 sm:py-6 flex items-start gap-5 sm:gap-6 group hover:bg-[rgba(255,255,255,0.02)] transition-colors px-2 sm:px-4"
-                >
-                  {/* Circular Step Badge */}
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[rgba(245,239,235,0.25)] bg-[#111113] flex-shrink-0 flex items-center justify-center font-mono text-xs sm:text-sm text-[#eae5d9] font-semibold group-hover:border-[#eae5d9] transition-colors">
-                    {step.step}
-                  </div>
+              {WORK_STEPS.map((step) => {
+                const IconComponent = step.icon;
+                return (
+                  <div
+                    key={step.title}
+                    className="py-5 sm:py-6 flex items-start gap-5 sm:gap-6 group hover:bg-[rgba(255,255,255,0.02)] transition-colors px-2"
+                  >
+                    {/* Circular Icon Badge */}
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#111113] border border-[rgba(245,239,235,0.25)] flex-shrink-0 flex items-center justify-center text-[#f5efeb] group-hover:border-[#f5efeb] transition-colors">
+                      <IconComponent className="w-5 h-5 stroke-[1.8]" />
+                    </div>
 
-                  {/* Step Content */}
-                  <div className="flex-1">
-                    <h4 className="font-mono text-xs sm:text-sm font-semibold tracking-wider text-[#f5efeb] uppercase mb-1.5 group-hover:text-[#eae5d9] transition-colors">
-                      {step.title}
-                    </h4>
-                    <p className="font-sans text-xs text-[#a39e93] leading-relaxed">
-                      {step.description}
-                    </p>
+                    {/* Content */}
+                    <div className="flex-1">
+                      <h4 className="font-sans font-bold text-sm sm:text-base text-[#f5efeb] group-hover:text-[#eae5d9] transition-colors mb-1">
+                        {step.title}
+                      </h4>
+                      <p className="font-sans text-xs sm:text-sm text-[#a39e93] leading-relaxed">
+                        {step.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
