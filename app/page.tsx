@@ -1,5 +1,5 @@
 import { HeroSection } from "@/components/features/landing/hero-section";
-import { StructureSection } from "@/components/features/landing/structure-section";
+import { AboutSection } from "@/components/features/landing/about-section";
 import { ObservatoryArchitecture } from "@/components/features/landing/observatory-architecture";
 import { MembershipSection } from "@/components/features/landing/membership-section";
 import { ArchiveSection } from "@/components/features/landing/archive-section";
@@ -11,10 +11,10 @@ export default function HomePage() {
       {/* 01: Hero & Celestial Sanctuary */}
       <HeroSection />
 
-      {/* 02: Structure — Pattern and Imposition / Absence and Disruption (About Us) */}
-      <StructureSection />
+      {/* 02: About Us — Narrative, Telemetry Stats, Affiliations & How We Operate */}
+      <AboutSection />
 
-      {/* 03: Dome Experience Narrative & Other Programs Gallery */}
+      {/* 03: Dome Experience Narrative Stage */}
       <ObservatoryArchitecture />
 
       {/* 04: Membership Tiers & Entitlements Matrix */}
