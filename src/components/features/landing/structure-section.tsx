@@ -44,7 +44,7 @@ export function StructureSection() {
 
           {/* Column 03: Portrait Eclipse Artwork (3 cols) */}
           <div className="lg:col-span-3 flex justify-center py-4 lg:py-0">
-            <div className="relative w-full max-w-[340px] lg:max-w-none aspect-[3/4.4] border border-[rgba(245,239,235,0.15)] bg-[#111113] overflow-hidden shadow-2xl">
+            <div className="relative w-full max-w-[340px] lg:max-w-none aspect-[3/4.4] bg-[#111113] overflow-hidden shadow-2xl">
               <Image
                 src="/images/assets/structure-eclipse.jpg"
                 alt="Total solar eclipse coronal halo over volumetric cloudscape"

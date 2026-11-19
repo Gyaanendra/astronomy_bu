@@ -130,7 +130,7 @@ export function ObservatoryArchitecture() {
 
           {/* Right Column: Monumental Swirling Galaxy Vortex Artwork */}
           <div className="lg:col-span-7">
-            <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] border border-[rgba(245,239,235,0.15)] bg-[#111113] overflow-hidden group shadow-2xl">
+            <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] bg-[#111113] overflow-hidden group shadow-2xl">
               <Image
                 src={slide.image}
                 alt={slide.alt}
