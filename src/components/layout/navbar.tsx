@@ -9,8 +9,6 @@ export function Navbar() {
 
   const navLinks = [
     { label: "ABOUT", href: "#sanctuary" },
-    { label: "STRUCTURE", href: "#structure" },
-    { label: "DOME", href: "#dome" },
     { label: "PROGRAMS", href: "#programs" },
     { label: "MEMBERSHIP", href: "#membership" },
     { label: "ARCHIVE", href: "#archive" },
