@@ -22,10 +22,11 @@ export function Footer() {
   return (
     <footer
       id="newsletter"
-      className="relative w-full min-h-[950px] lg:min-h-[1100px] flex flex-col justify-between bg-[#09090b] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] pt-20 sm:pt-28 pb-10 overflow-hidden"
+      className="relative w-full min-h-[755px] lg:h-[755px] lg:max-h-[755px] flex flex-col justify-between bg-[#09090b] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] pt-10 sm:pt-12 pb-5 sm:pb-6 overflow-hidden"
     >
       {/* ============================================================== */}
-      {/* BACKGROUND IMAGE: Behance Astronaut Lunar Stipple Illustration */}
+      {/* BACKGROUND IMAGE: Behance Astronaut Illustration (1920x755)     */}
+      {/* Set to exact 755px height matching the original artwork max-height*/}
       {/* ============================================================== */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden">
         <Image
@@ -38,115 +39,114 @@ export function Footer() {
         />
         
         {/* Top Fade Gradient: Seamless blend into void #09090b from page above */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#09090b] via-[#09090b]/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#09090b] via-[#09090b]/40 to-transparent" />
         
-        {/* Subtle radial shading for high contrast legibility */}
-        <div className="absolute inset-0 bg-radial from-transparent via-[#09090b]/20 to-[#09090b]/80" />
+        {/* Subtle radial shading for high contrast text readability */}
+        <div className="absolute inset-0 bg-radial from-transparent via-[#09090b]/15 to-[#09090b]/70" />
       </div>
 
       {/* ============================================================== */}
-      {/* FOREGROUND CONTENT LAYER (Positioned directly over the art)    */}
+      {/* FOREGROUND CONTENT LAYER (Proportionally fit within 755px)    */}
       {/* ============================================================== */}
-      <div className="relative z-10 w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-20 xl:px-24 flex-1 flex flex-col justify-between">
+      <div className="relative z-10 w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-20 xl:px-24 h-full flex flex-col justify-between">
         
         {/* ------------------------------------------------------------ */}
-        {/* 1. NEWSLETTER SUBSCRIPTION & DISPATCHES ROW                  */}
+        {/* 1. NEWSLETTER & DISPATCHES ROW (Top Section)                 */}
         {/* ------------------------------------------------------------ */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-24 pb-16 sm:pb-20 border-b border-[rgba(245,239,235,0.15)]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 pb-6 sm:pb-8 border-b border-[rgba(245,239,235,0.12)] items-start">
           
           {/* Left Column: Scope & Dispatches Explanation */}
-          <div className="lg:col-span-5 flex flex-col justify-between space-y-8">
+          <div className="lg:col-span-6 flex flex-col justify-between space-y-3">
             <div>
-              <span className="font-mono text-[10px] sm:text-xs tracking-archival text-[#d4af37] block mb-3 uppercase">
-                Celestial Dispatches // Bennett University
+              <span className="font-mono text-[10px] sm:text-[11px] tracking-archival text-[#d4af37] block mb-2 uppercase">
+                Celestial Dispatches // Bennett University Observatory
               </span>
-              <h2 className="font-editorial-serif italic text-4xl sm:text-6xl xl:text-7xl text-[#f5efeb] tracking-tight mb-6">
+              <h2 className="font-editorial-serif italic text-3xl sm:text-5xl text-[#f5efeb] tracking-tight mb-3">
                 SUBSCRIBE TO NEWSLETTER
               </h2>
 
-              <p className="font-mono text-xs sm:text-[13px] text-[#eae5d9]/90 leading-relaxed mb-6 uppercase">
-                Occasional updates from AstronomyBU — announcements, reflections, and selected materials that extend beyond the space.
+              <p className="font-mono text-xs text-[#eae5d9]/90 leading-relaxed max-w-xl uppercase mb-3">
+                Occasional updates from AstronomyBU — telescope observation alerts, astrophotography techniques, and research archives.
               </p>
 
-              <div className="font-mono text-xs text-[#a39e93] leading-relaxed space-y-2 uppercase">
-                <span className="text-[#f5efeb] block mb-2 font-semibold">Includes:</span>
-                <p>• upcoming experiences and seasonal programs</p>
-                <p>• selected entries from the Archive</p>
-                <p>• early access to Journal releases</p>
-                <p>• open calls and participation invitations</p>
-                <p>• visual materials and editorial notes</p>
-                <p>• occasional audio or written reflections</p>
+              <div className="flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] text-[#a39e93] uppercase">
+                <span>• Observation Nights</span>
+                <span>• Historical Archive</span>
+                <span>• Lecture Notes</span>
+                <span>• Sensor Presets</span>
               </div>
             </div>
 
-            <div className="pt-4 font-mono text-[11px] text-[#8a847a] uppercase">
+            <div className="pt-2 font-mono text-[10px] sm:text-[11px] text-[#8a847a] uppercase">
               Station 28.4595° N, 77.5046° E · Elevation 208m MSL · Greater Noida
             </div>
           </div>
 
           {/* Right Column: Warm Bone Editorial Input Card (Pinterest Spec) */}
-          <div className="lg:col-span-7 flex justify-end">
-            <div className="w-full max-w-2xl bg-[#eae5d9] text-[#09090b] p-8 sm:p-12 lg:p-14 shadow-2xl backdrop-blur-sm border border-[#eae5d9]">
+          <div className="lg:col-span-6 flex justify-end">
+            <div className="w-full max-w-xl bg-[#eae5d9] text-[#09090b] p-6 sm:p-7 shadow-2xl backdrop-blur-sm border border-[#eae5d9]">
               {sent ? (
-                <div className="py-16 text-center font-mono text-xs uppercase tracking-archival text-[#09090b]">
-                  <p className="font-bold text-base mb-2">Frequency Calibrated</p>
+                <div className="py-8 text-center font-mono text-xs uppercase tracking-archival text-[#09090b]">
+                  <p className="font-bold text-sm mb-1.5">Frequency Calibrated</p>
                   <p className="text-[#3f3f46]">
                     You will receive astronomical dispatches, telescope schedules, and observation alerts.
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="flex flex-col gap-8">
-                  {/* Field 1: Name */}
-                  <div className="flex flex-col gap-2">
-                    <label className="font-mono text-xs uppercase tracking-wider text-[#52525b]">
-                      How should we call you?
-                    </label>
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Your name"
-                      required
-                      className="w-full bg-transparent border-b border-[#09090b]/30 pb-2.5 text-base sm:text-lg font-editorial-serif text-[#09090b] placeholder-[#71717a] focus:outline-none focus:border-[#09090b] transition-colors"
-                    />
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                  {/* Name and Email side by side on desktop */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-mono text-[11px] uppercase tracking-wider text-[#52525b]">
+                        Your name
+                      </label>
+                      <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Observer"
+                        required
+                        className="w-full bg-transparent border-b border-[#09090b]/30 pb-1.5 text-sm sm:text-base font-editorial-serif text-[#09090b] placeholder-[#71717a] focus:outline-none focus:border-[#09090b] transition-colors"
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-mono text-[11px] uppercase tracking-wider text-[#52525b]">
+                        Your e-mail
+                      </label>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="observer@domain.com"
+                        required
+                        className="w-full bg-transparent border-b border-[#09090b]/30 pb-1.5 text-sm sm:text-base font-editorial-serif text-[#09090b] placeholder-[#71717a] focus:outline-none focus:border-[#09090b] transition-colors"
+                      />
+                    </div>
                   </div>
 
-                  {/* Field 2: Email */}
-                  <div className="flex flex-col gap-2">
-                    <label className="font-mono text-xs uppercase tracking-wider text-[#52525b]">
-                      How can we contact you?
+                  {/* Agreement & Submit button row */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+                    <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={agreed}
+                        onChange={(e) => setAgreed(e.target.checked)}
+                        required
+                        className="w-3.5 h-3.5 accent-[#09090b]"
+                      />
+                      <span className="font-mono text-[10px] uppercase text-[#52525b] tracking-wide">
+                        I agree to Terms &amp; Privacy Policy
+                      </span>
                     </label>
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Your e-mail"
-                      required
-                      className="w-full bg-transparent border-b border-[#09090b]/30 pb-2.5 text-base sm:text-lg font-editorial-serif text-[#09090b] placeholder-[#71717a] focus:outline-none focus:border-[#09090b] transition-colors"
-                    />
+
+                    <button
+                      type="submit"
+                      className="px-8 py-2.5 bg-[#09090b] text-[#eae5d9] font-mono text-[11px] tracking-archival font-semibold uppercase hover:bg-black transition-colors"
+                    >
+                      SEND [↗]
+                    </button>
                   </div>
-
-                  {/* Checkbox */}
-                  <label className="flex items-center gap-3.5 cursor-pointer select-none">
-                    <input
-                      type="checkbox"
-                      checked={agreed}
-                      onChange={(e) => setAgreed(e.target.checked)}
-                      required
-                      className="w-4 h-4 accent-[#09090b]"
-                    />
-                    <span className="font-mono text-[10px] sm:text-[11px] uppercase text-[#52525b] tracking-wide">
-                      I have read and agree to Privacy Policy and Terms of Service
-                    </span>
-                  </label>
-
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    className="w-full py-4 bg-[#09090b] text-[#eae5d9] font-mono text-xs tracking-archival font-semibold uppercase hover:bg-black transition-colors"
-                  >
-                    SEND
-                  </button>
                 </form>
               )}
             </div>
@@ -154,10 +154,10 @@ export function Footer() {
         </div>
 
         {/* ------------------------------------------------------------ */}
-        {/* 2. DIRECT SITE NAVIGATION / INDEX STRIP                     */}
+        {/* 2. DIRECT SITE NAVIGATION & TELEMETRY STRIP                  */}
         {/* ------------------------------------------------------------ */}
-        <div className="py-6 flex flex-wrap items-center justify-between gap-4 border-b border-[rgba(245,239,235,0.12)]">
-          <div className="flex flex-wrap items-center gap-6 sm:gap-10 font-mono text-[11px] sm:text-xs tracking-[0.2em] text-[#a39e93] uppercase">
+        <div className="py-3 flex flex-wrap items-center justify-between gap-3 border-b border-[rgba(245,239,235,0.1)]">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-7 font-mono text-[10px] sm:text-[11px] tracking-[0.18em] text-[#a39e93] uppercase">
             <Link href="#sanctuary" className="hover:text-[#f5efeb] transition-colors">
               [ 01 // ABOUT ]
             </Link>
@@ -184,53 +184,30 @@ export function Footer() {
             </Link>
           </div>
 
-          <div className="font-mono text-[11px] tracking-widest text-[#8a847a] uppercase">
-            BORTLE CLASS 6 · TELESCOPE DEPLOYMENT READY
-          </div>
-        </div>
-
-        {/* ------------------------------------------------------------ */}
-        {/* 3. METADATA & TELEMETRY ROW                                  */}
-        {/* ------------------------------------------------------------ */}
-        <div className="py-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 font-mono text-xs text-[#8a847a] tracking-wider uppercase border-b border-[rgba(245,239,235,0.12)]">
-          <div>
-            <span className="text-[#635e57] block mb-1">INQUIRIES //</span>
-            <a href="mailto:astronomy@bennett.edu.in" className="text-[#f5efeb] hover:underline">
+          <div className="font-mono text-[10px] sm:text-[11px] tracking-widest text-[#8a847a] uppercase flex items-center gap-4">
+            <a href="mailto:astronomy@bennett.edu.in" className="hover:text-[#f5efeb] transition-colors">
               astronomy@bennett.edu.in
             </a>
-          </div>
-
-          <div>
-            <span className="text-[#635e57] block mb-1">TELEMETRY LINE //</span>
-            <span className="text-[#f5efeb]">+91 (0120) 719-0101</span>
-          </div>
-
-          <div>
-            <span className="text-[#635e57] block mb-1">STATION LOCATION //</span>
-            <span className="text-[#f5efeb]">Bennett University, Greater Noida, 201310</span>
-          </div>
-
-          <div>
-            <span className="text-[#635e57] block mb-1">OBSERVATION WINDOW //</span>
-            <span className="text-[#f5efeb]">Weekdays 18:00 - 23:00 // Nights 21:00 - 03:00</span>
+            <span>/</span>
+            <span>+91 (0120) 719-0101</span>
           </div>
         </div>
 
         {/* ------------------------------------------------------------ */}
-        {/* 4. COLOSSAL WORDMARK: ASTRONOMYBU (Over the Lunar Horizon)   */}
+        {/* 3. COLOSSAL WORDMARK: ASTRONOMYBU (Over the Lunar Horizon)   */}
         {/* ------------------------------------------------------------ */}
-        <div className="w-full pt-8 sm:pt-14 pb-4 overflow-hidden select-none">
+        <div className="w-full py-2 overflow-hidden select-none">
           <div className="w-full text-center">
-            <span className="w-full font-editorial-serif italic tracking-tighter text-[clamp(4.2rem,16.5vw,18.5rem)] text-[#eae5d9]/95 leading-[0.8] block drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+            <span className="w-full font-editorial-serif italic tracking-tighter text-[clamp(3.8rem,13vw,10.5rem)] text-[#eae5d9]/95 leading-[0.8] block drop-shadow-[0_10px_30px_rgba(0,0,0,0.85)]">
               ASTRONOMYBU
             </span>
           </div>
         </div>
 
         {/* ------------------------------------------------------------ */}
-        {/* 5. SUB-FOOTER: COPYRIGHT & SOCIALS                           */}
+        {/* 4. SUB-FOOTER: COPYRIGHT & SOCIALS                           */}
         {/* ------------------------------------------------------------ */}
-        <div className="pt-6 border-t border-[rgba(245,239,235,0.12)] flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-[#8a847a]">
+        <div className="pt-3 border-t border-[rgba(245,239,235,0.1)] flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-[11px] text-[#8a847a]">
           <span>© {new Date().getFullYear()} ASTRONOMYBU · BENNETT OBSERVATORY ARCHIVE. ALL RIGHTS RESERVED.</span>
           
           <div className="flex items-center gap-6 text-[#eae5d9]">
