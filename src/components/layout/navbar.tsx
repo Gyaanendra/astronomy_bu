@@ -8,7 +8,7 @@ export function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const navLinks = [
-    { label: "ABOUT", href: "#sanctuary" },
+    { label: "ABOUT", href: "#about" },
     { label: "PROGRAMS", href: "#programs" },
     { label: "MEMBERSHIP", href: "#membership" },
     { label: "ARCHIVE", href: "#archive" },
@@ -17,7 +17,7 @@ export function Navbar() {
 
   return (
     <>
-      <header className="w-full bg-[#1D1D1D]/92 backdrop-blur-md border-b border-[rgba(245,239,235,0.08)] sticky top-0 z-50 transition-all">
+      <header className="w-full bg-[#1D1D1D] border-b border-[rgba(245,239,235,0.08)] relative z-40">
         <div className="w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-20 xl:px-24 h-20 sm:h-24 flex items-center justify-between">
           {/* Left: Star Glyph + Wordmark (Exact Noctra Brand Treatment) */}
           <Link href="/" className="flex items-center gap-3 group">

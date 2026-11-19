@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 
 const DOME_SLIDES = [
@@ -72,41 +72,41 @@ export function ObservatoryArchitecture() {
     >
       <div className="w-full max-w-[1800px] mx-auto">
         {/* ============================================================== */}
-        {/* PART 1: DOME EXPERIENCE (Matching Pinterest Reference 2 & 7)   */}
+        {/* PART 1: DOME EXPERIENCE (Matching Reference Exactly)           */}
         {/* ============================================================== */}
         <div className="flex items-center justify-between pb-8 sm:pb-12 border-b border-[rgba(245,239,235,0.12)]">
           <div>
-            <h2 className="font-editorial-serif italic text-4xl sm:text-6xl text-[#f5efeb] tracking-tight">
+            <h2 className="font-editorial-serif italic text-4xl sm:text-5xl lg:text-6xl text-[#f5efeb] tracking-tight">
               DOME EXPERIENCE
             </h2>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-6 font-mono text-xl sm:text-2xl text-[#f5efeb] select-none">
             <button
               type="button"
               onClick={() =>
                 setSlideIndex((prev) => (prev === 0 ? DOME_SLIDES.length - 1 : prev - 1))
               }
-              className="p-2.5 sm:p-3 border border-[rgba(245,239,235,0.2)] text-[#a39e93] hover:text-[#f5efeb] hover:border-[#f5efeb] transition-colors"
+              className="text-[#a39e93] hover:text-[#f5efeb] transition-colors cursor-pointer"
               aria-label="Previous slide"
             >
-              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+              ←
             </button>
             <button
               type="button"
               onClick={() =>
                 setSlideIndex((prev) => (prev === DOME_SLIDES.length - 1 ? 0 : prev + 1))
               }
-              className="p-2.5 sm:p-3 border border-[rgba(245,239,235,0.2)] text-[#a39e93] hover:text-[#f5efeb] hover:border-[#f5efeb] transition-colors"
+              className="text-[#a39e93] hover:text-[#f5efeb] transition-colors cursor-pointer"
               aria-label="Next slide"
             >
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              →
             </button>
           </div>
         </div>
 
         {/* 2-Column Dome Experience Stage */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-20 py-12 sm:py-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-20 py-12 sm:py-16 items-start lg:items-center">
           {/* Left Column: Narrative Headline + Body + Ticket Button */}
           <div className="lg:col-span-5 flex flex-col justify-between space-y-8">
             <div className="space-y-6">
