@@ -18,7 +18,7 @@ export function JournalShowcase() {
       : journalArticles.filter((art) => art.category === selectedCategory);
 
   return (
-    <div className="w-full py-16 sm:py-24 px-6 sm:px-12 lg:px-20 xl:px-24 bg-[#09090b]">
+    <div className="w-full py-16 sm:py-24 px-6 sm:px-12 lg:px-20 xl:px-24 bg-[#1D1D1D]">
       <div className="w-full max-w-[1800px] mx-auto">
         {/* Header */}
         <div className="pb-12 border-b border-[rgba(245,239,235,0.12)]">
@@ -41,7 +41,7 @@ export function JournalShowcase() {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-3 py-1 font-mono text-[11px] uppercase transition-all ${
                   selectedCategory === cat
-                    ? "bg-[#eae5d9] text-[#09090b] font-semibold"
+                    ? "bg-[#eae5d9] text-[#1D1D1D] font-semibold"
                     : "border border-[rgba(245,239,235,0.15)] text-[#a39e93] hover:text-[#f5efeb]"
                 }`}
               >
@@ -61,7 +61,7 @@ export function JournalShowcase() {
             >
               <div>
                 {/* Image Cover */}
-                <div className="relative aspect-[16/9] w-full mb-6 border border-[rgba(245,239,235,0.1)] bg-[#09090b] overflow-hidden">
+                <div className="relative aspect-[16/9] w-full mb-6 border border-[rgba(245,239,235,0.1)] bg-[#1D1D1D] overflow-hidden">
                   <Image
                     src={article.coverImage}
                     alt={article.title}
@@ -69,7 +69,7 @@ export function JournalShowcase() {
                     className="object-cover grayscale contrast-115 group-hover:contrast-100 group-hover:scale-105 transition-all duration-700"
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
-                  <div className="absolute top-3 left-3 bg-[#eae5d9] text-[#09090b] px-2 py-0.5 font-mono text-[9px] font-bold tracking-widest uppercase">
+                  <div className="absolute top-3 left-3 bg-[#eae5d9] text-[#1D1D1D] px-2 py-0.5 font-mono text-[9px] font-bold tracking-widest uppercase">
                     {article.category}
                   </div>
                 </div>
@@ -121,7 +121,7 @@ export function JournalShowcase() {
       {/* Article Reader Modal */}
       {activeArticle && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-md">
-          <div className="relative w-full max-w-3xl bg-[#09090b] border border-[rgba(245,239,235,0.25)] p-6 sm:p-12 max-h-[90vh] overflow-y-auto">
+          <div className="relative w-full max-w-3xl bg-[#1D1D1D] border border-[rgba(245,239,235,0.25)] p-6 sm:p-12 max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setActiveArticle(null)}
               className="absolute top-6 right-6 text-[#a39e93] hover:text-[#f5efeb] p-1"

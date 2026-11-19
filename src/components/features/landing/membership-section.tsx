@@ -93,7 +93,7 @@ export function MembershipSection() {
   return (
     <section
       id="membership"
-      className="w-full bg-[#09090b] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
+      className="w-full bg-[#1D1D1D] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
     >
       <div className="w-full max-w-[1800px] mx-auto">
         {/* Top Header Row (Pinterest Reference 5 Top-Left) */}
@@ -118,7 +118,7 @@ export function MembershipSection() {
               onClick={() => setActivePlan(key)}
               className={`px-6 sm:px-8 py-2 font-mono text-xs tracking-archival uppercase transition-colors ${
                 activePlan === key
-                  ? "bg-[#eae5d9] text-[#09090b] font-semibold"
+                  ? "bg-[#eae5d9] text-[#1D1D1D] font-semibold"
                   : "bg-transparent text-[#a39e93] border border-[rgba(245,239,235,0.2)] hover:border-[#f5efeb] hover:text-[#f5efeb]"
               }`}
             >
@@ -128,15 +128,15 @@ export function MembershipSection() {
         </div>
 
         {/* Main Matrix Box: Split Left Bone Card & Right Checklist Columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 border border-[rgba(245,239,235,0.15)] bg-[#09090b]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 border border-[rgba(245,239,235,0.15)] bg-[#1D1D1D]">
           
           {/* Left Bone Card (4 Columns) */}
-          <div className="lg:col-span-4 bg-[#eae5d9] text-[#09090b] p-8 sm:p-12 flex flex-col justify-between min-h-[460px]">
+          <div className="lg:col-span-4 bg-[#eae5d9] text-[#1D1D1D] p-8 sm:p-12 flex flex-col justify-between min-h-[460px]">
             <div>
               <span className="font-mono text-[10px] tracking-archival text-[#52525b] uppercase block mb-3 font-semibold">
                 {plan.badge}
               </span>
-              <h3 className="font-editorial-serif italic text-4xl sm:text-5xl text-[#09090b] tracking-tight mb-6">
+              <h3 className="font-editorial-serif italic text-4xl sm:text-5xl text-[#1D1D1D] tracking-tight mb-6">
                 {plan.name}
               </h3>
               <p className="font-sans text-xs sm:text-sm text-[#27272a] leading-relaxed">
@@ -145,7 +145,7 @@ export function MembershipSection() {
             </div>
 
             <div className="pt-8">
-              <div className="w-full py-4 bg-[#09090b] text-[#eae5d9] font-mono text-xs tracking-archival font-semibold uppercase text-center">
+              <div className="w-full py-4 bg-[#1D1D1D] text-[#eae5d9] font-mono text-xs tracking-archival font-semibold uppercase text-center">
                 [{plan.price}]
               </div>
             </div>
@@ -170,7 +170,7 @@ export function MembershipSection() {
                     <div
                       className={`w-4 h-4 border flex items-center justify-center ${
                         item.included
-                          ? "border-[#f5efeb] bg-[#f5efeb] text-[#09090b]"
+                          ? "border-[#f5efeb] bg-[#f5efeb] text-[#1D1D1D]"
                           : "border-[rgba(245,239,235,0.2)] bg-transparent text-transparent"
                       }`}
                     >
@@ -197,7 +197,7 @@ export function MembershipSection() {
                     <div
                       className={`w-4 h-4 border flex items-center justify-center ${
                         item.included
-                          ? "border-[#f5efeb] bg-[#f5efeb] text-[#09090b]"
+                          ? "border-[#f5efeb] bg-[#f5efeb] text-[#1D1D1D]"
                           : "border-[rgba(245,239,235,0.2)] bg-transparent text-transparent"
                       }`}
                     >

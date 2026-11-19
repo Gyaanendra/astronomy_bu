@@ -19,7 +19,7 @@ export function Navbar() {
 
   return (
     <>
-      <header className="w-full bg-[#09090b]/92 backdrop-blur-md border-b border-[rgba(245,239,235,0.08)] sticky top-0 z-50 transition-all">
+      <header className="w-full bg-[#1D1D1D]/92 backdrop-blur-md border-b border-[rgba(245,239,235,0.08)] sticky top-0 z-50 transition-all">
         <div className="w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-20 xl:px-24 h-20 sm:h-24 flex items-center justify-between">
           {/* Left: Star Glyph + Wordmark (Exact Noctra Brand Treatment) */}
           <Link href="/" className="flex items-center gap-3 group">
@@ -57,7 +57,7 @@ export function Navbar() {
 
             <a
               href="#newsletter"
-              className="px-5 sm:px-6 py-2.5 bg-[#eae5d9] text-[#09090b] font-mono text-xs tracking-archival font-semibold uppercase hover:bg-white transition-colors"
+              className="px-5 sm:px-6 py-2.5 bg-[#eae5d9] text-[#1D1D1D] font-mono text-xs tracking-archival font-semibold uppercase hover:bg-white transition-colors"
             >
               CONTACTS
             </a>
@@ -77,7 +77,7 @@ export function Navbar() {
 
       {/* Full-Screen Archival Navigation Drawer for Mobile & Tablet */}
       {drawerOpen && (
-        <div className="fixed inset-0 z-50 bg-[#09090b]/98 backdrop-blur-2xl flex flex-col justify-between p-8 sm:p-14 lg:p-20 animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 bg-[#1D1D1D]/98 backdrop-blur-2xl flex flex-col justify-between p-8 sm:p-14 lg:p-20 animate-in fade-in duration-200">
           <div className="flex items-center justify-between border-b border-[rgba(245,239,235,0.12)] pb-6">
             <div className="flex items-center gap-3">
               <span className="font-editorial-serif text-2xl text-[#f5efeb]">✱</span>

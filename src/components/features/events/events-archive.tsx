@@ -27,7 +27,7 @@ export function EventsArchive() {
   });
 
   return (
-    <div className="w-full py-16 sm:py-24 px-6 sm:px-12 lg:px-20 xl:px-24 bg-[#09090b]">
+    <div className="w-full py-16 sm:py-24 px-6 sm:px-12 lg:px-20 xl:px-24 bg-[#1D1D1D]">
       <div className="w-full max-w-[1800px] mx-auto">
         {/* Header */}
         <div className="pb-12 border-b border-[rgba(245,239,235,0.12)]">
@@ -52,7 +52,7 @@ export function EventsArchive() {
                   onClick={() => setSelectedTenure(tenure)}
                   className={`px-3 py-1 font-mono text-[11px] uppercase transition-all ${
                     selectedTenure === tenure
-                      ? "bg-[#eae5d9] text-[#09090b] font-semibold"
+                      ? "bg-[#eae5d9] text-[#1D1D1D] font-semibold"
                       : "border border-[rgba(245,239,235,0.15)] text-[#a39e93] hover:text-[#f5efeb]"
                   }`}
                 >
@@ -90,7 +90,7 @@ export function EventsArchive() {
             >
               <div>
                 {/* Event Image */}
-                <div className="relative aspect-[16/9] w-full border-b border-[rgba(245,239,235,0.1)] bg-[#09090b] overflow-hidden">
+                <div className="relative aspect-[16/9] w-full border-b border-[rgba(245,239,235,0.1)] bg-[#1D1D1D] overflow-hidden">
                   <Image
                     src={event.image}
                     alt={event.title}
@@ -98,10 +98,10 @@ export function EventsArchive() {
                     className="object-cover grayscale contrast-115 group-hover:contrast-100 group-hover:scale-105 transition-all duration-700"
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
-                  <div className="absolute top-3 left-3 bg-[#eae5d9] text-[#09090b] px-2.5 py-0.5 font-mono text-[9px] font-bold tracking-widest uppercase">
+                  <div className="absolute top-3 left-3 bg-[#eae5d9] text-[#1D1D1D] px-2.5 py-0.5 font-mono text-[9px] font-bold tracking-widest uppercase">
                     {event.category}
                   </div>
-                  <div className="absolute top-3 right-3 bg-[#09090b]/80 backdrop-blur-md px-2.5 py-0.5 font-mono text-[9px] text-[#f5efeb] border border-[rgba(245,239,235,0.2)]">
+                  <div className="absolute top-3 right-3 bg-[#1D1D1D]/80 backdrop-blur-md px-2.5 py-0.5 font-mono text-[9px] text-[#f5efeb] border border-[rgba(245,239,235,0.2)]">
                     TENURE {event.tenure}
                   </div>
                 </div>
@@ -151,7 +151,7 @@ export function EventsArchive() {
                     href={event.registerLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#eae5d9] text-[#09090b] font-mono text-[10px] font-bold uppercase tracking-wider hover:bg-white transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#eae5d9] text-[#1D1D1D] font-mono text-[10px] font-bold uppercase tracking-wider hover:bg-white transition-colors"
                   >
                     <span>PORTAL</span>
                     <ExternalLink className="w-3 h-3" />
@@ -230,7 +230,7 @@ export function EventsArchive() {
                   href={activeModalEvent.registerLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-2.5 bg-[#eae5d9] text-[#09090b] font-mono text-xs font-semibold tracking-wider uppercase hover:bg-white transition-colors"
+                  className="px-6 py-2.5 bg-[#eae5d9] text-[#1D1D1D] font-mono text-xs font-semibold tracking-wider uppercase hover:bg-white transition-colors"
                 >
                   Open External Registration / Portal [↗]
                 </a>

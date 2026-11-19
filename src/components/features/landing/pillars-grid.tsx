@@ -33,7 +33,7 @@ export function PillarsGrid() {
   ];
 
   return (
-    <section className="w-full border-b border-[rgba(245,239,235,0.12)] bg-[#09090b] py-16 px-4 sm:px-8">
+    <section className="w-full border-b border-[rgba(245,239,235,0.12)] bg-[#1D1D1D] py-16 px-4 sm:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[rgba(245,239,235,0.12)] border border-[rgba(245,239,235,0.12)]">
           {pillars.map((pillar) => {

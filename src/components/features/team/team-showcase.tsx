@@ -31,7 +31,7 @@ export function TeamShowcase() {
       : currentTenureData.departments.filter((d) => d.name === selectedDept);
 
   return (
-    <div className="w-full py-16 sm:py-24 px-6 sm:px-12 lg:px-20 xl:px-24 bg-[#09090b]">
+    <div className="w-full py-16 sm:py-24 px-6 sm:px-12 lg:px-20 xl:px-24 bg-[#1D1D1D]">
       <div className="w-full max-w-[1800px] mx-auto">
         {/* Page Header */}
         <div className="pb-12 border-b border-[rgba(245,239,235,0.12)]">
@@ -56,7 +56,7 @@ export function TeamShowcase() {
                   onClick={() => setSelectedTenureYear(t.tenureYear)}
                   className={`px-3 py-1.5 font-mono text-[11px] tracking-wider uppercase transition-all ${
                     selectedTenureYear === t.tenureYear
-                      ? "bg-[#eae5d9] text-[#09090b] font-semibold"
+                      ? "bg-[#eae5d9] text-[#1D1D1D] font-semibold"
                       : "border border-[rgba(245,239,235,0.15)] text-[#a39e93] hover:text-[#f5efeb]"
                   }`}
                 >
@@ -130,7 +130,7 @@ function MemberCard({ member }: { member: TeamMember }) {
     <div className="border border-[rgba(245,239,235,0.12)] bg-[#111113] p-6 flex flex-col justify-between hover:border-[rgba(245,239,235,0.3)] transition-all group">
       <div>
         {/* Photo Container */}
-        <div className="relative aspect-[4/5] w-full mb-6 border border-[rgba(245,239,235,0.1)] bg-[#09090b] overflow-hidden">
+        <div className="relative aspect-[4/5] w-full mb-6 border border-[rgba(245,239,235,0.1)] bg-[#1D1D1D] overflow-hidden">
           <Image
             src={member.image}
             alt={member.name}
@@ -139,7 +139,7 @@ function MemberCard({ member }: { member: TeamMember }) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           {member.isHead && (
-            <div className="absolute top-3 left-3 bg-[#eae5d9] text-[#09090b] px-2 py-0.5 font-mono text-[9px] font-bold tracking-widest uppercase">
+            <div className="absolute top-3 left-3 bg-[#eae5d9] text-[#1D1D1D] px-2 py-0.5 font-mono text-[9px] font-bold tracking-widest uppercase">
               LEAD / HEAD
             </div>
           )}

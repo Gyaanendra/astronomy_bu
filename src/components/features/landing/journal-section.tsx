@@ -69,7 +69,7 @@ export function JournalSection() {
   return (
     <section
       id="journal"
-      className="w-full bg-[#09090b] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
+      className="w-full bg-[#1D1D1D] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
     >
       <div className="w-full max-w-[1800px] mx-auto">
         {/* Header Row (Pinterest Reference 5 Bottom-Left) */}

@@ -55,7 +55,7 @@ export default function RootLayout({
       lang="en"
       className={`${cormorant.variable} ${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-[#09090b] text-[#f5efeb] selection:bg-[#eae5d9] selection:text-[#09090b]">
+      <body className="min-h-full flex flex-col bg-[#1D1D1D] text-[#f5efeb] selection:bg-[#eae5d9] selection:text-[#1D1D1D]">
         {/* Unified Archival Header with built-in ephemeris telemetry */}
         <Navbar />
 

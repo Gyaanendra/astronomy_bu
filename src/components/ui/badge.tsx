@@ -18,7 +18,7 @@ export function Badge({ children, variant = "bracket", className = "" }: BadgePr
   if (variant === "solid") {
     return (
       <span
-        className={`inline-flex items-center px-2 py-0.5 font-mono text-[10px] tracking-wider bg-[#eae5d9] text-[#09090b] font-semibold uppercase ${className}`}
+        className={`inline-flex items-center px-2 py-0.5 font-mono text-[10px] tracking-wider bg-[#eae5d9] text-[#1D1D1D] font-semibold uppercase ${className}`}
       >
         {children}
       </span>

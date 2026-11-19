@@ -8,7 +8,7 @@ import { JournalSection } from "@/components/features/landing/journal-section";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col w-full bg-[#09090b]">
+    <div className="flex flex-col w-full bg-[#1D1D1D]">
       {/* 01: Hero & Celestial Sanctuary (Pinterest Image 2) */}
       <HeroSection />
 

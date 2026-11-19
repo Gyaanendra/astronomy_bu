@@ -7,7 +7,7 @@ export function HeroSection() {
   return (
     <section
       id="sanctuary"
-      className="relative w-full flex flex-col justify-between border-b border-[rgba(245,239,235,0.08)] pt-8 sm:pt-12 pb-12 sm:pb-20 overflow-hidden bg-[#09090b]"
+      className="relative w-full flex flex-col justify-between border-b border-[rgba(245,239,235,0.08)] pt-8 sm:pt-12 pb-12 sm:pb-20 overflow-hidden bg-[#1D1D1D]"
     >
       {/* Background Interactive Stipple Particles */}
       <div className="absolute inset-0 pointer-events-none opacity-20">
@@ -76,7 +76,7 @@ export function HeroSection() {
               </span>
               <Link
                 href="/calendar"
-                className="px-8 sm:px-11 py-3 sm:py-4 bg-[#eae5d9] text-[#09090b] text-xs tracking-archival font-semibold uppercase hover:bg-white transition-colors shadow-2xl block text-center"
+                className="px-8 sm:px-11 py-3 sm:py-4 bg-[#eae5d9] text-[#1D1D1D] text-xs tracking-archival font-semibold uppercase hover:bg-white transition-colors shadow-2xl block text-center"
               >
                 BUY TICKET
               </Link>

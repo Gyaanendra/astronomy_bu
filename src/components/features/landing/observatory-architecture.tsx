@@ -68,7 +68,7 @@ export function ObservatoryArchitecture() {
   return (
     <section
       id="dome"
-      className="w-full bg-[#09090b] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24 overflow-hidden"
+      className="w-full bg-[#1D1D1D] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24 overflow-hidden"
     >
       <div className="w-full max-w-[1800px] mx-auto">
         {/* ============================================================== */}
@@ -121,7 +121,7 @@ export function ObservatoryArchitecture() {
             <div className="pt-2">
               <Link
                 href="/calendar"
-                className="inline-block px-8 sm:px-10 py-3.5 bg-[#eae5d9] text-[#09090b] font-mono text-xs tracking-archival font-semibold uppercase hover:bg-white transition-colors shadow-2xl"
+                className="inline-block px-8 sm:px-10 py-3.5 bg-[#eae5d9] text-[#1D1D1D] font-mono text-xs tracking-archival font-semibold uppercase hover:bg-white transition-colors shadow-2xl"
               >
                 BUY TICKET
               </Link>
@@ -139,7 +139,7 @@ export function ObservatoryArchitecture() {
                 className="object-cover filter contrast-110 brightness-95 group-hover:scale-105 transition-transform duration-700"
                 sizes="(max-width: 1024px) 100vw, 58vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#09090b]/60 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1D1D1D]/60 via-transparent to-transparent pointer-events-none" />
             </div>
           </div>
         </div>
@@ -163,7 +163,7 @@ export function ObservatoryArchitecture() {
           </div>
 
           {/* 4-Card Horizontal Program Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border border-[rgba(245,239,235,0.12)] divide-y sm:divide-y-0 sm:divide-x divide-[rgba(245,239,235,0.12)] bg-[#09090b] my-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border border-[rgba(245,239,235,0.12)] divide-y sm:divide-y-0 sm:divide-x divide-[rgba(245,239,235,0.12)] bg-[#1D1D1D] my-8">
             {OTHER_PROGRAMS.map((item) => (
               <Link
                 key={item.id}

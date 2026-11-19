@@ -57,7 +57,7 @@ export function ArchiveSection() {
   return (
     <section
       id="archive"
-      className="w-full bg-[#09090b] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
+      className="w-full bg-[#1D1D1D] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
     >
       <div className="w-full max-w-[1800px] mx-auto">
         {/* Header Row (Pinterest Reference 5 Top-Right) */}
@@ -74,7 +74,7 @@ export function ArchiveSection() {
         </div>
 
         {/* 6-Artifact Horizontal Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 border border-[rgba(245,239,235,0.12)] divide-y sm:divide-y-0 sm:divide-x divide-[rgba(245,239,235,0.12)] bg-[#09090b] my-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 border border-[rgba(245,239,235,0.12)] divide-y sm:divide-y-0 sm:divide-x divide-[rgba(245,239,235,0.12)] bg-[#1D1D1D] my-10">
           {ARTIFACTS.map((item) => (
             <div
               key={item.id}
@@ -110,7 +110,7 @@ export function ArchiveSection() {
         <div className="mt-12 text-center">
           <Link
             href="/events"
-            className="inline-block px-8 sm:px-12 py-3.5 sm:py-4 border border-[rgba(245,239,235,0.25)] text-[#f5efeb] font-mono text-xs tracking-archival font-semibold uppercase hover:bg-[#f5efeb] hover:text-[#09090b] transition-colors"
+            className="inline-block px-8 sm:px-12 py-3.5 sm:py-4 border border-[rgba(245,239,235,0.25)] text-[#f5efeb] font-mono text-xs tracking-archival font-semibold uppercase hover:bg-[#f5efeb] hover:text-[#1D1D1D] transition-colors"
           >
             ALL ARCHIVE POSTS
           </Link>

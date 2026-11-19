@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer
       id="footer"
-      className="relative w-full min-h-[755px] lg:h-[755px] lg:max-h-[755px] flex flex-col justify-end bg-[#09090b] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] overflow-hidden"
+      className="relative w-full min-h-[755px] lg:h-[755px] lg:max-h-[755px] flex flex-col justify-end bg-[#1D1D1D] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] overflow-hidden"
     >
       <div id="newsletter" className="absolute top-0 pointer-events-none" />
       {/* ============================================================== */}
@@ -24,10 +24,10 @@ export function Footer() {
         />
         
         {/* Top Fade Gradient: Smooth blend from page void into deep sky */}
-        <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-[#09090b] via-[#09090b]/80 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-[#1D1D1D] via-[#1D1D1D]/80 to-transparent pointer-events-none" />
         
         {/* Bottom Contrast Scrim: Ensures the colossal wordmark and copyright pop with 100% contrast */}
-        <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#09090b] via-[#09090b]/75 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#1D1D1D] via-[#1D1D1D]/75 to-transparent pointer-events-none" />
       </div>
 
       {/* ============================================================== */}

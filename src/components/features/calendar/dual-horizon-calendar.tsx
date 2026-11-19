@@ -22,7 +22,7 @@ export function DualHorizonCalendar() {
   ].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   return (
-    <div className="w-full py-16 sm:py-24 px-6 sm:px-12 lg:px-20 xl:px-24 bg-[#09090b]">
+    <div className="w-full py-16 sm:py-24 px-6 sm:px-12 lg:px-20 xl:px-24 bg-[#1D1D1D]">
       <div className="w-full max-w-[1800px] mx-auto">
         {/* Header */}
         <div className="pb-12 border-b border-[rgba(245,239,235,0.12)]">
@@ -44,7 +44,7 @@ export function DualHorizonCalendar() {
                 onClick={() => setActiveScope("all")}
                 className={`px-3 py-1.5 font-mono text-[11px] uppercase transition-all ${
                   activeScope === "all"
-                    ? "bg-[#eae5d9] text-[#09090b] font-semibold"
+                    ? "bg-[#eae5d9] text-[#1D1D1D] font-semibold"
                     : "border border-[rgba(245,239,235,0.15)] text-[#a39e93] hover:text-[#f5efeb]"
                 }`}
               >
@@ -54,7 +54,7 @@ export function DualHorizonCalendar() {
                 onClick={() => setActiveScope("global")}
                 className={`px-3 py-1.5 font-mono text-[11px] uppercase transition-all ${
                   activeScope === "global"
-                    ? "bg-[#eae5d9] text-[#09090b] font-semibold"
+                    ? "bg-[#eae5d9] text-[#1D1D1D] font-semibold"
                     : "border border-[rgba(245,239,235,0.15)] text-[#a39e93] hover:text-[#f5efeb]"
                 }`}
               >
@@ -64,7 +64,7 @@ export function DualHorizonCalendar() {
                 onClick={() => setActiveScope("bennett")}
                 className={`px-3 py-1.5 font-mono text-[11px] uppercase transition-all ${
                   activeScope === "bennett"
-                    ? "bg-[#eae5d9] text-[#09090b] font-semibold"
+                    ? "bg-[#eae5d9] text-[#1D1D1D] font-semibold"
                     : "border border-[rgba(245,239,235,0.15)] text-[#a39e93] hover:text-[#f5efeb]"
                 }`}
               >
@@ -77,7 +77,7 @@ export function DualHorizonCalendar() {
               href={`https://stellarium-web.org/?lat=${BENNETT_COORDINATES.latitude}&lon=${BENNETT_COORDINATES.longitude}&projection=stereo&constellations=true`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-1.5 border border-[#d4af37]/40 bg-[#d4af37]/10 text-[#d4af37] font-mono text-xs uppercase tracking-wider hover:bg-[#d4af37] hover:text-[#09090b] transition-all"
+              className="inline-flex items-center gap-2 px-4 py-1.5 border border-[#d4af37]/40 bg-[#d4af37]/10 text-[#d4af37] font-mono text-xs uppercase tracking-wider hover:bg-[#d4af37] hover:text-[#1D1D1D] transition-all"
             >
               <Compass className="w-3.5 h-3.5" />
               <span>Launch Stellarium Web [28.45° N]</span>
@@ -175,7 +175,7 @@ export function DualHorizonCalendar() {
                       className={`inline-block px-2 py-0.5 text-[9px] font-bold tracking-widest uppercase ${
                         item.scope === "bennett"
                           ? "bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#d4af37]"
-                          : "bg-[#eae5d9] text-[#09090b]"
+                          : "bg-[#eae5d9] text-[#1D1D1D]"
                       }`}
                     >
                       {item.scope === "bennett" ? "CAMPUS OBSERVATION" : "GLOBAL CELESTIAL"}

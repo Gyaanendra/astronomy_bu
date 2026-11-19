@@ -11,7 +11,7 @@ export function ProgramsBento() {
   return (
     <section
       id="programs"
-      className="w-full bg-[#09090b] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
+      className="w-full bg-[#1D1D1D] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
     >
       <div className="w-full max-w-[1800px] mx-auto">
         {/* Section Header (Pinterest Reference 1) */}
@@ -34,7 +34,7 @@ export function ProgramsBento() {
                 onClick={() => setFilter(filter === "DURATION" ? "ALL" : "DURATION")}
                 className={`px-4 py-1.5 border transition-colors ${
                   filter === "DURATION"
-                    ? "border-[#f5efeb] bg-[#f5efeb] text-[#09090b] font-semibold"
+                    ? "border-[#f5efeb] bg-[#f5efeb] text-[#1D1D1D] font-semibold"
                     : "border-[rgba(245,239,235,0.2)] hover:border-[#f5efeb] hover:text-[#f5efeb]"
                 }`}
               >
@@ -45,7 +45,7 @@ export function ProgramsBento() {
                 onClick={() => setFilter(filter === "INTENSITY" ? "ALL" : "INTENSITY")}
                 className={`px-4 py-1.5 border transition-colors ${
                   filter === "INTENSITY"
-                    ? "border-[#f5efeb] bg-[#f5efeb] text-[#09090b] font-semibold"
+                    ? "border-[#f5efeb] bg-[#f5efeb] text-[#1D1D1D] font-semibold"
                     : "border-[rgba(245,239,235,0.2)] hover:border-[#f5efeb] hover:text-[#f5efeb]"
                 }`}
               >
@@ -56,7 +56,7 @@ export function ProgramsBento() {
                 onClick={() => setFilter(filter === "TOPIC" ? "ALL" : "TOPIC")}
                 className={`px-4 py-1.5 border transition-colors ${
                   filter === "TOPIC"
-                    ? "border-[#f5efeb] bg-[#f5efeb] text-[#09090b] font-semibold"
+                    ? "border-[#f5efeb] bg-[#f5efeb] text-[#1D1D1D] font-semibold"
                     : "border-[rgba(245,239,235,0.2)] hover:border-[#f5efeb] hover:text-[#f5efeb]"
                 }`}
               >
@@ -69,7 +69,7 @@ export function ProgramsBento() {
         {/* ============================================================== */}
         {/* ROW 1: Featured 7/5 Split (Pinterest Reference 1)              */}
         {/* ============================================================== */}
-        <div className="grid grid-cols-1 md:grid-cols-12 border-x border-b border-[rgba(245,239,235,0.12)] divide-y md:divide-y-0 md:divide-x divide-[rgba(245,239,235,0.12)] bg-[#09090b]">
+        <div className="grid grid-cols-1 md:grid-cols-12 border-x border-b border-[rgba(245,239,235,0.12)] divide-y md:divide-y-0 md:divide-x divide-[rgba(245,239,235,0.12)] bg-[#1D1D1D]">
           
           {/* Card 1 (7 Columns): Newton's Cenotaph */}
           <Link
@@ -152,7 +152,7 @@ export function ProgramsBento() {
         {/* ============================================================== */}
         {/* ROW 2: 4 Equal Columns (Pinterest Reference 1)                 */}
         {/* ============================================================== */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-x border-b border-[rgba(245,239,235,0.12)] divide-y sm:divide-y-0 sm:divide-x divide-[rgba(245,239,235,0.12)] bg-[#09090b]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-x border-b border-[rgba(245,239,235,0.12)] divide-y sm:divide-y-0 sm:divide-x divide-[rgba(245,239,235,0.12)] bg-[#1D1D1D]">
           
           {/* Card 3: Distance Between Stars */}
           <Link
@@ -258,7 +258,7 @@ export function ProgramsBento() {
         {/* ============================================================== */}
         {/* ROW 3: 5/7 Asymmetric Split (Pinterest Reference 1)            */}
         {/* ============================================================== */}
-        <div className="grid grid-cols-1 md:grid-cols-12 border-x border-b border-[rgba(245,239,235,0.12)] divide-y md:divide-y-0 md:divide-x divide-[rgba(245,239,235,0.12)] bg-[#09090b]">
+        <div className="grid grid-cols-1 md:grid-cols-12 border-x border-b border-[rgba(245,239,235,0.12)] divide-y md:divide-y-0 md:divide-x divide-[rgba(245,239,235,0.12)] bg-[#1D1D1D]">
           
           {/* Card 7 (5 Columns): Cosmos and Mysticism (Plate XXV Mandala) */}
           <Link
@@ -318,7 +318,7 @@ export function ProgramsBento() {
         {/* ============================================================== */}
         {/* ROW 4: 4 Equal Columns Bottom Row (Pinterest Reference 1)      */}
         {/* ============================================================== */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-x border-b border-[rgba(245,239,235,0.12)] divide-y sm:divide-y-0 sm:divide-x divide-[rgba(245,239,235,0.12)] bg-[#09090b]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-x border-b border-[rgba(245,239,235,0.12)] divide-y sm:divide-y-0 sm:divide-x divide-[rgba(245,239,235,0.12)] bg-[#1D1D1D]">
           
           {/* Card 9: Russian Cosmism */}
           <Link

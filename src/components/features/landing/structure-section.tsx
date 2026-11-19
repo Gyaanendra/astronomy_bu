@@ -4,7 +4,7 @@ export function StructureSection() {
   return (
     <section
       id="structure"
-      className="w-full bg-[#09090b] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
+      className="w-full bg-[#1D1D1D] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
     >
       <div className="w-full max-w-[1800px] mx-auto">
         {/* Top Header Row (Pinterest Reference 2 & 7) */}
@@ -50,7 +50,7 @@ export function StructureSection() {
                 className="object-cover filter contrast-115 brightness-95 group-hover:scale-105 transition-transform duration-700"
                 sizes="(max-width: 1024px) 100vw, 400px"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#09090b]/80 via-transparent to-transparent opacity-40 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1D1D1D]/80 via-transparent to-transparent opacity-40 pointer-events-none" />
             </div>
           </div>
 
