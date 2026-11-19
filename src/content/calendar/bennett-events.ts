@@ -9,7 +9,7 @@ export const bennettCampusEvents: CelestialEvent[] = [
     scope: "bennett",
     category: "Campus Stargazing",
     description:
-      "Public telescope observation night at the Bennett cricket pavilion. We deploy club 8-inch Dobsonians to resolve the Trapezium cluster within M42 Orion Nebula, the ghostly reflection nebulosity of M45, and the craters along the lunar terminator.",
+      "Public telescope observation night at the Bennett cricket pavilion. We deploy club 8-inch Dobsonians to resolve the Trapezium cluster within M42 Orion Nebula, the reflection nebulosity of M45, and craters along the lunar terminator.",
     visibilityOrLocation: "Bennett University Cricket Pavilion (South-West corner)",
     peakTime: "21:30 IST",
     optimalEquipment: "Club Dobsonians provided / Bring red flashlight only",
@@ -41,6 +41,20 @@ export const bennettCampusEvents: CelestialEvent[] = [
     optimalEquipment: "High-magnification lunar filters & Barlow lenses provided",
   },
   {
+    id: "bu-planetary-saturn-jupiter",
+    title: "Gas Giants Watch: Saturn's Edge-On Rings & Jupiter's Moons",
+    date: "2026-09-25",
+    time: "20:00 - 23:00 IST",
+    scope: "bennett",
+    category: "Campus Stargazing",
+    description:
+      "Special double-planet tracking night. Witness the ultra-rare edge-on ring plane of Saturn alongside Jupiter's Galilean moon transit across the planetary disk using motorized tracking mounts.",
+    visibilityOrLocation: "Cricket Pavilion Ground, Bennett University",
+    peakTime: "21:15 IST",
+    optimalEquipment: "Club refractors and 200mm Newtonians ready",
+    highlighted: true,
+  },
+  {
     id: "bu-astrophotography-bootcamp",
     title: "Field Astrophotography Bootcamp 5.0",
     date: "2026-12-05",
@@ -53,5 +67,17 @@ export const bennettCampusEvents: CelestialEvent[] = [
     optimalEquipment: "DSLR / Mirrorless Camera, Tripod, Fast Lens (f/2.8 or lower)",
     highlighted: true,
   },
+  {
+    id: "bu-siril-stacking-lab",
+    title: "Astrophotography Stacking & Siril Processing Lab",
+    date: "2026-12-08",
+    time: "17:00 - 19:30 IST",
+    scope: "bennett",
+    category: "Lecture",
+    description:
+      "Hands-on digital darkroom laboratory: transforming raw FITS data captured during Bootcamp 5.0 into calibrated deep-space portraits using Siril, GraXpert background extraction, and Starnet++ star reduction.",
+    visibilityOrLocation: "Computer Lab 3, Academic Block B",
+    optimalEquipment: "Laptop with Siril & raw club sample datasets pre-loaded",
+    highlighted: false,
+  },
 ];
-

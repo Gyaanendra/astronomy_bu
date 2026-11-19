@@ -11,7 +11,7 @@ export const eventsRegistry: EventItem[] = [
     category: "Workshop",
     tenure: "2025-2026",
     description:
-      "Our flagship astrophotography bootcamp returns with a hands-on night-sky shoot led by special guest Virendra Adhikari. Expect advanced framing tips, low-light techniques, and guided practice under the Bennett skies.",
+      "Our flagship astrophotography bootcamp returns with a hands-on night-sky shoot led by special guest Virendra Adhikari. Hands-on tracking mount calibration, low-light ISO balancing, and live narrowband imaging of the Great Orion Nebula under Greater Noida skies.",
     guest: "Virendra Adhikari",
     highlighted: true,
     upcoming: false,
@@ -25,14 +25,14 @@ export const eventsRegistry: EventItem[] = [
   {
     id: "cosmo-2",
     slug: "cosmology-101-episode-2",
-    title: "Cosmology 101 Episode 2",
+    title: "Cosmology 101 Episode 2: Spacetime Geometry",
     date: "2026-01-15",
     time: "18:30 IST",
     location: "NLH 101, Bennett University",
     category: "Lecture",
     tenure: "2025-2026",
     description:
-      "The second episode of our Cosmology 101 series: an interactive inquiry into space-time geometry, origin theories, cosmological constants, and our place in the expanding cosmic web. Curiosity is your only prerequisite.",
+      "The second episode of our Cosmology series: an interactive inquiry into general relativity, gravitational time dilation, black hole event horizons, and topological data analysis of the expanding cosmic web. Curiosity is the only prerequisite.",
     highlighted: true,
     upcoming: false,
     image: "https://i.ibb.co/4RM5fywM/Cosmology-Lecture2-Page-1.png",
@@ -40,6 +40,44 @@ export const eventsRegistry: EventItem[] = [
       "https://i.ibb.co/4RM5fywM/Cosmology-Lecture2-Page-1.png",
     ],
     registerLink: "https://luma.com/x4lhsoib",
+  },
+  {
+    id: "messier-marathon-2026",
+    slug: "messier-marathon-campus-watch",
+    title: "Messier Marathon & Campus Moon Watch",
+    date: "2026-03-14",
+    time: "20:30 - 02:00 IST",
+    location: "Academic Block A Terrace & Pavilion",
+    category: "Workshop",
+    tenure: "2025-2026",
+    description:
+      "All-night observational marathon hunting deep-sky targets cataloged by Charles Messier: globular clusters M3 and M13, open cluster Pleiades (M45), and the Andromeda Galaxy (M31) using student-operated 8-inch Dobsonians and binoculars.",
+    guest: "Prof. A. K. Sundaram (Visiting Astronomer)",
+    highlighted: true,
+    upcoming: false,
+    image: "/images/assets/catalog-telescopes.jpg",
+    photos: [
+      "/images/assets/catalog-telescopes.jpg",
+      "/cool1.png",
+    ],
+  },
+  {
+    id: "solar-symposium-2026",
+    slug: "solar-projection-sunspot-analysis",
+    title: "Solar Projection & Sunspot Spectrography",
+    date: "2026-02-08",
+    time: "12:00 - 15:00 IST",
+    location: "Central Courtyard, Bennett University",
+    category: "Exhibition",
+    tenure: "2025-2026",
+    description:
+      "Daytime solar observation safely projecting the Sun's disk onto white projection screens via optical refractors. Students mapped sunspot groups in Solar Cycle 25 and demonstrated white-light solar filtration safety.",
+    highlighted: false,
+    upcoming: false,
+    image: "/images/assets/structure-eclipse.jpg",
+    photos: [
+      "/images/assets/structure-eclipse.jpg",
+    ],
   },
   {
     id: "stellar-vision-2025",
@@ -51,7 +89,7 @@ export const eventsRegistry: EventItem[] = [
     category: "Competition",
     tenure: "2024-2025",
     description:
-      "StellarVision invites passionate astronomy enthusiasts and researchers to present visionary concepts spanning theoretical physics, cosmology, orbital mechanics, and extraterrestrial habitability during Uphoria 2025.",
+      "StellarVision invites passionate astronomy enthusiasts and researchers to present visionary concepts spanning theoretical physics, orbital mechanics, planetary habitability, and deep-space telescope instrumentation during Uphoria 2025.",
     highlighted: true,
     upcoming: false,
     image: "https://i.ibb.co/99KgtCRQ/Screenshot-2025-01-31-223840.png",
@@ -72,7 +110,7 @@ export const eventsRegistry: EventItem[] = [
     category: "Exhibition",
     tenure: "2024-2025",
     description:
-      "Club delegation visit to the Russian House in New Delhi to meet active Russian cosmonauts. First-hand debriefs on orbital station operations, extravehicular training regimes, and the future horizon of human spaceflight.",
+      "Club delegation visit to the Russian House in New Delhi to meet active orbital cosmonauts. First-hand debriefs on orbital space station operations, extravehicular spacewalks, physiological adaptation, and the next century of lunar exploration.",
     highlighted: true,
     upcoming: false,
     image: "/events/russian-cosmonauts-delhi-2025/photo1.jpeg",
@@ -87,14 +125,14 @@ export const eventsRegistry: EventItem[] = [
   {
     id: "cosmo-1",
     slug: "cosmology-101-episode-1",
-    title: "Cosmology 101 Episode 1",
+    title: "Cosmology 101 Episode 1: Cosmic Foundations",
     date: "2025-11-17",
     time: "18:00 IST",
     location: "NLH 101, Bennett University",
     category: "Lecture",
     tenure: "2025-2026",
     description:
-      "Guest keynote lecture by Dr. Pratyush Pranav, Assistant Dean at the School of AI and theoretical astrophysicist. Exploring cosmic structure formation and how the grand architecture of the universe mirrors human consciousness.",
+      "Guest keynote lecture by Dr. Pratyush Pranav, Assistant Dean at the School of AI and theoretical astrophysicist. Exploring cosmic structure formation, acoustic oscillations, and how the grand architecture of the universe mirrors mathematical topology.",
     guest: "Dr. Pratyush Pranav",
     highlighted: false,
     upcoming: false,
@@ -114,12 +152,31 @@ export const eventsRegistry: EventItem[] = [
     category: "Exhibition",
     tenure: "2025-2026",
     description:
-      "A night dedicated to the eerie mysteries of the void: black holes, stellar remnants, cosmic ghost nebulae, paired with outdoor telescope viewing under late autumn skies.",
+      "A night dedicated to the eerie mysteries of the void: stellar remnants, supermassive black holes, ghost nebulae, and gravitational lensing, paired with outdoor telescope viewing under late autumn skies.",
     highlighted: false,
     upcoming: false,
     image: "https://i.ibb.co/TBJTv0CJ/photo1.jpg",
     photos: [
       "https://i.ibb.co/TBJTv0CJ/photo1.jpg",
+    ],
+  },
+  {
+    id: "spiti-expedition-2024",
+    slug: "himalayan-dark-sky-spiti",
+    title: "Himalayan Dark Sky Expedition: Spiti Astrocamp",
+    date: "2024-06-18",
+    time: "5-Day Expedition",
+    location: "Langza & Kaza (Bortle 1), Himachal Pradesh",
+    category: "Exhibition",
+    tenure: "2024-2025",
+    description:
+      "High-altitude dark sky expedition to the trans-Himalayan plateau at 3,800 meters elevation. Pristine Bortle 1 conditions permitted imaging of the Galactic Core, zodiacal light, airglow emissions, and deep Milky Way dust lanes without urban contamination.",
+    highlighted: true,
+    upcoming: false,
+    image: "/images/assets/journal-gathering.jpg",
+    photos: [
+      "/images/assets/journal-gathering.jpg",
+      "/cool2.png",
     ],
   },
   {
@@ -143,6 +200,24 @@ export const eventsRegistry: EventItem[] = [
     ],
   },
   {
+    id: "observatory-inaugural-2023",
+    slug: "first-light-observatory-inauguration",
+    title: "First Light: Bennett Observatory Inauguration",
+    date: "2023-11-04",
+    time: "19:00 IST",
+    location: "Academic Block A Terrace",
+    category: "Lecture",
+    tenure: "2023-2024",
+    description:
+      "Inaugural First Light gathering celebrating the formal constitution of AstronomyBU and deployment of the university's primary Dobsonian reflecting telescope. First public views of Jupiter's Great Red Spot and the Galilean moons.",
+    highlighted: true,
+    upcoming: false,
+    image: "/images/assets/journal-workshop.jpg",
+    photos: [
+      "/images/assets/journal-workshop.jpg",
+    ],
+  },
+  {
     id: "halloween-2024",
     slug: "halloween-2024",
     title: "Starlight & Shadows: Halloween 2024",
@@ -162,4 +237,3 @@ export const eventsRegistry: EventItem[] = [
     ],
   },
 ];
-

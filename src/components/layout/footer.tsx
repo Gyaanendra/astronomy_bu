@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import { CLUB_INFO } from "@/lib/constants";
 import { InstagramIcon, LinkedinIcon, GithubIcon } from "@/components/ui/icons";
@@ -34,7 +35,25 @@ export function Footer() {
       {/* 2. FOREGROUND: Clean Wordmark & Essential Sub-Footer           */}
       {/* ============================================================== */}
       <div className="relative z-10 w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-20 xl:px-24 pb-6 sm:pb-8 flex flex-col justify-end">
-        
+        {/* Category Jump Navigation */}
+        <nav className="mb-6 flex flex-wrap items-center gap-x-8 gap-y-2 font-mono text-[11px] tracking-archival uppercase text-[#eae5d9]/80">
+          <Link href="/" className="hover:text-white transition-colors">
+            [01] Overview
+          </Link>
+          <Link href="/team" className="hover:text-white transition-colors">
+            [02] Members & Heads
+          </Link>
+          <Link href="/events" className="hover:text-white transition-colors">
+            [03] Events & Tenures
+          </Link>
+          <Link href="/journal" className="hover:text-white transition-colors">
+            [04] Blogs & Articles
+          </Link>
+          <Link href="/calendar" className="hover:text-white transition-colors">
+            [05] Cosmic Calendar
+          </Link>
+        </nav>
+
         {/* Colossal Brand Wordmark */}
         <div className="w-full overflow-hidden select-none mb-3">
           <span className="w-full font-editorial-serif italic tracking-tighter text-[clamp(4rem,14vw,11rem)] text-[#f5efeb] leading-[0.85] block drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">

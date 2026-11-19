@@ -1,24 +1,27 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 
 export function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const pathname = usePathname();
 
   const navLinks = [
-    { label: "ABOUT", href: "#about" },
-    { label: "MEMBERSHIP", href: "#membership" },
-    { label: "ARCHIVE", href: "#archive" },
-    { label: "JOURNAL", href: "#journal" },
+    { label: "OVERVIEW", href: "/" },
+    { label: "MEMBERS & HEADS", href: "/team" },
+    { label: "EVENTS & TENURES", href: "/events" },
+    { label: "JOURNAL", href: "/journal" },
+    { label: "COSMIC CALENDAR", href: "/calendar" },
   ];
 
   return (
     <>
       <header className="w-full bg-[#1D1D1D] border-b border-[rgba(245,239,235,0.08)] relative z-40">
         <div className="w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-20 xl:px-24 h-20 sm:h-24 flex items-center justify-between">
-          {/* Left: Star Glyph + Wordmark (Exact Noctra Brand Treatment) */}
+          {/* Left: Star Glyph + Wordmark */}
           <Link href="/" className="flex items-center gap-3 group">
             <span className="font-editorial-serif text-2xl sm:text-3xl text-[#f5efeb] select-none leading-none">
               ✱
@@ -34,22 +37,35 @@ export function Navbar() {
           </Link>
 
           {/* Center: Quiet, Spaced Editorial Navigation */}
-          <nav className="hidden lg:flex items-center gap-8 xl:gap-12">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="font-mono text-[11px] xl:text-xs tracking-[0.22em] text-[#a39e93] hover:text-[#f5efeb] transition-colors uppercase py-1"
-              >
-                {link.label}
-              </a>
-            ))}
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-9">
+            {navLinks.map((link) => {
+              const isActive =
+                link.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(link.href);
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={`font-mono text-[11px] xl:text-xs tracking-[0.2em] uppercase py-1.5 relative transition-all duration-200 ${
+                    isActive
+                      ? "text-[#f5efeb] font-semibold"
+                      : "text-[#a39e93] hover:text-[#f5efeb]"
+                  }`}
+                >
+                  {link.label}
+                  {isActive && (
+                    <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[#eae5d9] rounded-full" />
+                  )}
+                </Link>
+              );
+            })}
           </nav>
 
-          {/* Right: Language Toggle & Solid Cream [ CONTACTS ] Button */}
+          {/* Right: Station Telemetry & Contacts Button */}
           <div className="flex items-center gap-4 sm:gap-6">
-            <span className="hidden sm:inline font-mono text-[11px] tracking-widest text-[#8a847a] cursor-pointer hover:text-[#f5efeb] transition-colors">
-              EN ▾
+            <span className="hidden xl:inline font-mono text-[10px] tracking-widest text-[#8a847a]">
+              28.45° N · 77.50° E
             </span>
 
             <a
@@ -92,22 +108,32 @@ export function Navbar() {
 
           <div className="my-auto py-8 flex flex-col gap-6">
             <span className="font-mono text-[10px] tracking-archival text-[#8a847a] uppercase">
-              Archival Observatory Index
+              5 Major Observatory Categories
             </span>
             <ul className="flex flex-col gap-5">
-              {navLinks.map((link, idx) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    onClick={() => setDrawerOpen(false)}
-                    className="flex items-center gap-4 text-3xl sm:text-5xl font-editorial-serif italic text-[#a39e93] hover:text-[#f5efeb] transition-colors"
-                  >
-                    <span className="font-mono text-xs text-[#635e57]">[0{idx + 1}]</span>
-                    <span>{link.label}</span>
-                    <ArrowUpRight className="w-5 h-5 opacity-60" />
-                  </a>
-                </li>
-              ))}
+              {navLinks.map((link, idx) => {
+                const isActive =
+                  link.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(link.href);
+                return (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      onClick={() => setDrawerOpen(false)}
+                      className={`flex items-center gap-4 text-2xl sm:text-4xl font-editorial-serif italic transition-colors ${
+                        isActive
+                          ? "text-[#f5efeb] font-semibold"
+                          : "text-[#a39e93] hover:text-[#f5efeb]"
+                      }`}
+                    >
+                      <span className="font-mono text-xs text-[#635e57]">[0{idx + 1}]</span>
+                      <span>{link.label}</span>
+                      <ArrowUpRight className="w-5 h-5 opacity-60" />
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
