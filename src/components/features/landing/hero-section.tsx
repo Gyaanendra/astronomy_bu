@@ -1,13 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { StippleCanvas } from "@/components/ui/stipple-canvas";
 
 export function HeroSection() {
-  const [activeVisual, setActiveVisual] = useState<"astral" | "stargazer">("astral");
-
   return (
     <section
       id="sanctuary"
@@ -20,7 +17,7 @@ export function HeroSection() {
 
       <div className="w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-20 xl:px-24 flex-1 flex flex-col justify-between relative z-10">
         {/* ============================================================== */}
-        {/* 1. TOP METADATA ROW (Exact Reference Match)                    */}
+        {/* 1. TOP METADATA ROW (Minimalist Clean Ephemeris)               */}
         {/* ============================================================== */}
         <div className="w-full flex flex-col sm:flex-row items-start justify-between gap-6 font-mono text-[10px] sm:text-[11px] xl:text-xs tracking-[0.18em] uppercase pt-1">
           {/* Upper Left: Tagline & Philosophical Inquiry */}
@@ -38,42 +35,6 @@ export function HeroSection() {
               Bennett University Observatory Archive · Station 28.4595° N, 77.5046° E
             </p>
           </div>
-
-          {/* Upper Right: Club Disciplines & Telemetry + Visual Switcher */}
-          <div className="text-left sm:text-right font-mono text-[10px] sm:text-[11px] xl:text-xs tracking-[0.2em] uppercase leading-relaxed flex flex-col space-y-0.5">
-            <span className="text-[#f5efeb] font-semibold">SYMBOLS &amp; MEANING</span>
-            <span className="text-[#a39e93]">CONSTELLATIONS</span>
-            <span className="text-[#a39e93]">IN-DEPTH</span>
-            <span className="text-[#8a847a]">60 MIN</span>
-
-            {/* Seamless Visual Mode Switcher (Image 1 vs Image 2) */}
-            <div className="pt-2.5 flex items-center justify-start sm:justify-end gap-2 text-[9px] sm:text-[10px] tracking-widest text-[#8a847a]">
-              <span>VIEW:</span>
-              <button
-                type="button"
-                onClick={() => setActiveVisual("astral")}
-                className={`transition-colors uppercase ${
-                  activeVisual === "astral"
-                    ? "text-[#f5efeb] font-semibold underline underline-offset-4"
-                    : "hover:text-[#eae5d9]"
-                }`}
-              >
-                01 ASTRAL
-              </button>
-              <span>/</span>
-              <button
-                type="button"
-                onClick={() => setActiveVisual("stargazer")}
-                className={`transition-colors uppercase ${
-                  activeVisual === "stargazer"
-                    ? "text-[#f5efeb] font-semibold underline underline-offset-4"
-                    : "hover:text-[#eae5d9]"
-                }`}
-              >
-                02 STARGAZER
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* ============================================================== */}
@@ -81,7 +42,7 @@ export function HeroSection() {
         {/* ============================================================== */}
         <div
           aria-hidden="true"
-          className="absolute left-1/2 -translate-x-[42%] sm:-translate-x-[38%] lg:-translate-x-[32%] xl:-translate-x-[28%] top-1/2 -translate-y-[52%] sm:-translate-y-[54%] w-[300px] sm:w-[460px] lg:w-[580px] xl:w-[680px] h-[360px] sm:h-[500px] lg:h-[620px] xl:h-[700px] pointer-events-none select-none z-10 transition-opacity duration-700"
+          className="absolute left-1/2 -translate-x-[42%] sm:-translate-x-[38%] lg:-translate-x-[32%] xl:-translate-x-[28%] top-1/2 -translate-y-[52%] sm:-translate-y-[54%] w-[300px] sm:w-[460px] lg:w-[580px] xl:w-[680px] h-[360px] sm:h-[500px] lg:h-[620px] xl:h-[700px] pointer-events-none select-none z-10"
         >
           {/* Subtle Ambient Radial Halos */}
           <div className="absolute inset-0 bg-radial from-[rgba(245,239,235,0.18)] via-[rgba(245,239,235,0.04)] to-transparent rounded-full blur-3xl transform scale-110 pointer-events-none" />
@@ -93,33 +54,17 @@ export function HeroSection() {
           <div className="absolute left-1/3 -top-6 w-2 h-2 rounded-full bg-[#eae5d9]/50 blur-[1px] animate-pulse delay-500" />
           <div className="absolute -left-12 sm:-left-20 bottom-1/4 w-3 h-3 rounded-full bg-[#eae5d9]/45 blur-[1.5px] animate-pulse delay-1000" />
 
-          {/* Visual Option 01: Ethereal Astral Entity (Exact Image 1 Reference) */}
-          {activeVisual === "astral" ? (
-            <div className="relative w-full h-full animate-float-celestial">
-              <Image
-                src="/images/assets/astral-entity-nobg.png"
-                alt="Celestial Astral Figure Floating in Zero Gravity"
-                fill
-                priority
-                className="object-contain filter drop-shadow-[0_0_45px_rgba(245,239,235,0.32)]"
-                sizes="(max-width: 640px) 300px, (max-width: 1024px) 480px, (max-width: 1536px) 620px, 700px"
-              />
-            </div>
-          ) : (
-            /* Visual Option 02: Stippled Astronaut Stargazer Gazing Up (Image 2 Reference) */
-            <div className="relative w-full h-full flex items-center justify-center animate-float-celestial">
-              <div className="relative w-[300px] sm:w-[460px] lg:w-[580px] aspect-[1024/542] rounded-2xl overflow-hidden filter drop-shadow-[0_0_40px_rgba(245,239,235,0.25)]">
-                <Image
-                  src="/images/assets/astronaut-portrait-nobg.png"
-                  alt="Stippled Astronaut Gazing into Starlight"
-                  fill
-                  priority
-                  className="object-contain"
-                  sizes="(max-width: 640px) 300px, (max-width: 1024px) 460px, 580px"
-                />
-              </div>
-            </div>
-          )}
+          {/* Ethereal Astral Entity (Exact Image 1 Reference) */}
+          <div className="relative w-full h-full animate-float-celestial">
+            <Image
+              src="/images/assets/astral-entity-nobg.png"
+              alt="Celestial Astral Figure Floating in Zero Gravity"
+              fill
+              priority
+              className="object-contain filter drop-shadow-[0_0_45px_rgba(245,239,235,0.32)]"
+              sizes="(max-width: 640px) 300px, (max-width: 1024px) 480px, (max-width: 1536px) 620px, 700px"
+            />
+          </div>
         </div>
 
         {/* ============================================================== */}
