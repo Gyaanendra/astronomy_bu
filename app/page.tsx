@@ -1,5 +1,4 @@
 import { HeroSection } from "@/components/features/landing/hero-section";
-import { HeroTransition } from "@/components/features/landing/hero-transition";
 import { StructureSection } from "@/components/features/landing/structure-section";
 import { ObservatoryArchitecture } from "@/components/features/landing/observatory-architecture";
 import { ProgramsBento } from "@/components/features/landing/programs-bento";
@@ -12,9 +11,6 @@ export default function HomePage() {
     <div className="flex flex-col w-full bg-[#1D1D1D]">
       {/* 01: Hero & Celestial Sanctuary (Pinterest Image 2) */}
       <HeroSection />
-
-      {/* Transitional Ephemeris Quote & Milky Way Galactic Stream */}
-      <HeroTransition />
 
       {/* 02: Structure — Pattern and Imposition / Absence and Disruption (Pinterest Image 1 Top) */}
       <StructureSection />
