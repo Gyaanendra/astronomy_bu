@@ -12,37 +12,37 @@ const ARTIFACTS: Artifact[] = [
     title: "EGYPTIAN SUNDIALS",
     description:
       "Early Egyptian timekeeping devices that used the movement of shadows to structure daily life and ritual.",
-    image: "/images/assets/archive-egyptian-sundial.jpg",
+    image: "/images/assets/archive-egyptian-sundial.png",
   },
   {
     title: "NEBRA SKY DISK ARTIFACT",
     description:
       "A Bronze Age artifact depicting one of the earliest known visual representations of the night sky and celestial alignment.",
-    image: "/images/assets/archive-nebra-sky-disk.jpg",
+    image: "/images/assets/archive-nebra-sky-disk.png",
   },
   {
     title: "METEORITES IN HISTORY",
     description:
       "Accounts of meteorite falls across cultures, often interpreted as omens, divine messages, or disruptions of the natural order.",
-    image: "/images/assets/archive-meteorite.jpg",
+    image: "/images/assets/archive-meteorite.png",
   },
   {
     title: "AZTEC SUN STONE DISK",
     description:
       "A monumental carved disk representing cyclical time, cosmology, and the movement of the sun.",
-    image: "/images/assets/archive-aztec-sun-stone.jpg",
+    image: "/images/assets/archive-aztec-sun-stone.png",
   },
   {
     title: "EARLY STAR CARTOGRAPHY",
     description:
       "The development of star maps as tools for navigation, storytelling, and structuring the visible sky.",
-    image: "/images/assets/archive-star-cartography.jpg",
+    image: "/images/assets/archive-star-cartography.png",
   },
   {
     title: "BABYLONIAN STAR CATALOGUE",
     description:
       "Ancient records that mapped stars and constellations, forming one of the foundations of astronomical observation.",
-    image: "/images/assets/archive-babylonian-tablet.jpg",
+    image: "/images/assets/archive-babylonian-tablet.png",
   },
 ];
 
@@ -73,15 +73,17 @@ export function ArchiveSection() {
               key={item.title}
               className="flex flex-col group"
             >
-              {/* Square artifact photo */}
-              <div className="relative w-full aspect-square bg-[#111113] overflow-hidden mb-5">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className="object-cover filter contrast-110 brightness-95 group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
-                />
+              {/* Floating transparent artifact specimen */}
+              <div className="relative w-full aspect-square flex items-center justify-center mb-5">
+                <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-500">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-contain filter contrast-110 brightness-100"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                  />
+                </div>
               </div>
 
               {/* Thin divider line between photo and text */}
