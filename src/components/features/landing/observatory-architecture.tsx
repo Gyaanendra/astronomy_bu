@@ -67,9 +67,10 @@ export function ObservatoryArchitecture() {
 
   return (
     <section
-      id="dome"
-      className="w-full bg-[#1D1D1D] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24 overflow-hidden"
+      id="programs"
+      className="w-full bg-[#1D1D1D] text-[#f5efeb] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24 overflow-hidden"
     >
+      <div id="dome" className="sr-only" />
       <div className="w-full max-w-[1800px] mx-auto">
         {/* ============================================================== */}
         {/* PART 1: DOME EXPERIENCE (Matching Reference Exactly)           */}
@@ -147,7 +148,7 @@ export function ObservatoryArchitecture() {
         {/* ============================================================== */}
         {/* PART 2: OTHER PROGRAMS (Matching Pinterest Reference 2 Bottom) */}
         {/* ============================================================== */}
-        <div className="pt-16 sm:pt-24 border-t border-[rgba(245,239,235,0.12)]">
+        <div className="pt-16 sm:pt-24">
           <div className="flex items-center justify-between pb-8 sm:pb-12 border-b border-[rgba(245,239,235,0.12)]">
             <h2 className="font-editorial-serif italic text-3xl sm:text-5xl text-[#f5efeb] tracking-tight">
               OTHER PROGRAMS

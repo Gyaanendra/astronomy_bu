@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer
       id="footer"
-      className="relative w-full min-h-[755px] lg:h-[755px] lg:max-h-[755px] flex flex-col justify-end bg-[#1D1D1D] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] overflow-hidden"
+      className="relative w-full min-h-[755px] lg:h-[755px] lg:max-h-[755px] flex flex-col justify-end bg-[#1D1D1D] text-[#f5efeb] overflow-hidden"
     >
       <div id="newsletter" className="absolute top-0 pointer-events-none" />
       {/* ============================================================== */}

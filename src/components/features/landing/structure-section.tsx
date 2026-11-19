@@ -4,7 +4,7 @@ export function StructureSection() {
   return (
     <section
       id="about"
-      className="w-full bg-[#1D1D1D] text-[#f5efeb] border-t border-[rgba(245,239,235,0.12)] py-16 sm:py-24 lg:py-32 px-6 sm:px-12 lg:px-20 xl:px-24"
+      className="w-full bg-[#1D1D1D] text-[#f5efeb] py-16 sm:py-24 lg:py-32 px-6 sm:px-12 lg:px-20 xl:px-24"
     >
       <div className="w-full max-w-[1800px] mx-auto">
         {/* 4-Column Asymmetric Fluid Grid Matching Reference Screenshot Exactly */}
