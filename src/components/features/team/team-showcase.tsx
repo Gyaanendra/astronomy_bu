@@ -4,26 +4,26 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { allTenures } from "@/content/team";
 import { Department, TeamMember } from "@/types/team.types";
-import { Sparkles, Users, ShieldCheck, Eye } from "lucide-react";
+import {
+  Sparkles,
+  Users,
+  ShieldCheck,
+  Eye,
+} from "lucide-react";
 import { InstagramIcon, LinkedinIcon, GithubIcon } from "@/components/ui/icons";
 import { RotaryCarousel } from "./rotary-carousel";
 import { ChernobylDossierModal } from "./chernobyl-dossier-modal";
 import gsap from "gsap";
 
 export function TeamShowcase() {
-  const [selectedTenureYear, setSelectedTenureYear] =
-    useState<string>("2025-2026");
+  const [selectedTenureYear, setSelectedTenureYear] = useState<string>("2025-2026");
   const [selectedDept, setSelectedDept] = useState<string>("ALL");
-  const [selectedDossierMember, setSelectedDossierMember] =
-    useState<TeamMember | null>(null);
+  const [selectedDossierMember, setSelectedDossierMember] = useState<TeamMember | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
   // Retrieve current tenure object
   const currentTenureData = useMemo(() => {
-    return (
-      allTenures.find((t) => t.tenureYear === selectedTenureYear) ||
-      allTenures[0]
-    );
+    return allTenures.find((t) => t.tenureYear === selectedTenureYear) || allTenures[0];
   }, [selectedTenureYear]);
 
   // All distinct departments available across the entire club
@@ -45,10 +45,7 @@ export function TeamShowcase() {
 
   // When switching tenures, if selectedDept is not present in that tenure, safely reset to ALL
   useEffect(() => {
-    if (
-      selectedDept !== "ALL" &&
-      !existingDeptNamesInTenure.includes(selectedDept as Department)
-    ) {
+    if (selectedDept !== "ALL" && !existingDeptNamesInTenure.includes(selectedDept as Department)) {
       setSelectedDept("ALL");
     }
   }, [selectedTenureYear, existingDeptNamesInTenure, selectedDept]);
@@ -70,7 +67,7 @@ export function TeamShowcase() {
   const totalTenureMembers = useMemo(() => {
     return currentTenureData.departments.reduce(
       (acc, d) => acc + d.members.length,
-      0,
+      0
     );
   }, [currentTenureData]);
 
@@ -86,7 +83,7 @@ export function TeamShowcase() {
           duration: 0.35,
           stagger: 0.025,
           ease: "power2.out",
-        },
+        }
       );
     }
   }, [selectedTenureYear, selectedDept]);
@@ -94,6 +91,7 @@ export function TeamShowcase() {
   return (
     <div className="w-full py-8 sm:py-12 px-4 sm:px-8 lg:px-12 bg-[#1D1D1D] text-[#f5efeb]">
       <div className="w-full max-w-[1700px] mx-auto">
+
         {/* ========================================================================= */}
         {/* CLEAN, UNCLUTTERED TOP HEADER */}
         {/* ========================================================================= */}
@@ -112,15 +110,11 @@ export function TeamShowcase() {
             <div className="flex items-center gap-3 font-mono text-[11px] text-[#a39e93]">
               <span className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-[rgba(245,239,235,0.12)] bg-[#17171a]">
                 <Users className="w-3.5 h-3.5 text-[#c84b31]" />
-                <strong className="text-[#f5efeb]">{totalTenureMembers}</strong>{" "}
-                Curators
+                <strong className="text-[#f5efeb]">{totalTenureMembers}</strong> Curators
               </span>
               <span className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-[rgba(245,239,235,0.12)] bg-[#17171a]">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#eae5d9]" />
-                <strong className="text-[#f5efeb]">
-                  {currentTenureData.departments.length}
-                </strong>{" "}
-                Divisions
+                <strong className="text-[#f5efeb]">{currentTenureData.departments.length}</strong> Divisions
               </span>
             </div>
           </div>
@@ -129,19 +123,16 @@ export function TeamShowcase() {
           <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[rgba(245,239,235,0.06)]">
             {/* Tenure Switcher */}
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[10px] text-[#8a847a] mr-1 uppercase">
-                TENURE:
-              </span>
+              <span className="font-mono text-[10px] text-[#8a847a] mr-1 uppercase">TENURE:</span>
               {allTenures.map((t) => (
                 <button
                   key={t.tenureYear}
                   type="button"
                   onClick={() => setSelectedTenureYear(t.tenureYear)}
-                  className={`px-3.5 py-1 rounded-full font-mono text-[10px] sm:text-[11px] tracking-wider uppercase transition-colors cursor-pointer ${
-                    selectedTenureYear === t.tenureYear
+                  className={`px-3.5 py-1 rounded-full font-mono text-[10px] sm:text-[11px] tracking-wider uppercase transition-colors cursor-pointer ${selectedTenureYear === t.tenureYear
                       ? "bg-[#eae5d9] text-[#1D1D1D] font-bold shadow-sm"
                       : "border border-[rgba(245,239,235,0.14)] text-[#a39e93] hover:text-[#f5efeb] hover:border-[rgba(245,239,235,0.3)] bg-[#17171a]"
-                  }`}
+                    }`}
                 >
                   {t.tenureYear}
                 </button>
@@ -150,24 +141,19 @@ export function TeamShowcase() {
 
             {/* Division Filter Pills */}
             <div className="flex flex-wrap items-center gap-1.5">
-              <span className="font-mono text-[10px] text-[#8a847a] mr-1 uppercase">
-                DIVISION:
-              </span>
+              <span className="font-mono text-[10px] text-[#8a847a] mr-1 uppercase">DIVISION:</span>
               <button
                 type="button"
                 onClick={() => setSelectedDept("ALL")}
-                className={`px-2.5 py-1 rounded-full font-mono text-[9px] uppercase transition-colors cursor-pointer ${
-                  selectedDept === "ALL"
+                className={`px-2.5 py-1 rounded-full font-mono text-[9px] uppercase transition-colors cursor-pointer ${selectedDept === "ALL"
                     ? "border border-[#f5efeb] text-[#f5efeb] bg-[#222225] font-bold"
                     : "text-[#8a847a] hover:text-[#a39e93] border border-transparent"
-                }`}
+                  }`}
               >
                 ALL ({totalTenureMembers})
               </button>
               {allDepartmentNames.map((dept) => {
-                const deptInTenure = currentTenureData.departments.find(
-                  (d) => d.name === dept,
-                );
+                const deptInTenure = currentTenureData.departments.find((d) => d.name === dept);
                 const count = deptInTenure ? deptInTenure.members.length : 0;
                 const isAvailable = count > 0;
 
@@ -181,18 +167,15 @@ export function TeamShowcase() {
                     type="button"
                     disabled={!isAvailable}
                     onClick={() => setSelectedDept(dept)}
-                    className={`px-2.5 py-1 rounded-full font-mono text-[9px] uppercase transition-colors cursor-pointer ${
-                      selectedDept === dept
+                    className={`px-2.5 py-1 rounded-full font-mono text-[9px] uppercase transition-colors cursor-pointer ${selectedDept === dept
                         ? "border border-[#f5efeb] text-[#f5efeb] bg-[#222225] font-bold"
                         : isAvailable
                           ? "text-[#8a847a] hover:text-[#a39e93] border border-transparent"
                           : "text-[#55504a] border border-transparent cursor-not-allowed opacity-35"
-                    }`}
+                      }`}
                   >
                     {dept}
-                    {isAvailable && (
-                      <span className="opacity-60 ml-1">({count})</span>
-                    )}
+                    {isAvailable && <span className="opacity-60 ml-1">({count})</span>}
                   </button>
                 );
               })}
@@ -236,10 +219,7 @@ export function TeamShowcase() {
             <div
               key={dept.name}
               className="flex flex-col gap-5"
-              style={{
-                contentVisibility: "auto",
-                containIntrinsicSize: "320px",
-              }}
+              style={{ contentVisibility: "auto", containIntrinsicSize: "320px" }}
             >
               {/* Department Subheader */}
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-2.5 border-b border-[rgba(245,239,235,0.08)]">
@@ -270,8 +250,7 @@ export function TeamShowcase() {
           {filteredDepartments.length === 0 && (
             <div className="py-16 text-center border border-[rgba(245,239,235,0.1)] rounded-[20px] bg-[#141416]">
               <p className="font-mono text-xs text-[#8a847a]">
-                NO CURATORS FOUND FOR THIS DIVISION IN THE {selectedTenureYear}{" "}
-                ARCHIVE.
+                NO CURATORS FOUND FOR THIS DIVISION IN THE {selectedTenureYear} ARCHIVE.
               </p>
             </div>
           )}

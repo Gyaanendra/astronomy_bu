@@ -25,9 +25,7 @@ export function RotaryCarousel({
   onCenterMember,
 }: RotaryCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [imageFailures, setImageFailures] = useState<Record<string, boolean>>(
-    {},
-  );
+  const [imageFailures, setImageFailures] = useState<Record<string, boolean>>({});
   const [dragOffset, setDragOffset] = useState<number>(0);
   const [isDragging, setIsDragging] = useState(false);
   const [containerWidth, setContainerWidth] = useState(1200);
@@ -220,8 +218,7 @@ export function RotaryCarousel({
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-[#c84b31] animate-pulse" />
           <span className="font-mono text-[10px] sm:text-[11px] tracking-widest text-[#a39e93] uppercase font-bold">
-            ORBIT DOSSIER [{String(activeIndex + 1).padStart(2, "0")} /{" "}
-            {String(members.length).padStart(2, "0")}]
+            ORBIT DOSSIER [{String(activeIndex + 1).padStart(2, "0")} / {String(members.length).padStart(2, "0")}]
           </span>
         </div>
 
@@ -264,8 +261,7 @@ export function RotaryCarousel({
 
         {/* Rotary Card Fan with STABLE KEYS and True GPU Interpolation */}
         {visibleOffsets.map((offset) => {
-          const itemIndex =
-            (activeIndex + offset + members.length) % members.length;
+          const itemIndex = (activeIndex + offset + members.length) % members.length;
           const member = members[itemIndex];
           if (!member) return null;
 
@@ -280,14 +276,9 @@ export function RotaryCarousel({
           const translateZ = isCenter ? 35 : -absEffOffset * 38;
           const rotateZ = effOffset * angleMultiplier;
           const rotateY = -effOffset * 6.0;
-          const scale = isCenter
-            ? 1.05
-            : Math.max(0.78, 1 - absEffOffset * 0.072);
+          const scale = isCenter ? 1.05 : Math.max(0.78, 1 - absEffOffset * 0.072);
           const zIndex = Math.round(50 - absEffOffset * 5);
-          const opacity =
-            absEffOffset > 2.5
-              ? Math.max(0, 1 - (absEffOffset - 2.5) * 1.5)
-              : 1;
+          const opacity = absEffOffset > 2.5 ? Math.max(0, 1 - (absEffOffset - 2.5) * 1.5) : 1;
 
           const imageFailed = imageFailures[member.id];
           const initials = member.name
@@ -321,11 +312,10 @@ export function RotaryCarousel({
                   ? "none"
                   : "transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
               }}
-              className={`absolute w-[260px] sm:w-[310px] md:w-[350px] lg:w-[380px] h-[390px] sm:h-[460px] md:h-[520px] rounded-[28px] p-5 sm:p-6 flex flex-col justify-between cursor-pointer group select-none ${
-                isCenter
+              className={`absolute w-[260px] sm:w-[310px] md:w-[350px] lg:w-[380px] h-[390px] sm:h-[460px] md:h-[520px] rounded-[28px] p-5 sm:p-6 flex flex-col justify-between cursor-pointer group select-none ${isCenter
                   ? "border-2 border-[#eae5d9] bg-[#161619] shadow-[0_18px_45px_rgba(0,0,0,0.85)] ring-1 ring-[rgba(245,239,235,0.2)]"
                   : "border border-[rgba(245,239,235,0.12)] bg-[#111114]/90 hover:border-[rgba(245,239,235,0.3)] shadow-lg"
-              }`}
+                }`}
             >
               {/* Card Header: Division & Lead status */}
               <div className="flex items-center justify-between pb-2 border-b border-[rgba(245,239,235,0.08)]">
@@ -353,16 +343,12 @@ export function RotaryCarousel({
                     alt={member.name}
                     fill
                     onError={() =>
-                      setImageFailures((prev) => ({
-                        ...prev,
-                        [member.id]: true,
-                      }))
+                      setImageFailures((prev) => ({ ...prev, [member.id]: true }))
                     }
-                    className={`object-cover transition-all duration-300 ${
-                      isCenter
+                    className={`object-cover transition-all duration-300 ${isCenter
                         ? "contrast-110 grayscale-[10%] group-hover:grayscale-0"
                         : "contrast-100 grayscale opacity-80"
-                    }`}
+                      }`}
                     sizes="(max-width: 768px) 260px, 380px"
                     priority={isCenter}
                     loading={isCenter ? "eager" : "lazy"}
