@@ -106,22 +106,11 @@ export function EventsArchive() {
       ref={containerRef}
       className="w-full bg-[#1D1D1D] text-[#f5efeb] font-sans selection:bg-[#eae5d9] selection:text-[#1D1D1D]"
     >
-      {/* Header matching exact original design */}
-      <div className="w-full pt-16 sm:pt-24 pb-12 px-6 sm:px-12 lg:px-20 xl:px-24 border-b border-[rgba(245,239,235,0.12)]">
+      {/* Header */}
+      <div className="w-full pt-10 sm:pt-16 pb-12 px-6 sm:px-12 lg:px-20 xl:px-24 border-b border-[rgba(245,239,235,0.12)]">
         <div className="w-full max-w-[1800px] mx-auto">
-          {/* Top metadata line */}
-          <div className="flex flex-wrap items-center justify-between gap-4 mb-3">
-            <span className="font-mono text-[10px] tracking-archival text-[#a39e93] uppercase">
-              CATEGORY // 03 · CHRONICLES &amp; TENURE LOGS
-            </span>
-            <div className="flex items-center gap-2 font-mono text-[11px] text-[#8a847a]">
-              <span className="w-2 h-2 rounded-full bg-[#eae5d9] animate-ping" />
-              <span>{filteredEvents.length} ARCHIVAL LOGS CATALOGED</span>
-            </div>
-          </div>
-
           {/* Main Title */}
-          <h1 className="font-editorial-serif italic text-5xl sm:text-7xl lg:text-8xl text-[#f5efeb]">
+          <h1 className="font-editorial-serif italic text-5xl sm:text-7xl lg:text-8xl text-[#f5efeb] leading-tight select-none">
             Past Events &amp; This Tenure
           </h1>
 
