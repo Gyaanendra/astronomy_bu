@@ -8,7 +8,7 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight, X, Clock, Share2 } from "lucide-react";
 
-interface EditorialDossier {
+export interface EditorialDossier {
   id: string;
   category: string;
   title: string;
@@ -24,7 +24,7 @@ interface EditorialDossier {
   ctaText: string;
 }
 
-const EDITORIAL_DOSSIERS: EditorialDossier[] = [
+export const EDITORIAL_DOSSIERS: EditorialDossier[] = [
   {
     id: "narrowband-astrophotography",
     category: "ASTROPHOTOGRAPHY • GREATER NOIDA • ORION CAMPAIGN",
@@ -93,7 +93,7 @@ const EDITORIAL_DOSSIERS: EditorialDossier[] = [
   },
 ];
 
-const ARCHIVE_LINKS = [
+export const ARCHIVE_LINKS = [
   {
     num: "01",
     title: "MINISTRY & RESEARCH PROBLEM STATEMENTS",
@@ -138,7 +138,7 @@ export function JournalSection() {
         return;
       }
 
-      // 1. Bottom-up clipPath unmask entrance + parallax image scrub
+      // 1. Bottom-up clip-path wipe entrance + Parallax scrub
       imageRefs.current.forEach((el) => {
         if (!el) return;
         const img = el.querySelector("img");
@@ -217,29 +217,29 @@ export function JournalSection() {
     <section
       ref={containerRef}
       id="journal"
-      className="relative w-full bg-[#FAF8F5] dark:bg-[#0C0D0E] text-[#141518] dark:text-[#F3F4F6] py-16 sm:py-24 border-y border-neutral-300 dark:border-neutral-800 transition-colors duration-500 font-serif selection:bg-[#FF7700] selection:text-white"
+      className="relative w-full bg-[#1D1D1D] text-[#f5efeb] py-16 sm:py-24 border-y border-[rgba(245,239,235,0.12)] transition-colors duration-500 font-serif selection:bg-[#eae5d9] selection:text-[#1D1D1D]"
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         {/* Top Tagline Bar */}
-        <div className="flex items-center justify-between pb-6 mb-12 border-b border-neutral-300 dark:border-neutral-800 text-xs font-mono tracking-[0.22em] text-neutral-500 uppercase">
+        <div className="flex items-center justify-between pb-6 mb-12 border-b border-[rgba(245,239,235,0.12)] text-xs font-mono tracking-[0.22em] text-[#a39e93] uppercase">
           <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#FF7700]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#d4af37]" />
             <span>CASE DOSSIERS // PROTOTYPE TO OBSERVATION</span>
           </div>
-          <span className="hidden sm:inline">
+          <span className="hidden sm:inline text-[#8a847a]">
             ASTRONOMYBU RESEARCH JOURNAL
           </span>
         </div>
 
         {/* Section Headline */}
         <div className="mb-16 max-w-3xl">
-          <h2 className="text-3xl sm:text-5xl lg:text-[3.6rem] font-bold text-neutral-900 dark:text-white leading-[1.1] font-sans tracking-tight mb-4">
+          <h2 className="text-3xl sm:text-5xl lg:text-[3.6rem] font-bold text-[#f5efeb] leading-[1.1] font-sans tracking-tight mb-4">
             How Celestial Solutions <br />
-            <span className="font-serif italic font-normal text-neutral-700 dark:text-neutral-300">
+            <span className="font-editorial-serif italic font-normal text-[#eae5d9]">
               Become Sovereign Systems.
             </span>
           </h2>
-          <p className="text-sm sm:text-base font-sans text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-xl">
+          <p className="text-sm sm:text-base font-sans text-[#a39e93] leading-relaxed max-w-xl">
             A documented archival record of collegiate engineering breakthroughs
             deployed across national space, optical sensor arrays, and celestial
             rescue infrastructure.
@@ -247,7 +247,7 @@ export function JournalSection() {
         </div>
 
         {/* Main 12-Column Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start pt-4 border-t border-neutral-300 dark:border-neutral-800">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start pt-4 border-t border-[rgba(245,239,235,0.12)]">
           {/* Left Column (8 cols): Alternating Dossier Cards */}
           <div className="lg:col-span-8 flex flex-col space-y-16">
             {EDITORIAL_DOSSIERS.map((item, index) => {
@@ -259,14 +259,14 @@ export function JournalSection() {
                   ref={(el) => {
                     rowRefs.current[index] = el;
                   }}
-                  className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center pb-14 border-b border-neutral-200 dark:border-neutral-800"
+                  className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center pb-14 border-b border-[rgba(245,239,235,0.08)]"
                 >
                   {/* Image Container */}
                   <div
                     ref={(el) => {
                       imageRefs.current[index] = el;
                     }}
-                    className={`relative aspect-[4/3] sm:aspect-[4/3] w-full overflow-hidden bg-neutral-200 dark:bg-neutral-800 will-change-transform shadow-xs ${
+                    className={`relative aspect-[4/3] sm:aspect-[4/3] w-full overflow-hidden bg-[#111113] border border-[rgba(245,239,235,0.1)] will-change-transform shadow-xs ${
                       isEven ? "order-1 md:order-2" : ""
                     }`}
                   >
@@ -285,19 +285,19 @@ export function JournalSection() {
                       isEven ? "order-2 md:order-1" : ""
                     }`}
                   >
-                    <span className="editorial-swipe-text text-[10px] font-mono tracking-[0.2em] uppercase text-neutral-500 mb-3 block">
+                    <span className="editorial-swipe-text text-[10px] font-mono tracking-[0.2em] uppercase text-[#d4af37] mb-3 block">
                       {item.category}
                     </span>
-                    <h3 className="editorial-swipe-text text-2xl sm:text-3xl font-serif italic text-neutral-900 dark:text-white leading-snug mb-4 font-normal">
+                    <h3 className="editorial-swipe-text text-2xl sm:text-3xl font-editorial-serif italic text-[#f5efeb] leading-snug mb-4 font-normal">
                       {item.title}
                     </h3>
-                    <p className="editorial-swipe-text text-sm font-sans text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6 font-normal">
+                    <p className="editorial-swipe-text text-sm font-sans text-[#a39e93] leading-relaxed mb-6 font-normal">
                       {item.excerpt}
                     </p>
                     <div className="editorial-swipe-text">
                       <button
                         onClick={() => setActiveDossier(item)}
-                        className="inline-block px-6 py-2.5 bg-black text-white dark:bg-white dark:text-black text-[10px] font-mono uppercase tracking-[0.2em] font-semibold hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors cursor-pointer"
+                        className="inline-block px-6 py-2.5 bg-[#eae5d9] text-[#1D1D1D] text-[10px] font-mono uppercase tracking-[0.2em] font-semibold hover:bg-white hover:text-black transition-colors cursor-pointer"
                       >
                         {item.ctaText}
                       </button>
@@ -308,16 +308,16 @@ export function JournalSection() {
             })}
 
             {/* Bottom Row Navigation Links */}
-            <div className="flex items-center justify-between pt-6 text-xs font-mono uppercase tracking-[0.2em] text-neutral-500">
+            <div className="flex items-center justify-between pt-6 text-xs font-mono uppercase tracking-[0.2em] text-[#a39e93]">
               <Link
                 href="/calendar"
-                className="hover:text-neutral-900 dark:hover:text-white transition-colors"
+                className="hover:text-[#f5efeb] transition-colors"
               >
                 ← THE CELESTIAL ARENA
               </Link>
               <Link
                 href="/journal"
-                className="hover:text-neutral-900 dark:hover:text-white transition-colors font-bold text-neutral-800 dark:text-neutral-200"
+                className="hover:text-[#f5efeb] transition-colors font-bold text-[#eae5d9]"
               >
                 EXPLORE ALL ARCHIVES →
               </Link>
@@ -325,47 +325,47 @@ export function JournalSection() {
           </div>
 
           {/* Right Column (4 cols): Editorial Sidebar with Border Line */}
-          <div className="lg:col-span-4 lg:pl-10 lg:border-l border-neutral-300 dark:border-neutral-800 flex flex-col space-y-12">
+          <div className="lg:col-span-4 lg:pl-10 lg:border-l border-[rgba(245,239,235,0.12)] flex flex-col space-y-12">
             {/* Story Paragraphs */}
             <div>
-              <div className="pb-3 mb-6 border-b border-neutral-300 dark:border-neutral-800">
-                <h4 className="text-2xl sm:text-3xl font-serif italic font-normal text-neutral-900 dark:text-white">
+              <div className="pb-3 mb-6 border-b border-[rgba(245,239,235,0.12)]">
+                <h4 className="text-2xl sm:text-3xl font-editorial-serif italic font-normal text-[#f5efeb]">
                   Read our Story
                 </h4>
               </div>
-              <div className="space-y-4 font-sans text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal">
+              <div className="space-y-4 font-sans text-sm text-[#a39e93] leading-relaxed font-normal">
                 <p>
-                  AstronomyBU was conceived not merely as a collegiate coding
-                  or stargazing contest, but as an open-innovation sovereign
-                  observatory mechanism where university labs solve hard
-                  astrophysical problems.
+                  AstronomyBU was conceived not merely as an undergraduate
+                  stargazing club, but as an open-innovation collegiate
+                  observatory where student researchers author operational
+                  astrophysical telemetry, calibrate motorized optics, and analyze
+                  deep-sky datasets.
                 </p>
                 <p>
-                  Across premier nodal centers, teams author operational telemetry
-                  code directly with researchers, visiting scientists, and optical
-                  engineers—turning raw academic talent into mission-critical
-                  astronomical infrastructure.
+                  Across premier dark-sky cohorts, student teams work directly
+                  with faculty mentors and visiting scientists—turning raw
+                  curiosity into rigorous archival space science.
                 </p>
               </div>
             </div>
 
             {/* Featured Visual with Floating Glass Caption */}
-            <div className="relative aspect-[4/5] w-full overflow-hidden bg-neutral-200 dark:bg-neutral-800 shadow-xs border border-neutral-300/60 dark:border-neutral-700/60">
+            <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#111113] shadow-xs border border-[rgba(245,239,235,0.15)] group">
               <Image
                 src="/images/observatory-dome.jpg"
-                alt="Engineering prototype in observatory dome"
+                alt="Bennett University Observatory Dome"
                 fill
                 sizes="(max-width: 1024px) 100vw, 30vw"
-                className="object-cover object-center grayscale contrast-125 hover:grayscale-0 transition-all duration-700"
+                className="object-cover object-center grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700"
               />
-              <div className="absolute bottom-3 left-3 right-3 p-2 bg-black/60 backdrop-blur-xs text-[10px] font-mono text-white/90 uppercase tracking-widest text-center">
+              <div className="absolute bottom-3 left-3 right-3 p-2 bg-black/75 backdrop-blur-xs text-[10px] font-mono text-[#f5efeb] uppercase tracking-widest text-center border border-white/10">
                 BENNETT OBSERVATORY TELEMETRY BENCHMARK
               </div>
             </div>
 
             {/* Numbered Quick-Links List */}
             <div>
-              <span className="text-[11px] font-mono tracking-[0.25em] text-neutral-400 uppercase block mb-6">
+              <span className="text-[11px] font-mono tracking-[0.25em] text-[#a39e93] uppercase block mb-6">
                 LINKS &amp; ARCHIVES:
               </span>
               <ul className="space-y-6">
@@ -374,7 +374,7 @@ export function JournalSection() {
                     key={link.num}
                     className={
                       idx > 0
-                        ? "pt-4 border-t border-neutral-200 dark:border-neutral-800"
+                        ? "pt-4 border-t border-[rgba(245,239,235,0.08)]"
                         : ""
                     }
                   >
@@ -382,15 +382,15 @@ export function JournalSection() {
                       href={link.href}
                       className="flex items-baseline group"
                     >
-                      <span className="text-2xl font-serif italic text-neutral-800 dark:text-neutral-200 mr-4 group-hover:text-[#FF7700] transition-colors">
+                      <span className="text-2xl font-editorial-serif italic text-[#8a847a] mr-4 group-hover:text-[#d4af37] transition-colors">
                         {link.num}
                       </span>
                       <div className="flex flex-col">
-                        <span className="text-xs font-mono uppercase tracking-wider font-bold text-neutral-900 dark:text-white group-hover:text-[#FF7700] transition-colors flex items-center gap-1">
+                        <span className="text-xs font-mono uppercase tracking-wider font-bold text-[#f5efeb] group-hover:text-[#d4af37] transition-colors flex items-center gap-1">
                           <span>{link.title}</span>
                           <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </span>
-                        <span className="text-[11px] font-sans text-neutral-500 font-normal mt-0.5">
+                        <span className="text-[11px] font-sans text-[#a39e93] font-normal mt-0.5">
                           {link.desc}
                         </span>
                       </div>
@@ -406,44 +406,44 @@ export function JournalSection() {
       {/* Interactive Modal Reader when clicking READ MORE → */}
       {activeDossier && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
           onClick={() => setActiveDossier(null)}
         >
           <div
-            className="relative w-full max-w-3xl bg-[#141518] text-[#F3F4F6] border border-neutral-800 rounded-2xl p-6 sm:p-10 max-h-[90vh] overflow-y-auto"
+            className="relative w-full max-w-3xl bg-[#171719] text-[#f5efeb] border border-[rgba(245,239,235,0.18)] rounded-[28px] p-6 sm:p-12 max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setActiveDossier(null)}
-              className="absolute top-6 right-6 p-2 rounded-full border border-neutral-700 text-neutral-400 hover:text-white hover:bg-neutral-800 transition-all cursor-pointer"
+              className="absolute top-6 right-6 p-2 rounded-full border border-[rgba(245,239,235,0.15)] text-[#a39e93] hover:text-[#f5efeb] hover:bg-white/5 transition-all cursor-pointer"
               aria-label="Close reader"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-[#FF7700]" />
-              <span className="font-mono text-[10px] tracking-widest text-neutral-400 uppercase">
+              <span className="w-2 h-2 rounded-full bg-[#d4af37]" />
+              <span className="font-mono text-[10px] tracking-widest text-[#a39e93] uppercase">
                 {activeDossier.category}
               </span>
             </div>
 
-            <h1 className="font-serif italic text-2xl sm:text-4xl text-white leading-tight mb-3">
+            <h1 className="font-editorial-serif italic text-2xl sm:text-4xl text-[#f5efeb] leading-tight mb-3">
               {activeDossier.title}
             </h1>
-            <p className="font-mono text-xs sm:text-sm text-[#FF7700] mb-6">
+            <p className="font-mono text-xs sm:text-sm text-[#d4af37] mb-6">
               {activeDossier.subtitle}
             </p>
 
-            <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-y border-neutral-800 font-mono text-xs text-neutral-400">
+            <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-y border-[rgba(245,239,235,0.12)] font-mono text-xs text-[#8a847a]">
               <div className="flex items-center gap-3">
-                <span className="text-white font-semibold">{activeDossier.author}</span>
+                <span className="text-[#f5efeb] font-semibold">{activeDossier.author}</span>
                 <span>({activeDossier.role})</span>
               </div>
               <div className="flex items-center gap-4">
                 <span>{activeDossier.date}</span>
                 <span>·</span>
-                <span className="flex items-center gap-1 text-white">
+                <span className="flex items-center gap-1 text-[#eae5d9]">
                   <Clock className="w-3.5 h-3.5" />
                   {activeDossier.readTime}
                 </span>
@@ -451,7 +451,7 @@ export function JournalSection() {
             </div>
 
             {/* Modal Image */}
-            <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden my-6 border border-neutral-800 bg-neutral-900">
+            <div className="relative aspect-[16/9] w-full rounded-[20px] overflow-hidden my-6 border border-[rgba(245,239,235,0.1)] bg-[#111113]">
               <Image
                 src={activeDossier.image}
                 alt={activeDossier.title}
@@ -462,20 +462,22 @@ export function JournalSection() {
             </div>
 
             {/* Content Paragraphs */}
-            <div className="space-y-4 text-sm sm:text-base font-sans text-neutral-300 leading-relaxed">
+            <div className="space-y-4 text-sm sm:text-base font-sans text-[#eae5d9]/90 leading-relaxed">
               {activeDossier.content.map((p, idx) => (
-                <p key={idx}>{p}</p>
+                <p key={idx} className={idx === 0 ? "text-base sm:text-lg text-[#f5efeb] font-serif leading-relaxed italic border-l-2 border-[#d4af37]/60 pl-4 py-1" : ""}>
+                  {p}
+                </p>
               ))}
             </div>
 
             {/* Modal Footer */}
-            <div className="mt-8 pt-6 border-t border-neutral-800 flex items-center justify-between">
-              <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">
+            <div className="mt-8 pt-6 border-t border-[rgba(245,239,235,0.1)] flex items-center justify-between">
+              <span className="font-mono text-[10px] text-[#8a847a] uppercase tracking-widest">
                 BENNETT UNIVERSITY OBSERVATORY ARCHIVE
               </span>
               <button
                 onClick={handleShare}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neutral-700 text-neutral-200 font-mono text-xs hover:bg-neutral-800 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[rgba(245,239,235,0.2)] text-[#eae5d9] font-mono text-xs hover:bg-white/5 transition-colors cursor-pointer"
               >
                 <Share2 className="w-3.5 h-3.5" />
                 <span>{copied ? "Link Copied!" : "Share Dossier"}</span>
