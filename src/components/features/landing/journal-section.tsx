@@ -8,7 +8,8 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 interface JournalEntry {
-  date: string;
+  dateTop: string;
+  dateBottom: string;
   title: string;
   type: string;
   description: string;
@@ -18,7 +19,8 @@ interface JournalEntry {
 
 const JOURNAL_ENTRIES: JournalEntry[] = [
   {
-    date: "22.03\n26",
+    dateTop: "22.03",
+    dateBottom: "26",
     title: "EVENING OF THE\nSEVEN SISTERS",
     type: "Meeting",
     description:
@@ -27,7 +29,8 @@ const JOURNAL_ENTRIES: JournalEntry[] = [
     href: "/events",
   },
   {
-    date: "05.04\n26",
+    dateTop: "05.04",
+    dateBottom: "26",
     title: "LUNAR WORKSHOP: CYCLES\nAND SYMBOLISM",
     type: "Workshop",
     description:
@@ -36,7 +39,8 @@ const JOURNAL_ENTRIES: JournalEntry[] = [
     href: "/events",
   },
   {
-    date: "15.04-23.05\n26",
+    dateTop: "15.04-23.05",
+    dateBottom: "26",
     title: "OPEN CALL: STAR MAPS\nREIMAGINED",
     type: "Open call",
     description:
@@ -48,108 +52,113 @@ const JOURNAL_ENTRIES: JournalEntry[] = [
 
 export function JournalSection() {
   const containerRef = useRef<HTMLElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
+  const rowsRef = useRef<(HTMLAnchorElement | null)[]>([]);
 
   useGSAP(
     () => {
       gsap.registerPlugin(ScrollTrigger);
 
-      const prefersReduced = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
-      if (prefersReduced) return;
+      if (
+        !containerRef.current ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        return;
+      }
 
-      if (listRef.current) {
-        gsap.from(listRef.current.children, {
-          autoAlpha: 0,
-          y: 30,
-          stagger: 0.14,
-          duration: 0.8,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: listRef.current,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
-        });
+      const validRows = rowsRef.current.filter(Boolean);
+      if (validRows.length > 0) {
+        gsap.fromTo(
+          validRows,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
       }
     },
-    { scope: containerRef },
+    { scope: containerRef }
   );
 
   return (
     <section
       ref={containerRef}
       id="journal"
-      className="w-full bg-[#1D1D1D] text-[#f5efeb] py-20 sm:py-28 lg:py-36 px-6 sm:px-12 lg:px-20 xl:px-24"
+      className="w-full bg-[#1D1D1D] text-[#f5efeb] py-20 sm:py-28 lg:py-32 px-6 sm:px-12 lg:px-20 xl:px-24 border-t border-[rgba(245,239,235,0.12)] selection:bg-[#eae5d9] selection:text-[#1D1D1D]"
     >
       <div className="w-full max-w-[1800px] mx-auto">
-        {/* Header Row */}
-        <div className="flex flex-col md:flex-row md:items-start justify-between mb-10 sm:mb-14 gap-8">
-          <div>
-            <h2 className="font-editorial-serif italic text-4xl sm:text-6xl xl:text-7xl text-[#f5efeb] tracking-tight">
-              JOURNAL
-            </h2>
-          </div>
+        {/* Header Row: JOURNAL on left, subtitle on right */}
+        <div className="flex flex-col md:flex-row md:items-start justify-between pb-8 sm:pb-12 gap-6">
+          <h2 className="font-editorial-serif italic text-5xl sm:text-6xl lg:text-7xl text-[#f5efeb] tracking-tight leading-none">
+            JOURNAL
+          </h2>
 
-          <p className="font-mono text-xs xl:text-[13px] tracking-wide text-[#a39e93] leading-relaxed max-w-md md:text-right">
+          <p className="font-mono text-xs sm:text-[13px] tracking-wide text-[#a39e93] leading-relaxed max-w-sm md:text-right">
             Traces and reflections from Noctra&apos;s gatherings — public
             meetings, discussions, and collaborations that unfold beneath the
             night sky.
           </p>
         </div>
 
-        {/* Editorial Rows with top and bottom borders */}
-        <div
-          ref={listRef}
-          className="border-t border-b border-[rgba(245,239,235,0.12)] divide-y divide-[rgba(245,239,235,0.12)]"
-        >
-          {JOURNAL_ENTRIES.map((entry) => (
+        {/* Minimalist Editorial Rows with hairline top & bottom borders */}
+        <div className="border-t border-b border-[rgba(245,239,235,0.14)] divide-y divide-[rgba(245,239,235,0.14)]">
+          {JOURNAL_ENTRIES.map((entry, idx) => (
             <Link
               key={entry.title}
+              ref={(el) => {
+                rowsRef.current[idx] = el;
+              }}
               href={entry.href}
-              className="py-8 sm:py-10 grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-center group hover:bg-[rgba(255,255,255,0.02)] px-2 sm:px-4 transition-all duration-300"
+              className="py-10 sm:py-12 grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-stretch group hover:bg-[rgba(245,239,235,0.02)] transition-colors duration-300"
             >
-              {/* Col 1: Thumbnail Photo (2 cols) */}
-              <div className="md:col-span-2">
-                <div className="relative w-24 h-24 sm:w-28 sm:h-28 bg-[#111113] overflow-hidden">
+              {/* Col 1: Thumbnail Photo (md:col-span-2) */}
+              <div className="md:col-span-2 flex items-center">
+                <div className="relative w-28 h-28 sm:w-36 sm:h-36 bg-[#141416] overflow-hidden border border-[rgba(245,239,235,0.08)]">
                   <Image
                     src={entry.image}
-                    alt={entry.title}
+                    alt={entry.title.replace("\n", " ")}
                     fill
-                    className="object-cover filter contrast-110 brightness-90 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500"
-                    sizes="112px"
+                    sizes="(max-width: 768px) 112px, 144px"
+                    className="object-cover grayscale contrast-115 brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-700"
                   />
                 </div>
               </div>
 
-              {/* Col 2: Date (1 col) */}
-              <div className="md:col-span-1 font-mono text-sm tracking-wide text-[#f5efeb] whitespace-pre-line leading-tight">
-                {entry.date}
+              {/* Col 2: Date (md:col-span-2) */}
+              <div className="md:col-span-2 flex flex-col justify-start md:items-end pr-0 md:pr-8 font-mono text-sm sm:text-base tracking-wider text-[#f5efeb] leading-tight">
+                <span>{entry.dateTop}</span>
+                <span className="text-[#a39e93] mt-0.5">{entry.dateBottom}</span>
               </div>
 
-              {/* Col 3: Title & Category (4 cols) */}
-              <div className="md:col-span-4">
-                <h3 className="font-mono text-xs sm:text-sm font-semibold tracking-wider text-[#f5efeb] uppercase group-hover:text-[#eae5d9] transition-colors whitespace-pre-line leading-relaxed">
+              {/* Col 3: Title & Category (md:col-span-4) with Left Vertical Border Line */}
+              <div className="md:col-span-4 flex flex-col justify-between pl-0 md:pl-8 md:border-l border-[rgba(245,239,235,0.14)]">
+                <h3 className="font-mono text-xs sm:text-sm font-semibold tracking-wider text-[#f5efeb] uppercase whitespace-pre-line leading-relaxed group-hover:text-white transition-colors">
                   {entry.title}
                 </h3>
-                <span className="font-mono text-[11px] text-[#8a847a] mt-3 block">
+                <span className="font-mono text-[11px] text-[#8a847a] mt-6 sm:mt-10 block">
                   {entry.type}
                 </span>
               </div>
 
-              {/* Col 4: Description (4 cols) */}
-              <div className="md:col-span-4">
-                <p className="font-sans text-xs text-[#a39e93] leading-relaxed max-w-md">
+              {/* Col 4: Description & Minimalist [ ↗ ] Arrow (md:col-span-4) */}
+              <div className="md:col-span-4 flex flex-col justify-between items-start md:items-end text-left md:text-left">
+                <p className="font-sans text-xs sm:text-sm text-[#a39e93] leading-relaxed max-w-sm">
                   {entry.description}
                 </p>
-              </div>
 
-              {/* Col 5: Arrow Link (1 col) */}
-              <div className="md:col-span-1 flex justify-end">
-                <span className="w-12 h-12 sm:w-14 sm:h-14 border border-[rgba(245,239,235,0.2)] flex items-center justify-center font-mono text-sm sm:text-base text-[#f5efeb] group-hover:border-[#f5efeb] group-hover:text-white transition-colors">
-                  [ ↗ ]
-                </span>
+                <div className="mt-8 sm:mt-12 flex justify-start md:justify-end w-full">
+                  <span className="font-mono text-2xl sm:text-3xl text-[#f5efeb] tracking-widest group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 select-none">
+                    [ ↗ ]
+                  </span>
+                </div>
               </div>
             </Link>
           ))}
