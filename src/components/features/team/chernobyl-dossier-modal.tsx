@@ -3,16 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { TeamMember, Department } from "@/types/team.types";
-import {
-  X,
-  ChevronLeft,
-  ChevronRight,
-  ShieldCheck,
-  Compass,
-  Radio,
-  ExternalLink,
-  Sparkles,
-} from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Radio, Sparkles } from "lucide-react";
 import { InstagramIcon, LinkedinIcon, GithubIcon } from "@/components/ui/icons";
 
 interface ChernobylDossierModalProps {
@@ -90,7 +81,7 @@ export function ChernobylDossierModal({
     .slice(0, 2)
     .toUpperCase();
 
-  // Astrophotography / Instrument Telemetry generator based on Department
+  // Telemetry attributes generator
   const getDepartmentTelemetry = (dept: Department) => {
     switch (dept) {
       case "Leadership":
@@ -164,138 +155,95 @@ export function ChernobylDossierModal({
   const telemetry = getDepartmentTelemetry(member.department);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 lg:p-8 bg-black/85 backdrop-blur-md animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-5 lg:p-7 bg-black/92 backdrop-blur-sm animate-in fade-in duration-200">
       {/* Outer Click Boundary */}
       <div className="absolute inset-0" onClick={onClose} />
 
-      {/* Main Floating HBO Chernobyl-Style Container */}
-      <div className="relative w-full max-w-7xl max-h-[92vh] rounded-[32px] overflow-hidden border border-[rgba(245,239,235,0.18)] bg-[#111114] shadow-[0_25px_80px_rgba(0,0,0,0.95)] flex flex-col lg:flex-row z-10">
-        {/* Floating Left Circular Navigation Button (Chevron) */}
+      {/* Main Expansive Chernobyl Stage Container */}
+      <div
+        data-lenis-prevent
+        onWheel={(e) => e.stopPropagation()}
+        className="relative w-[96vw] max-w-[1780px] h-[92vh] sm:h-[90vh] rounded-[32px] overflow-hidden border border-[rgba(245,239,235,0.18)] bg-[#111114] shadow-[0_30px_90px_rgba(0,0,0,0.98)] flex flex-col lg:flex-row z-10 overscroll-contain"
+      >
+        {/* Floating Left Circular Navigation Button */}
         <button
+          type="button"
           onClick={handlePrev}
-          className="hidden sm:flex absolute left-3 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full border border-[rgba(245,239,235,0.2)] bg-[#18181c]/90 text-[#f5efeb] hover:bg-[#eae5d9] hover:text-[#1D1D1D] items-center justify-center transition-all duration-300 shadow-xl cursor-pointer hover:scale-105 active:scale-95"
+          className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full border border-[rgba(245,239,235,0.22)] bg-[#18181c]/90 text-[#f5efeb] hover:bg-[#eae5d9] hover:text-[#1D1D1D] items-center justify-center transition-all duration-200 shadow-xl cursor-pointer hover:scale-105 active:scale-95"
           aria-label="Previous Profile"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-5 h-5" />
         </button>
 
-        {/* Floating Right Circular Navigation Button (Chevron) */}
+        {/* Floating Right Circular Navigation Button */}
         <button
+          type="button"
           onClick={handleNext}
-          className="hidden sm:flex absolute right-3 lg:right-[380px] top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full border border-[rgba(245,239,235,0.2)] bg-[#18181c]/90 text-[#f5efeb] hover:bg-[#eae5d9] hover:text-[#1D1D1D] items-center justify-center transition-all duration-300 shadow-xl cursor-pointer hover:scale-105 active:scale-95"
+          className="hidden sm:flex absolute right-4 lg:right-[430px] xl:right-[470px] top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full border border-[rgba(245,239,235,0.22)] bg-[#18181c]/90 text-[#f5efeb] hover:bg-[#eae5d9] hover:text-[#1D1D1D] items-center justify-center transition-all duration-200 shadow-xl cursor-pointer hover:scale-105 active:scale-95"
           aria-label="Next Profile"
         >
-          <ChevronRight className="w-6 h-6" />
+          <ChevronRight className="w-5 h-5" />
         </button>
 
         {/* LEFT / HERO SECTION: The Chernobyl Persona Stage */}
-        <div className="relative flex-1 p-6 sm:p-10 lg:p-12 flex flex-col justify-between overflow-y-auto overflow-x-hidden min-h-[480px] lg:min-h-[640px]">
-          {/* Faint Background Radar/Concentric Rings (Chernobyl poster motif) */}
-          <div className="absolute -left-24 -top-24 w-[620px] h-[620px] pointer-events-none opacity-[0.09]">
-            <svg viewBox="0 0 600 600" className="w-full h-full text-[#f5efeb]">
-              <circle
-                cx="300"
-                cy="300"
-                r="100"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1"
-              />
-              <circle
-                cx="300"
-                cy="300"
-                r="180"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1"
-                strokeDasharray="6 6"
-              />
-              <circle
-                cx="300"
-                cy="300"
-                r="260"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1"
-              />
-              <circle
-                cx="300"
-                cy="300"
-                r="290"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="0.5"
-                strokeDasharray="3 3"
-              />
-              <line
-                x1="300"
-                y1="0"
-                x2="300"
-                y2="600"
-                stroke="currentColor"
-                strokeWidth="0.5"
-              />
-              <line
-                x1="0"
-                y1="300"
-                x2="600"
-                y2="300"
-                stroke="currentColor"
-                strokeWidth="0.5"
-              />
-            </svg>
-          </div>
-
-          {/* Large Atmospheric Character Portrait (Blending smoothly with dark canvas) */}
-          <div className="absolute right-0 sm:right-6 lg:right-10 top-0 bottom-0 w-full sm:w-[460px] pointer-events-none z-0 overflow-hidden opacity-35 sm:opacity-55 lg:opacity-75">
+        <div
+          data-lenis-prevent
+          onWheel={(e) => e.stopPropagation()}
+          className="relative flex-1 min-h-0 p-6 sm:p-10 lg:p-14 flex flex-col justify-between overflow-y-auto overflow-x-hidden overscroll-contain"
+        >
+          {/* Full Vivid Character Portrait: Perfectly Visible Background */}
+          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
             {!imageFailed && member.image ? (
               <Image
                 src={member.image}
                 alt={member.name}
                 fill
                 onError={() => setImageFailed(true)}
-                className="object-cover object-center grayscale contrast-125"
-                sizes="(max-width: 1024px) 100vw, 460px"
+                className="object-cover object-center sm:object-[center_20%] contrast-110 grayscale-[15%]"
+                sizes="(max-width: 1024px) 100vw, 75vw"
                 priority
+                quality={80}
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center opacity-20">
-                <span className="font-editorial-serif text-[180px] text-[#eae5d9]">
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#1c1c22] to-[#0c0c0e]">
+                <span className="font-editorial-serif text-[180px] text-[#eae5d9]/20">
                   {initials}
                 </span>
               </div>
             )}
-            {/* Subtle Gradient Overlays for Cinematic Blend */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#111114] via-[#111114]/60 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#111114] via-transparent to-[#111114]/40" />
+
+            {/* Directional Vignette: Keeps Text 100% Readable without obscuring the person */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#111114]/95 via-[#111114]/65 sm:via-[#111114]/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#111114]/90 via-transparent to-[#111114]/40" />
           </div>
 
           {/* Top Bar inside Left Canvas */}
-          <div className="relative z-10 flex items-center justify-between gap-4 mb-8">
-            {/* Minimalist HBO-style logo header */}
+          <div className="relative z-10 flex items-center justify-between gap-4 mb-6">
+            {/* Minimalist logo header */}
             <div className="flex items-center gap-3">
               <span className="font-mono text-xl sm:text-2xl font-black tracking-tighter text-[#f5efeb]">
                 ASTRONOMY<span className="text-[#c84b31]">BU</span>
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#c84b31]" />
-              <span className="font-mono text-[10px] tracking-widest text-[#a39e93] uppercase">
+              <span className="font-mono text-[10px] tracking-widest text-[#eae5d9]/80 uppercase">
                 PERSONNEL DOSSIER
               </span>
             </div>
 
-            {/* Top Badges & Close Button */}
+            {/* Badges & Close Button */}
             <div className="flex items-center gap-2">
               {member.isHead && (
                 <span className="px-3 py-1 rounded-full bg-[#c84b31] text-white font-mono text-[9px] font-bold tracking-widest uppercase shadow-sm">
                   LEAD / HEAD
                 </span>
               )}
-              <span className="px-3 py-1 rounded-full border border-[rgba(245,239,235,0.18)] bg-[#18181c] font-mono text-[9px] text-[#a39e93] uppercase">
+              <span className="px-3 py-1 rounded-full border border-[rgba(245,239,235,0.2)] bg-[#18181c]/80 backdrop-blur-sm font-mono text-[9px] text-[#f5efeb] uppercase">
                 {member.department}
               </span>
               <button
+                type="button"
                 onClick={onClose}
-                className="w-8 h-8 rounded-full border border-[rgba(245,239,235,0.18)] bg-[#18181c] text-[#f5efeb] hover:bg-[#eae5d9] hover:text-[#1D1D1D] flex items-center justify-center transition-colors cursor-pointer ml-2"
+                className="w-9 h-9 rounded-full border border-[rgba(245,239,235,0.2)] bg-[#18181c]/80 text-[#f5efeb] hover:bg-[#eae5d9] hover:text-[#1D1D1D] flex items-center justify-center transition-colors cursor-pointer ml-1"
                 aria-label="Close dossier"
               >
                 <X className="w-4 h-4" />
@@ -304,65 +252,64 @@ export function ChernobylDossierModal({
           </div>
 
           {/* Center Stage: Monumental Title & Archival Transcript (Like CHERNOBYL) */}
-          <div className="relative z-10 max-w-xl my-auto py-6">
-            <div className="flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] text-[#c84b31] uppercase mb-2">
+          <div className="relative z-10 max-w-2xl my-auto py-6">
+            <div className="flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] text-[#c84b31] uppercase mb-2 font-bold drop-shadow-sm">
               <Radio className="w-3.5 h-3.5 animate-pulse" />
               <span>{telemetry.callsign} · STATION 28.4595° N</span>
             </div>
 
             {/* Giant monumental Name typography */}
-            <h1 className="font-sans font-black tracking-tight text-4xl sm:text-6xl lg:text-7xl text-[#f5efeb] uppercase leading-[0.95] drop-shadow-md">
+            <h1 className="font-sans font-black tracking-tight text-5xl sm:text-7xl lg:text-8xl text-[#f5efeb] uppercase leading-[0.92] drop-shadow-lg">
               {member.name.replace(/\[.*?\]/g, "")}
             </h1>
 
             {/* Role & Division */}
-            <p className="mt-3 font-mono text-xs sm:text-sm tracking-archival text-[#eae5d9]/85 uppercase font-medium">
+            <p className="mt-4 font-mono text-xs sm:text-sm tracking-archival text-[#eae5d9] uppercase font-bold drop-shadow-sm">
               {member.role} — {member.department} DIVISION
             </p>
 
             {/* Member Quote / Observatory Log */}
             {member.quote && (
-              <div className="mt-6 p-4 rounded-[18px] bg-[#16161a]/80 border border-[rgba(245,239,235,0.1)] backdrop-blur-sm">
-                <p className="font-editorial-serif italic text-base sm:text-lg text-[#f5efeb]/90 leading-relaxed">
+              <div className="mt-6 p-4 rounded-[18px] bg-[#141418]/85 border border-[rgba(245,239,235,0.14)] backdrop-blur-md max-w-xl">
+                <p className="font-editorial-serif italic text-lg sm:text-xl text-[#f5efeb] leading-relaxed">
                   &ldquo;{member.quote}&rdquo;
                 </p>
-                <p className="font-mono text-[9px] text-[#8a847a] tracking-widest mt-2 uppercase">
+                <p className="font-mono text-[9px] text-[#a39e93] tracking-widest mt-2 uppercase">
                   — LOGGED TRANSCRIPT // BU ARCHIVES
                 </p>
               </div>
             )}
 
             {/* Specialized Telemetry Attributes */}
-            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-[rgba(245,239,235,0.08)]">
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-[rgba(245,239,235,0.12)] max-w-xl">
               <div>
-                <span className="font-mono text-[9px] text-[#8a847a] uppercase tracking-wider block">
+                <span className="font-mono text-[9px] text-[#a39e93] uppercase tracking-wider block">
                   PRIMARY INSTRUMENT
                 </span>
-                <span className="font-mono text-[11px] text-[#eae5d9] font-medium leading-snug">
+                <span className="font-mono text-[11px] text-[#f5efeb] font-medium leading-snug">
                   {telemetry.instrument}
                 </span>
               </div>
               <div>
-                <span className="font-mono text-[9px] text-[#8a847a] uppercase tracking-wider block">
+                <span className="font-mono text-[9px] text-[#a39e93] uppercase tracking-wider block">
                   SPECIALTY / FOCUS
                 </span>
-                <span className="font-mono text-[11px] text-[#eae5d9] font-medium leading-snug">
+                <span className="font-mono text-[11px] text-[#f5efeb] font-medium leading-snug">
                   {telemetry.specialty}
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Bottom Row: Chernobyl "01 MAY 6, 2019 >" & Socials */}
-          <div className="relative z-10 pt-6 border-t border-[rgba(245,239,235,0.1)] flex flex-wrap items-end justify-between gap-4">
+          {/* Bottom Row: Chernobyl Index Number & Socials */}
+          <div className="relative z-10 pt-6 border-t border-[rgba(245,239,235,0.12)] flex flex-wrap items-end justify-between gap-4">
             <div className="flex items-baseline gap-4">
-              {/* Massive index number */}
-              <span className="font-sans font-black text-4xl sm:text-5xl text-[#f5efeb]">
+              <span className="font-sans font-black text-5xl sm:text-6xl text-[#f5efeb] drop-shadow-md">
                 {String(safeIndex + 1).padStart(2, "0")}
               </span>
               <div className="flex flex-col">
-                <span className="font-mono text-[11px] text-[#a39e93] uppercase tracking-wider">
-                  TENURE 2025–2026
+                <span className="font-mono text-[11px] text-[#a39e93] uppercase tracking-wider font-semibold">
+                  TENURE ARCHIVE
                 </span>
                 <span className="font-mono text-[10px] text-[#8a847a] uppercase flex items-center gap-1">
                   BENNETT EXPEDITION CORPS{" "}
@@ -382,7 +329,7 @@ export function ChernobylDossierModal({
                   }
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full border border-[rgba(245,239,235,0.18)] bg-[#18181c] text-[#a39e93] hover:text-[#f5efeb] hover:border-[#eae5d9] flex items-center justify-center transition-colors cursor-pointer"
+                  className="w-10 h-10 rounded-full border border-[rgba(245,239,235,0.2)] bg-[#18181c]/90 text-[#a39e93] hover:text-[#f5efeb] hover:border-[#eae5d9] flex items-center justify-center transition-colors cursor-pointer"
                   aria-label={`${member.name} Instagram`}
                 >
                   <InstagramIcon className="w-4 h-4" />
@@ -397,7 +344,7 @@ export function ChernobylDossierModal({
                   }
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full border border-[rgba(245,239,235,0.18)] bg-[#18181c] text-[#a39e93] hover:text-[#f5efeb] hover:border-[#eae5d9] flex items-center justify-center transition-colors cursor-pointer"
+                  className="w-10 h-10 rounded-full border border-[rgba(245,239,235,0.2)] bg-[#18181c]/90 text-[#a39e93] hover:text-[#f5efeb] hover:border-[#eae5d9] flex items-center justify-center transition-colors cursor-pointer"
                   aria-label={`${member.name} LinkedIn`}
                 >
                   <LinkedinIcon className="w-4 h-4" />
@@ -408,7 +355,7 @@ export function ChernobylDossierModal({
                   href={member.socials.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full border border-[rgba(245,239,235,0.18)] bg-[#18181c] text-[#a39e93] hover:text-[#f5efeb] hover:border-[#eae5d9] flex items-center justify-center transition-colors cursor-pointer"
+                  className="w-10 h-10 rounded-full border border-[rgba(245,239,235,0.2)] bg-[#18181c]/90 text-[#a39e93] hover:text-[#f5efeb] hover:border-[#eae5d9] flex items-center justify-center transition-colors cursor-pointer"
                   aria-label={`${member.name} GitHub`}
                 >
                   <GithubIcon className="w-4 h-4" />
@@ -418,10 +365,14 @@ export function ChernobylDossierModal({
           </div>
         </div>
 
-        {/* RIGHT SIDE RAIL: The Chernobyl Episode List of Other Profiles */}
-        <div className="w-full lg:w-[380px] xl:w-[420px] bg-[#0c0c0f] border-t lg:border-t-0 lg:border-l border-[rgba(245,239,235,0.12)] p-5 sm:p-6 flex flex-col justify-between shrink-0">
+        {/* RIGHT SIDE RAIL: The Chernobyl Episode List */}
+        <div
+          data-lenis-prevent
+          onWheel={(e) => e.stopPropagation()}
+          className="w-full lg:w-[400px] xl:w-[440px] bg-[#0c0c0f]/95 border-t lg:border-t-0 lg:border-l border-[rgba(245,239,235,0.12)] p-5 sm:p-6 flex flex-col justify-between shrink-0 min-h-0 h-full overscroll-contain"
+        >
           {/* Header for Side Rail */}
-          <div className="pb-4 border-b border-[rgba(245,239,235,0.1)] flex items-center justify-between">
+          <div className="pb-4 border-b border-[rgba(245,239,235,0.1)] flex items-center justify-between shrink-0">
             <div>
               <h2 className="font-sans font-bold text-sm sm:text-base text-[#f5efeb] tracking-wide uppercase">
                 EXPEDITION ROSTER
@@ -439,7 +390,9 @@ export function ChernobylDossierModal({
           {/* Scrollable list of profiles matching the Chernobyl episode thumbnail list */}
           <div
             ref={sideRailRef}
-            className="flex-1 my-3 overflow-y-auto max-h-[320px] lg:max-h-[500px] flex flex-col gap-2 pr-1"
+            data-lenis-prevent
+            onWheel={(e) => e.stopPropagation()}
+            className="flex-1 min-h-0 my-3 overflow-y-auto overscroll-contain flex flex-col gap-2 pr-1.5"
           >
             {allMembers.map((other, idx) => {
               const isActive = other.id === member.id;
@@ -468,7 +421,7 @@ export function ChernobylDossierModal({
                       : "bg-[#131317]/80 hover:bg-[#1a1a20] border border-[rgba(245,239,235,0.06)] hover:border-[rgba(245,239,235,0.2)]"
                   }`}
                 >
-                  {/* Left Column: Number and Info */}
+                  {/* Left: Index & Name */}
                   <div className="flex items-start gap-3 min-w-0">
                     <span
                       className={`font-mono text-sm font-bold pt-0.5 ${
@@ -496,7 +449,7 @@ export function ChernobylDossierModal({
                     </div>
                   </div>
 
-                  {/* Right Column: Mini Rounded Thumbnail Image */}
+                  {/* Right: Rounded Thumbnail Photo */}
                   <div className="relative w-16 h-12 rounded-[10px] overflow-hidden border border-[rgba(245,239,235,0.12)] bg-[#1e1e24] shrink-0 group-hover:border-[rgba(245,239,235,0.3)] transition-colors">
                     {!hasFailed && other.image ? (
                       <Image
@@ -515,6 +468,8 @@ export function ChernobylDossierModal({
                             : "grayscale opacity-80 group-hover:opacity-100"
                         }`}
                         sizes="64px"
+                        loading="lazy"
+                        quality={60}
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center font-editorial-serif text-sm text-[#a39e93]">
@@ -527,12 +482,13 @@ export function ChernobylDossierModal({
             })}
           </div>
 
-          {/* Side Rail Footer: Return back to Carousel */}
+          {/* Side Rail Footer */}
           <div className="pt-3 border-t border-[rgba(245,239,235,0.1)] flex items-center justify-between">
             <span className="font-mono text-[9px] text-[#8a847a] tracking-widest uppercase">
               ESC OR CLICK OUTSIDE TO RETURN
             </span>
             <button
+              type="button"
               onClick={onClose}
               className="px-3.5 py-1.5 rounded-full bg-[#eae5d9] hover:bg-[#f5efeb] text-[#1D1D1D] font-mono text-[10px] font-bold tracking-wider uppercase transition-colors cursor-pointer"
             >

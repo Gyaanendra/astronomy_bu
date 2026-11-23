@@ -15,21 +15,23 @@ export function SmoothScrollProvider({
     // Register ScrollTrigger plugin
     gsap.registerPlugin(ScrollTrigger);
 
-    // Initialize Lenis smooth scroll
+    // Initialize Lenis with high-performance, snappy settings
     const lenis = new Lenis({
-      duration: 1.2,
+      autoRaf: false,
+      duration: 0.75,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.5,
+      wheelMultiplier: 1.05,
+      touchMultiplier: 1.0,
+      syncTouch: false,
     });
 
     // Update ScrollTrigger on Lenis scroll
     lenis.on("scroll", ScrollTrigger.update);
 
-    // Sync Lenis RAF with GSAP ticker for 60-120fps synchronization
+    // Sync Lenis RAF with GSAP ticker; lagSmoothing(0) prevents timestamp dilation
     const updateTicker = (time: number) => {
       lenis.raf(time * 1000);
     };

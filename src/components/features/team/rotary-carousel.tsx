@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import Image from "next/image";
 import { TeamMember } from "@/types/team.types";
 import {
@@ -8,7 +8,7 @@ import {
   ChevronRight,
   Eye,
   Sparkles,
-  Compass,
+  MoveHorizontal,
 } from "lucide-react";
 
 interface RotaryCarouselProps {
@@ -28,10 +28,28 @@ export function RotaryCarousel({
   const [imageFailures, setImageFailures] = useState<Record<string, boolean>>(
     {},
   );
+  const [dragOffset, setDragOffset] = useState<number>(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [containerWidth, setContainerWidth] = useState(1200);
+
   const dragStartX = useRef<number>(0);
-  const dragDeltaX = useRef<number>(0);
+  const currentDragDelta = useRef<number>(0);
+  const rafId = useRef<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const isWheelingRef = useRef<boolean>(false);
+  const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Resize listener for responsive spacing
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.clientWidth);
+      }
+    };
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
 
   // Sync activeIndex if activeMemberId changes from outside
   useEffect(() => {
@@ -41,7 +59,7 @@ export function RotaryCarousel({
     }
   }, [activeMemberId, members]);
 
-  // Reset active index if member list shrinks
+  // Keep index within bounds
   useEffect(() => {
     if (activeIndex >= members.length && members.length > 0) {
       setActiveIndex(0);
@@ -66,6 +84,47 @@ export function RotaryCarousel({
     });
   }, [members, onCenterMember]);
 
+  // High performance, silky smooth horizontal trackpad/wheel navigation
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    let accumulatedDelta = 0;
+
+    const onWheel = (e: WheelEvent) => {
+      const isHorizontal =
+        Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 2;
+      const isShift = e.shiftKey && Math.abs(e.deltaY) > 2;
+
+      if (isHorizontal || isShift) {
+        e.preventDefault();
+        const delta = isHorizontal ? e.deltaX : e.deltaY;
+        accumulatedDelta += delta;
+
+        if (!isWheelingRef.current && Math.abs(accumulatedDelta) >= 32) {
+          isWheelingRef.current = true;
+          if (accumulatedDelta > 0) {
+            handleNext();
+          } else {
+            handlePrev();
+          }
+          accumulatedDelta = 0;
+
+          if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
+          wheelTimeoutRef.current = setTimeout(() => {
+            isWheelingRef.current = false;
+          }, 200);
+        }
+      }
+    };
+
+    container.addEventListener("wheel", onWheel, { passive: false });
+    return () => {
+      container.removeEventListener("wheel", onWheel);
+      if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
+    };
+  }, [handleNext, handlePrev]);
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -76,36 +135,60 @@ export function RotaryCarousel({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handlePrev, handleNext]);
 
-  // Touch and drag handlers
+  // RAF-throttled drag tracking: 120fps smooth without saturating React renders
   const handleTouchStart = (e: React.TouchEvent | React.MouseEvent) => {
     setIsDragging(true);
     const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
     dragStartX.current = clientX;
-    dragDeltaX.current = 0;
+    currentDragDelta.current = 0;
+    setDragOffset(0);
   };
 
   const handleTouchMove = (e: React.TouchEvent | React.MouseEvent) => {
     if (!isDragging) return;
     const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
-    dragDeltaX.current = clientX - dragStartX.current;
+    currentDragDelta.current = clientX - dragStartX.current;
+
+    if (!rafId.current) {
+      rafId.current = requestAnimationFrame(() => {
+        setDragOffset(currentDragDelta.current);
+        rafId.current = null;
+      });
+    }
   };
 
   const handleTouchEnd = () => {
     if (!isDragging) return;
+    if (rafId.current) {
+      cancelAnimationFrame(rafId.current);
+      rafId.current = null;
+    }
     setIsDragging(false);
-    if (dragDeltaX.current > 45) {
+    const delta = currentDragDelta.current;
+    if (delta > 42) {
       handlePrev();
-    } else if (dragDeltaX.current < -45) {
+    } else if (delta < -42) {
       handleNext();
     }
-    dragDeltaX.current = 0;
+    setDragOffset(0);
+    currentDragDelta.current = 0;
   };
+
+  // Safe non-overlapping offset range according to member count (prevents duplicate React keys)
+  const visibleOffsets = useMemo(() => {
+    const count = members.length;
+    if (count <= 1) return [0];
+    if (count === 2) return [0, 1];
+    if (count <= 4) return [-1, 0, 1];
+    if (count <= 6) return [-2, -1, 0, 1, 2];
+    return [-3, -2, -1, 0, 1, 2, 3];
+  }, [members.length]);
 
   if (!members || members.length === 0) {
     return (
-      <div className="py-24 text-center">
-        <p className="font-mono text-sm text-[#8a847a]">
-          NO CURATORS ENROLLED IN THIS DIVISION.
+      <div className="py-16 text-center">
+        <p className="font-mono text-xs text-[#8a847a]">
+          NO CURATORS ENROLLED IN THIS DIVISION FOR THIS TENURE.
         </p>
       </div>
     );
@@ -113,13 +196,18 @@ export function RotaryCarousel({
 
   const activeMember = members[activeIndex] || members[0];
 
-  // Offsets to render: -3 to +3
-  const visibleOffsets = [-3, -2, -1, 0, 1, 2, 3];
+  const isMobile = containerWidth < 640;
+  const isTablet = containerWidth >= 640 && containerWidth < 1050;
+  const spacing = isMobile ? 180 : isTablet ? 250 : 310;
+  const angleMultiplier = isMobile ? 8.5 : isTablet ? 9.8 : 11;
+
+  // Normalized drag fraction between -0.75 and 0.75
+  const dragFraction = Math.max(-0.75, Math.min(0.75, dragOffset / spacing));
 
   return (
     <div
       ref={containerRef}
-      className="relative w-full max-w-7xl mx-auto flex flex-col items-center select-none pt-4 pb-16 overflow-hidden"
+      className="relative w-full max-w-[1700px] mx-auto flex flex-col items-center select-none pt-2 pb-6 overflow-hidden cursor-grab active:cursor-grabbing"
       onMouseDown={handleTouchStart}
       onMouseMove={handleTouchMove}
       onMouseUp={handleTouchEnd}
@@ -127,55 +215,79 @@ export function RotaryCarousel({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Top telemetry indicator and quick controls */}
-      <div className="w-full flex items-center justify-between px-6 sm:px-12 mb-8 z-30">
-        <div className="flex items-center gap-3">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#c84b31] animate-pulse" />
-          <span className="font-mono text-[11px] tracking-archival text-[#a39e93] uppercase">
-            ORBIT WHEEL // SELECTION [{String(activeIndex + 1).padStart(2, "0")}{" "}
-            / {String(members.length).padStart(2, "0")}]
+      {/* Sleek top telemetry row */}
+      <div className="w-full flex items-center justify-between px-4 sm:px-8 mb-4 z-20">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#c84b31] animate-pulse" />
+          <span className="font-mono text-[10px] sm:text-[11px] tracking-widest text-[#a39e93] uppercase font-bold">
+            ORBIT DOSSIER [{String(activeIndex + 1).padStart(2, "0")} /{" "}
+            {String(members.length).padStart(2, "0")}]
           </span>
         </div>
 
-        {/* Navigation Arrows */}
         <div className="flex items-center gap-3">
-          <button
-            onClick={handlePrev}
-            className="w-10 h-10 rounded-full border border-[rgba(245,239,235,0.18)] bg-[#18181b]/80 hover:bg-[#eae5d9] hover:text-[#1D1D1D] text-[#f5efeb] flex items-center justify-center transition-all duration-300 shadow-lg cursor-pointer"
-            aria-label="Previous curator"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            onClick={handleNext}
-            className="w-10 h-10 rounded-full border border-[rgba(245,239,235,0.18)] bg-[#18181b]/80 hover:bg-[#eae5d9] hover:text-[#1D1D1D] text-[#f5efeb] flex items-center justify-center transition-all duration-300 shadow-lg cursor-pointer"
-            aria-label="Next curator"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
+          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full border border-[rgba(245,239,235,0.12)] bg-[#17171a] text-[#8a847a] font-mono text-[9px] tracking-wider uppercase">
+            <MoveHorizontal className="w-3 h-3 text-[#c84b31]" />
+            <span>Scroll Sideways ↔ or Drag</span>
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={handlePrev}
+              className="w-9 h-9 rounded-full border border-[rgba(245,239,235,0.18)] bg-[#19191c] hover:bg-[#eae5d9] hover:text-[#1D1D1D] text-[#f5efeb] flex items-center justify-center transition-colors cursor-pointer"
+              aria-label="Previous profile"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={handleNext}
+              className="w-9 h-9 rounded-full border border-[rgba(245,239,235,0.18)] bg-[#19191c] hover:bg-[#eae5d9] hover:text-[#1D1D1D] text-[#f5efeb] flex items-center justify-center transition-colors cursor-pointer"
+              aria-label="Next profile"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* The Radial Arc Stage */}
-      <div className="relative w-full h-[520px] sm:h-[580px] flex items-center justify-center">
+      {/* 3D Perspective Hero Arc Stage */}
+      <div
+        className="relative w-full h-[500px] sm:h-[580px] md:h-[640px] flex items-center justify-center"
+        style={{ perspective: "1200px" }}
+      >
+        {/* Subtle background radar circles */}
+        <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0 opacity-20">
+          <div className="w-[600px] sm:w-[900px] lg:w-[1200px] h-[600px] sm:h-[900px] lg:h-[1200px] rounded-full border border-dashed border-[rgba(245,239,235,0.14)] translate-y-[120px]" />
+        </div>
+
+        {/* Rotary Card Fan with STABLE KEYS and True GPU Interpolation */}
         {visibleOffsets.map((offset) => {
           const itemIndex =
             (activeIndex + offset + members.length) % members.length;
           const member = members[itemIndex];
           if (!member) return null;
 
-          const isCenter = offset === 0;
-          const absOffset = Math.abs(offset);
+          // Effective offset with drag fraction
+          const effOffset = offset + dragFraction;
+          const absEffOffset = Math.abs(effOffset);
+          const isCenter = Math.abs(effOffset) < 0.45;
 
-          // Radial positioning calculations
-          const angleDeg = offset * 15;
-          const angleRad = (angleDeg * Math.PI) / 180;
-          const translateX = Math.sin(angleRad) * 440;
-          const translateY = (1 - Math.cos(angleRad)) * 110 + absOffset * 18;
-          const rotateZ = angleDeg;
-          const scale = 1 - absOffset * 0.08;
-          const zIndex = 40 - absOffset;
-          const opacity = absOffset > 2 ? Math.max(0, 1 - absOffset * 0.35) : 1;
+          // True 3D turntable coordinates
+          const translateX = effOffset * spacing;
+          const translateY = isCenter ? -10 : Math.pow(absEffOffset, 1.45) * 19;
+          const translateZ = isCenter ? 35 : -absEffOffset * 38;
+          const rotateZ = effOffset * angleMultiplier;
+          const rotateY = -effOffset * 6.0;
+          const scale = isCenter
+            ? 1.05
+            : Math.max(0.78, 1 - absEffOffset * 0.072);
+          const zIndex = Math.round(50 - absEffOffset * 5);
+          const opacity =
+            absEffOffset > 2.5
+              ? Math.max(0, 1 - (absEffOffset - 2.5) * 1.5)
+              : 1;
 
           const imageFailed = imageFailures[member.id];
           const initials = member.name
@@ -189,9 +301,9 @@ export function RotaryCarousel({
 
           return (
             <div
-              key={`${member.id}-${offset}`}
+              key={member.id}
               onClick={() => {
-                if (isCenter) {
+                if (Math.abs(effOffset) < 0.35) {
                   onSelectMember(member);
                 } else {
                   setActiveIndex(itemIndex);
@@ -199,21 +311,25 @@ export function RotaryCarousel({
                 }
               }}
               style={{
-                transform: `translateX(${translateX}px) translateY(${translateY}px) rotateZ(${rotateZ}deg) scale(${scale})`,
+                transform: `translate3d(${translateX}px, ${translateY}px, ${translateZ}px) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${scale})`,
                 zIndex,
                 opacity,
-                transition:
-                  "transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.45s ease",
+                transformStyle: "preserve-3d",
+                backfaceVisibility: "hidden",
+                willChange: isDragging ? "transform" : "auto",
+                transition: isDragging
+                  ? "none"
+                  : "transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
               }}
-              className={`absolute top-4 w-[260px] sm:w-[300px] h-[390px] sm:h-[450px] rounded-[30px] p-5 sm:p-6 flex flex-col justify-between cursor-pointer transition-shadow duration-300 group ${
+              className={`absolute w-[260px] sm:w-[310px] md:w-[350px] lg:w-[380px] h-[390px] sm:h-[460px] md:h-[520px] rounded-[28px] p-5 sm:p-6 flex flex-col justify-between cursor-pointer group select-none ${
                 isCenter
-                  ? "border-2 border-[#eae5d9] bg-[#161619] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.9),0_0_35px_rgba(234,229,217,0.15)] ring-1 ring-[rgba(245,239,235,0.2)]"
-                  : "border border-[rgba(245,239,235,0.14)] bg-[#111113]/90 hover:border-[rgba(245,239,235,0.35)] shadow-xl"
+                  ? "border-2 border-[#eae5d9] bg-[#161619] shadow-[0_18px_45px_rgba(0,0,0,0.85)] ring-1 ring-[rgba(245,239,235,0.2)]"
+                  : "border border-[rgba(245,239,235,0.12)] bg-[#111114]/90 hover:border-[rgba(245,239,235,0.3)] shadow-lg"
               }`}
             >
-              {/* Card Top: Department & Dossier Code */}
-              <div className="flex items-center justify-between pb-3 border-b border-[rgba(245,239,235,0.08)]">
-                <span className="font-mono text-[9px] tracking-widest text-[#a39e93] uppercase flex items-center gap-1.5">
+              {/* Card Header: Division & Lead status */}
+              <div className="flex items-center justify-between pb-2 border-b border-[rgba(245,239,235,0.08)]">
+                <span className="font-mono text-[9px] sm:text-[10px] tracking-widest text-[#a39e93] uppercase flex items-center gap-1.5 font-bold">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#c84b31]" />
                   {member.department}
                 </span>
@@ -223,14 +339,14 @@ export function RotaryCarousel({
                     LEAD
                   </span>
                 ) : (
-                  <span className="font-mono text-[8px] text-[#8a847a] tracking-wider">
+                  <span className="font-mono text-[8px] sm:text-[9px] text-[#8a847a] tracking-wider">
                     #{String(itemIndex + 1).padStart(2, "0")}
                   </span>
                 )}
               </div>
 
-              {/* Card Portrait Frame */}
-              <div className="relative my-3 w-full flex-1 rounded-[22px] overflow-hidden border border-[rgba(245,239,235,0.1)] bg-[#1a1a1e]">
+              {/* Card Portrait Frame with Optimized Image Loading */}
+              <div className="relative my-2.5 w-full flex-1 rounded-[18px] overflow-hidden border border-[rgba(245,239,235,0.1)] bg-[#18181d]">
                 {!imageFailed && member.image ? (
                   <Image
                     src={member.image}
@@ -242,16 +358,19 @@ export function RotaryCarousel({
                         [member.id]: true,
                       }))
                     }
-                    className={`object-cover transition-all duration-500 ${
+                    className={`object-cover transition-all duration-300 ${
                       isCenter
-                        ? "contrast-110 grayscale-[35%] group-hover:grayscale-0 group-hover:scale-105"
+                        ? "contrast-110 grayscale-[10%] group-hover:grayscale-0"
                         : "contrast-100 grayscale opacity-80"
                     }`}
-                    sizes="(max-width: 768px) 260px, 300px"
+                    sizes="(max-width: 768px) 260px, 380px"
+                    priority={isCenter}
+                    loading={isCenter ? "eager" : "lazy"}
+                    quality={75}
                   />
                 ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-gradient-to-br from-[#1c1c22] to-[#0d0d10] text-center select-none">
-                    <div className="w-16 h-16 rounded-full border border-[rgba(245,239,235,0.2)] flex items-center justify-center mb-2 bg-[#25252b]">
+                  <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-[#1a1a20] to-[#0f0f12] text-center select-none">
+                    <div className="w-16 h-16 rounded-full border border-[rgba(245,239,235,0.2)] flex items-center justify-center mb-2 bg-[#222228]">
                       <span className="font-editorial-serif text-3xl text-[#eae5d9]">
                         {initials}
                       </span>
@@ -262,13 +381,12 @@ export function RotaryCarousel({
                   </div>
                 )}
 
-                {/* Subtle vignette gradient at bottom of photo */}
-                <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#111113] to-transparent pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#111114] via-[#111114]/30 to-transparent pointer-events-none" />
               </div>
 
-              {/* Card Bottom: Identity & Action */}
-              <div className="pt-2 flex flex-col gap-1">
-                <span className="font-mono text-[9px] tracking-archival text-[#a39e93] uppercase line-clamp-1">
+              {/* Card Footer: Role & Name */}
+              <div className="pt-1 flex flex-col gap-0.5">
+                <span className="font-mono text-[8px] sm:text-[9px] tracking-archival text-[#a39e93] uppercase line-clamp-1">
                   {member.role}
                 </span>
                 <h3 className="font-editorial-serif text-xl sm:text-2xl text-[#f5efeb] leading-tight group-hover:text-[#eae5d9] transition-colors line-clamp-1">
@@ -276,14 +394,12 @@ export function RotaryCarousel({
                 </h3>
 
                 {isCenter && (
-                  <div className="mt-2.5 pt-2 border-t border-[rgba(245,239,235,0.1)] flex items-center justify-between text-[#eae5d9]">
-                    <span className="font-mono text-[9px] tracking-widest uppercase font-bold flex items-center gap-1">
+                  <div className="mt-2 pt-1.5 border-t border-[rgba(245,239,235,0.1)] flex items-center justify-between text-[#eae5d9]">
+                    <span className="font-mono text-[9px] tracking-widest uppercase font-bold flex items-center gap-1.5">
                       <Eye className="w-3 h-3 text-[#c84b31]" />
                       INSPECT DOSSIER
                     </span>
-                    <span className="font-mono text-[10px] text-[#a39e93]">
-                      ↗
-                    </span>
+                    <span className="font-mono text-xs text-[#a39e93]">↗</span>
                   </div>
                 )}
               </div>
@@ -292,45 +408,22 @@ export function RotaryCarousel({
         })}
       </div>
 
-      {/* Circular Telemetry Dial & Compass Arc (Ref 1 bottom dial) */}
-      <div className="relative mt-2 flex flex-col items-center z-10">
-        {/* Active pointer marker */}
-        <div className="flex flex-col items-center mb-3">
-          <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[8px] border-b-[#c84b31]" />
-          <span className="font-mono text-[9px] tracking-widest text-[#c84b31] uppercase mt-1 font-bold">
-            CURATOR IN FOCUS
-          </span>
-        </div>
+      {/* Active Member Focus Bar */}
+      <div className="relative mt-1 flex flex-col items-center z-10 w-full">
+        {activeMember.quote && (
+          <p className="font-editorial-serif italic text-base sm:text-lg text-[#f5efeb]/85 line-clamp-1 mb-2.5 text-center max-w-lg px-4">
+            &ldquo;{activeMember.quote}&rdquo;
+          </p>
+        )}
 
-        {/* Concentric telemetry rings */}
-        <div className="relative w-[340px] sm:w-[460px] h-[70px] overflow-hidden flex items-start justify-center">
-          {/* Outer dashed arc */}
-          <div className="absolute -top-[160px] w-[420px] sm:w-[540px] h-[420px] sm:h-[540px] rounded-full border border-dashed border-[rgba(245,239,235,0.18)] flex items-center justify-center">
-            {/* Inner solid arc */}
-            <div className="w-[360px] sm:w-[470px] h-[360px] sm:h-[470px] rounded-full border border-[rgba(245,239,235,0.1)] flex items-center justify-center">
-              <span className="font-mono text-[8px] tracking-[0.3em] text-[#8a847a] uppercase -translate-y-[150px]">
-                ASTRONOMY BU • BENNETT OBSERVATORY • CREW ARCHIVE
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Active Member Bio Snippet & Call to Action */}
-        <div className="mt-4 flex flex-col items-center text-center max-w-lg px-4">
-          {activeMember.quote && (
-            <p className="font-mono text-xs text-[#a39e93] italic line-clamp-2 mb-3">
-              &ldquo;{activeMember.quote}&rdquo;
-            </p>
-          )}
-
-          <button
-            onClick={() => onSelectMember(activeMember)}
-            className="px-6 py-2.5 rounded-full bg-[#eae5d9] hover:bg-[#f5efeb] text-[#1D1D1D] font-mono text-xs font-bold tracking-widest uppercase transition-all duration-300 shadow-md flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-[#c84b31]" />
-            OPEN PERSONNEL DOSSIER
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => onSelectMember(activeMember)}
+          className="px-6 py-2.5 rounded-full bg-[#eae5d9] hover:bg-[#f5efeb] text-[#1D1D1D] font-mono text-xs font-bold tracking-widest uppercase transition-all duration-200 shadow-md flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
+        >
+          <Sparkles className="w-3.5 h-3.5 text-[#c84b31]" />
+          OPEN PERSONNEL DOSSIER
+        </button>
       </div>
     </div>
   );

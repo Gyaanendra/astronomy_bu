@@ -1,463 +1,423 @@
 "use client";
 
-import gsap from "gsap";
-import {
-  ArrowLeft,
-  ArrowRight,
-  ChevronDown,
-  Compass,
-  Users,
-  Eye,
-  Disc3,
-  Sparkles,
-} from "lucide-react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { GithubIcon, InstagramIcon, LinkedinIcon } from "@/components/ui/icons";
 import { allTenures } from "@/content/team";
-import type { Department, TeamMember } from "@/types/team.types";
+import { Department, TeamMember } from "@/types/team.types";
+import { Sparkles, Users, ShieldCheck, Eye } from "lucide-react";
+import { InstagramIcon, LinkedinIcon, GithubIcon } from "@/components/ui/icons";
 import { RotaryCarousel } from "./rotary-carousel";
 import { ChernobylDossierModal } from "./chernobyl-dossier-modal";
-
-const departmentList: Department[] = [
-  "Leadership",
-  "Tech & Research",
-  "Web & Development",
-  "Content",
-  "Management",
-  "PR & Outreach",
-  "Multimedia",
-  "Finance",
-];
+import gsap from "gsap";
 
 export function TeamShowcase() {
-  const [selectedTenureYear, setSelectedTenureYear] = useState("2025-2026");
-  const [selectedDept, setSelectedDept] = useState<Department | "ALL">("ALL");
-  const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null);
-  const [dossierModalMember, setDossierModalMember] =
+  const [selectedTenureYear, setSelectedTenureYear] =
+    useState<string>("2025-2026");
+  const [selectedDept, setSelectedDept] = useState<string>("ALL");
+  const [selectedDossierMember, setSelectedDossierMember] =
     useState<TeamMember | null>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
-  const currentTenure =
-    allTenures.find((tenure) => tenure.tenureYear === selectedTenureYear) ??
-    allTenures[0];
+  // Retrieve current tenure object
+  const currentTenureData = useMemo(() => {
+    return (
+      allTenures.find((t) => t.tenureYear === selectedTenureYear) ||
+      allTenures[0]
+    );
+  }, [selectedTenureYear]);
 
-  const visibleDepartments =
-    selectedDept === "ALL"
-      ? currentTenure.departments
-      : currentTenure.departments.filter(
-          (department) => department.name === selectedDept,
-        );
+  // All distinct departments available across the entire club
+  const allDepartmentNames: Department[] = [
+    "Leadership",
+    "Tech & Research",
+    "Web & Development",
+    "Content",
+    "Management",
+    "PR & Outreach",
+    "Multimedia",
+    "Finance",
+  ];
 
-  const visibleMembers = useMemo(
-    () => visibleDepartments.flatMap((department) => department.members),
-    [visibleDepartments],
-  );
+  // List of departments that exist in the currently selected tenure
+  const existingDeptNamesInTenure = useMemo(() => {
+    return currentTenureData.departments.map((d) => d.name);
+  }, [currentTenureData]);
 
+  // When switching tenures, if selectedDept is not present in that tenure, safely reset to ALL
   useEffect(() => {
     if (
-      visibleMembers.length &&
-      !visibleMembers.some((member) => member.id === selectedMemberId)
+      selectedDept !== "ALL" &&
+      !existingDeptNamesInTenure.includes(selectedDept as Department)
     ) {
-      setSelectedMemberId(visibleMembers[0].id);
+      setSelectedDept("ALL");
     }
-  }, [selectedMemberId, visibleMembers]);
+  }, [selectedTenureYear, existingDeptNamesInTenure, selectedDept]);
 
-  const selectedMember =
-    visibleMembers.find((member) => member.id === selectedMemberId) ??
-    visibleMembers[0];
+  // Departments filtered for display
+  const filteredDepartments = useMemo(() => {
+    if (selectedDept === "ALL") {
+      return currentTenureData.departments;
+    }
+    return currentTenureData.departments.filter((d) => d.name === selectedDept);
+  }, [currentTenureData, selectedDept]);
 
-  useEffect(() => {
-    if (!heroRef.current || !selectedMember) return;
-    heroRef.current.dataset.memberId = selectedMember.id;
-    gsap.fromTo(
-      heroRef.current,
-      { opacity: 0, y: 18 },
-      { opacity: 1, y: 0, duration: 0.65, ease: "power3.out" },
+  // Flat list of visible members in the current filter
+  const visibleMembers = useMemo(() => {
+    return filteredDepartments.flatMap((d) => d.members);
+  }, [filteredDepartments]);
+
+  // Total members count in current tenure
+  const totalTenureMembers = useMemo(() => {
+    return currentTenureData.departments.reduce(
+      (acc, d) => acc + d.members.length,
+      0,
     );
-  }, [selectedMember]);
+  }, [currentTenureData]);
 
-  const moveSelection = (direction: -1 | 1) => {
-    if (!visibleMembers.length) return;
-    const currentIndex = selectedMember
-      ? visibleMembers.findIndex((member) => member.id === selectedMember.id)
-      : 0;
-    const nextIndex =
-      (currentIndex + direction + visibleMembers.length) %
-      visibleMembers.length;
-    setSelectedMemberId(visibleMembers[nextIndex].id);
-  };
-
-  const totalMembers = currentTenure.departments.reduce(
-    (total, department) => total + department.members.length,
-    0,
-  );
+  // Fast GSAP stagger animation on filter change
+  useEffect(() => {
+    if (gridRef.current) {
+      gsap.fromTo(
+        gridRef.current.querySelectorAll(".member-card-compact"),
+        { opacity: 0, y: 12 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.35,
+          stagger: 0.025,
+          ease: "power2.out",
+        },
+      );
+    }
+  }, [selectedTenureYear, selectedDept]);
 
   return (
-    <main className="w-full min-h-screen overflow-hidden bg-[#1D1D1D] text-[#f5efeb]">
-      <section className="relative mx-auto max-w-[1800px] px-5 py-8 sm:px-8 lg:px-12 lg:py-12">
-        {/* Top Header Section */}
-        <header className="mb-7 flex flex-col gap-5 border-b border-[rgba(245,239,235,0.12)] pb-6 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.28em] text-[#8a847a]">
-              Astronomy BU / Crew Archive
-            </p>
-            <h1 className="font-editorial-serif text-5xl leading-none italic sm:text-6xl lg:text-7xl">
-              The People
-            </h1>
+    <div className="w-full py-8 sm:py-12 px-4 sm:px-8 lg:px-12 bg-[#1D1D1D] text-[#f5efeb]">
+      <div className="w-full max-w-[1700px] mx-auto">
+        {/* ========================================================================= */}
+        {/* CLEAN, UNCLUTTERED TOP HEADER */}
+        {/* ========================================================================= */}
+        <header className="pb-5 border-b border-[rgba(245,239,235,0.1)]">
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-3">
+            <div>
+              <p className="font-mono text-[9px] uppercase tracking-[0.24em] text-[#8a847a] mb-1">
+                Astronomy BU / Crew Archive
+              </p>
+              <h1 className="font-editorial-serif italic text-4xl sm:text-6xl text-[#f5efeb] leading-tight">
+                Members &amp; Heads
+              </h1>
+            </div>
+
+            {/* Compact Telemetry Counters */}
+            <div className="flex items-center gap-3 font-mono text-[11px] text-[#a39e93]">
+              <span className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-[rgba(245,239,235,0.12)] bg-[#17171a]">
+                <Users className="w-3.5 h-3.5 text-[#c84b31]" />
+                <strong className="text-[#f5efeb]">{totalTenureMembers}</strong>{" "}
+                Curators
+              </span>
+              <span className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-[rgba(245,239,235,0.12)] bg-[#17171a]">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#eae5d9]" />
+                <strong className="text-[#f5efeb]">
+                  {currentTenureData.departments.length}
+                </strong>{" "}
+                Divisions
+              </span>
+            </div>
           </div>
 
-          <div className="flex items-center gap-6 pb-1">
-            <div>
-              <p className="font-editorial-serif text-2xl">{totalMembers}</p>
-              <p className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#8a847a]">
-                Crew members
-              </p>
+          {/* Unified Controls: Tenure Buttons & Division Pills */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[rgba(245,239,235,0.06)]">
+            {/* Tenure Switcher */}
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-[10px] text-[#8a847a] mr-1 uppercase">
+                TENURE:
+              </span>
+              {allTenures.map((t) => (
+                <button
+                  key={t.tenureYear}
+                  type="button"
+                  onClick={() => setSelectedTenureYear(t.tenureYear)}
+                  className={`px-3.5 py-1 rounded-full font-mono text-[10px] sm:text-[11px] tracking-wider uppercase transition-colors cursor-pointer ${
+                    selectedTenureYear === t.tenureYear
+                      ? "bg-[#eae5d9] text-[#1D1D1D] font-bold shadow-sm"
+                      : "border border-[rgba(245,239,235,0.14)] text-[#a39e93] hover:text-[#f5efeb] hover:border-[rgba(245,239,235,0.3)] bg-[#17171a]"
+                  }`}
+                >
+                  {t.tenureYear}
+                </button>
+              ))}
             </div>
-            <div className="h-9 w-px bg-[rgba(245,239,235,0.12)]" />
-            <div>
-              <p className="font-editorial-serif text-2xl">
-                {currentTenure.departments.length}
-              </p>
-              <p className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#8a847a]">
-                Divisions
-              </p>
+
+            {/* Division Filter Pills */}
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="font-mono text-[10px] text-[#8a847a] mr-1 uppercase">
+                DIVISION:
+              </span>
+              <button
+                type="button"
+                onClick={() => setSelectedDept("ALL")}
+                className={`px-2.5 py-1 rounded-full font-mono text-[9px] uppercase transition-colors cursor-pointer ${
+                  selectedDept === "ALL"
+                    ? "border border-[#f5efeb] text-[#f5efeb] bg-[#222225] font-bold"
+                    : "text-[#8a847a] hover:text-[#a39e93] border border-transparent"
+                }`}
+              >
+                ALL ({totalTenureMembers})
+              </button>
+              {allDepartmentNames.map((dept) => {
+                const deptInTenure = currentTenureData.departments.find(
+                  (d) => d.name === dept,
+                );
+                const count = deptInTenure ? deptInTenure.members.length : 0;
+                const isAvailable = count > 0;
+
+                if (!isAvailable && selectedTenureYear !== "2025-2026") {
+                  return null;
+                }
+
+                return (
+                  <button
+                    key={dept}
+                    type="button"
+                    disabled={!isAvailable}
+                    onClick={() => setSelectedDept(dept)}
+                    className={`px-2.5 py-1 rounded-full font-mono text-[9px] uppercase transition-colors cursor-pointer ${
+                      selectedDept === dept
+                        ? "border border-[#f5efeb] text-[#f5efeb] bg-[#222225] font-bold"
+                        : isAvailable
+                          ? "text-[#8a847a] hover:text-[#a39e93] border border-transparent"
+                          : "text-[#55504a] border border-transparent cursor-not-allowed opacity-35"
+                    }`}
+                  >
+                    {dept}
+                    {isAvailable && (
+                      <span className="opacity-60 ml-1">({count})</span>
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </header>
 
-        {/* Navigation & Filters Bar */}
-        <nav className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-            {allTenures.map((tenure) => (
-              <button
-                key={tenure.tenureYear}
-                type="button"
-                onClick={() => {
-                  setSelectedTenureYear(tenure.tenureYear);
-                  setSelectedMemberId(null);
-                }}
-                className={`shrink-0 rounded-full px-4 py-2 font-mono text-[9px] uppercase tracking-[0.16em] transition-colors cursor-pointer ${
-                  selectedTenureYear === tenure.tenureYear
-                    ? "bg-[#f5efeb] text-[#1D1D1D] font-bold shadow-sm"
-                    : "border border-[rgba(245,239,235,0.14)] text-[#a39e93] hover:border-[rgba(245,239,235,0.35)] hover:text-[#f5efeb]"
-                }`}
-              >
-                {tenure.tenureYear}
-              </button>
-            ))}
-          </div>
+        {/* ========================================================================= */}
+        {/* MAIN HERO FOCUS: The Rotary Carousel (Cards Moving In A Circle) */}
+        {/* ========================================================================= */}
+        <section className="mt-6 mb-16" aria-label="Orbital rotary carousel">
+          <RotaryCarousel
+            members={visibleMembers}
+            onSelectMember={(member) => setSelectedDossierMember(member)}
+          />
+        </section>
 
-          <div className="relative w-full lg:w-[210px]">
-            <select
-              value={selectedDept}
-              onChange={(event) => {
-                setSelectedDept(event.target.value as Department | "ALL");
-                setSelectedMemberId(null);
-              }}
-              className="h-10 w-full appearance-none border border-[rgba(245,239,235,0.14)] bg-[#191919] px-4 pr-10 font-mono text-[9px] uppercase tracking-[0.14em] text-[#f5efeb] outline-none cursor-pointer"
-              aria-label="Filter by division"
-            >
-              <option value="ALL">All divisions</option>
-              {departmentList.map((department) => (
-                <option key={department} value={department}>
-                  {department}
-                </option>
-              ))}
-            </select>
-            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#8a847a]" />
-          </div>
-        </nav>
-
-        {selectedMember ? (
-          <>
-            {/* Featured Hero Showcase Stage */}
-            <div
-              ref={heroRef}
-              className="relative grid min-h-[620px] overflow-hidden border border-[rgba(245,239,235,0.12)] bg-[#151515] lg:grid-cols-[44%_56%]"
-            >
-              <ProfilePortrait
-                key={selectedMember.id}
-                member={selectedMember}
-                onOpenDossier={() => setDossierModalMember(selectedMember)}
-              />
-
-              <article className="relative flex min-h-[520px] flex-col justify-between p-7 sm:p-10 lg:min-h-[620px] lg:p-12 xl:p-16">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_15%,rgba(245,239,235,0.055),transparent_34%)] pointer-events-none" />
-
-                <div className="relative flex items-start justify-between">
-                  <p className="font-mono text-[9px] uppercase tracking-[0.24em] text-[#8a847a]">
-                    {String(
-                      visibleMembers.findIndex(
-                        (member) => member.id === selectedMember.id,
-                      ) + 1,
-                    ).padStart(2, "0")}
-                    {" / "}
-                    {String(visibleMembers.length).padStart(2, "0")}
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => moveSelection(-1)}
-                      className="flex h-10 w-10 items-center justify-center border border-[rgba(245,239,235,0.14)] transition-colors hover:border-[#f5efeb] cursor-pointer"
-                      aria-label="Previous profile"
-                    >
-                      <ArrowLeft className="h-4 w-4" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => moveSelection(1)}
-                      className="flex h-10 w-10 items-center justify-center border border-[rgba(245,239,235,0.14)] transition-colors hover:border-[#f5efeb] cursor-pointer"
-                      aria-label="Next profile"
-                    >
-                      <ArrowRight className="h-4 w-4" />
-                    </button>
-                  </div>
-                </div>
-
-                <div className="relative my-auto py-12 lg:py-8">
-                  <p className="mb-5 font-mono text-[9px] uppercase tracking-[0.28em] text-[#b9b1a4]">
-                    {selectedMember.department}
-                  </p>
-                  <h2 className="max-w-[760px] font-editorial-serif text-5xl leading-[0.92] sm:text-7xl xl:text-[92px]">
-                    {cleanName(selectedMember.name)}
-                  </h2>
-                  <div className="mt-7 flex items-center gap-3">
-                    <span className="h-px w-12 bg-[#a39e93]" />
-                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#d2ccbe]">
-                      {selectedMember.role}
-                    </p>
-                  </div>
-                  {selectedMember.quote && (
-                    <blockquote className="mt-8 max-w-xl border-l border-[rgba(245,239,235,0.24)] pl-5 font-editorial-serif text-xl leading-relaxed text-[#b9b1a4] italic sm:text-2xl">
-                      &ldquo;{selectedMember.quote}&rdquo;
-                    </blockquote>
-                  )}
-
-                  {/* Quick button to open full Chernobyl dossier view */}
-                  <div className="mt-8">
-                    <button
-                      type="button"
-                      onClick={() => setDossierModalMember(selectedMember)}
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[rgba(245,239,235,0.2)] bg-[#1c1c22] hover:bg-[#eae5d9] hover:text-[#1D1D1D] font-mono text-[10px] tracking-widest uppercase transition-colors cursor-pointer group"
-                    >
-                      <Eye className="w-3.5 h-3.5 text-[#c84b31] group-hover:text-[#1D1D1D] transition-colors" />
-                      Inspect Full Dossier
-                      <span className="opacity-60">↗</span>
-                    </button>
-                  </div>
-                </div>
-
-                <div className="relative flex flex-wrap items-end justify-between gap-6 border-t border-[rgba(245,239,235,0.12)] pt-6">
-                  <div className="grid grid-cols-2 gap-8">
-                    <div>
-                      <p className="mb-1 font-mono text-[8px] uppercase tracking-[0.2em] text-[#777266]">
-                        Tenure
-                      </p>
-                      <p className="font-mono text-[10px] text-[#c9c2b5]">
-                        {selectedTenureYear}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="mb-1 font-mono text-[8px] uppercase tracking-[0.2em] text-[#777266]">
-                        Status
-                      </p>
-                      <p className="flex items-center gap-2 font-mono text-[10px] text-[#c9c2b5]">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                        Active
-                      </p>
-                    </div>
-                  </div>
-                  <SocialLinks member={selectedMember} />
-                </div>
-              </article>
+        {/* ========================================================================= */}
+        {/* COMPACT DIRECTORY GRID: Sleeker, smaller card footprint */}
+        {/* ========================================================================= */}
+        <section
+          ref={gridRef}
+          className="mt-12 pt-10 border-t border-[rgba(245,239,235,0.12)] flex flex-col gap-14"
+          aria-label="Department directory grid"
+        >
+          <div className="flex items-center justify-between pb-2 border-b border-[rgba(245,239,235,0.08)]">
+            <div>
+              <p className="font-mono text-[9px] tracking-archival text-[#8a847a] uppercase">
+                Archival Catalog // Full Roster
+              </p>
+              <h2 className="font-editorial-serif italic text-3xl sm:text-4xl text-[#f5efeb]">
+                Divisions &amp; Officers
+              </h2>
             </div>
+            <p className="font-mono text-[9px] text-[#8a847a] uppercase">
+              Click any card to inspect dossier
+            </p>
+          </div>
 
-            {/* ========================================================================= */}
-            {/* ROTARY CAROUSEL: Cards moving in a circle as requested by the user */}
-            {/* ========================================================================= */}
-            <section
-              className="mt-14 pt-10 border-t border-[rgba(245,239,235,0.1)]"
-              aria-label="Team orbital rotary carousel"
+          {filteredDepartments.map((dept) => (
+            <div
+              key={dept.name}
+              className="flex flex-col gap-5"
+              style={{
+                contentVisibility: "auto",
+                containIntrinsicSize: "320px",
+              }}
             >
-              <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <Disc3
-                      className="w-4 h-4 text-[#c84b31] animate-spin"
-                      style={{ animationDuration: "12s" }}
-                    />
-                    <p className="font-mono text-[9px] uppercase tracking-[0.28em] text-[#8a847a]">
-                      Across the roster / Rotary Orbit Wheel
-                    </p>
-                  </div>
-                  <h3 className="font-editorial-serif italic text-3xl sm:text-4xl text-[#f5efeb]">
-                    Orbital Cards Dial
+              {/* Department Subheader */}
+              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-2.5 border-b border-[rgba(245,239,235,0.08)]">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-3.5 h-3.5 text-[#c84b31]" />
+                  <h3 className="font-editorial-serif italic text-2xl sm:text-3xl text-[#f5efeb]">
+                    {dept.name}
                   </h3>
                 </div>
-                <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#8a847a]">
-                  Click or drag cards in a circle · Tap active card to inspect
-                  dossier
+                <p className="font-mono text-[10px] text-[#a39e93]">
+                  {dept.description}
                 </p>
               </div>
 
-              {/* Rotary Wheel Carousel */}
-              <RotaryCarousel
-                members={visibleMembers}
-                activeMemberId={selectedMember.id}
-                onCenterMember={(member) => setSelectedMemberId(member.id)}
-                onSelectMember={(member) => {
-                  setSelectedMemberId(member.id);
-                  setDossierModalMember(member);
-                }}
-              />
-            </section>
-          </>
-        ) : (
-          <div className="flex min-h-[420px] items-center justify-center border border-[rgba(245,239,235,0.12)]">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#8a847a]">
-              No profiles in this division
-            </p>
-          </div>
-        )}
-      </section>
+              {/* Smaller, High-Density Compact Grid (4 to 5 columns on desktop) */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-3.5 sm:gap-4">
+                {dept.members.map((member) => (
+                  <CompactMemberCard
+                    key={member.id}
+                    member={member}
+                    onInspect={() => setSelectedDossierMember(member)}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
 
-      {/* Chernobyl-Style Full Profile Dossier Modal (opens when inspecting a profile) */}
-      {dossierModalMember && (
+          {filteredDepartments.length === 0 && (
+            <div className="py-16 text-center border border-[rgba(245,239,235,0.1)] rounded-[20px] bg-[#141416]">
+              <p className="font-mono text-xs text-[#8a847a]">
+                NO CURATORS FOUND FOR THIS DIVISION IN THE {selectedTenureYear}{" "}
+                ARCHIVE.
+              </p>
+            </div>
+          )}
+        </section>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* EXPANDED CHERNOBYL DOSSIER MODAL WITH FULL-VISIBILITY BACKGROUND */}
+      {/* ========================================================================= */}
+      {selectedDossierMember && (
         <ChernobylDossierModal
-          member={dossierModalMember}
+          member={selectedDossierMember}
           allMembers={visibleMembers}
-          onSelectMember={(m) => {
-            setSelectedMemberId(m.id);
-            setDossierModalMember(m);
-          }}
-          onClose={() => setDossierModalMember(null)}
+          onSelectMember={(m) => setSelectedDossierMember(m)}
+          onClose={() => setSelectedDossierMember(null)}
         />
       )}
-    </main>
-  );
-}
-
-function cleanName(name: string) {
-  return name.replace(/\[.*?\]/g, "").trim();
-}
-
-function ProfilePortrait({
-  member,
-  onOpenDossier,
-}: {
-  member: TeamMember;
-  onOpenDossier?: () => void;
-}) {
-  const [imageFailed, setImageFailed] = useState(false);
-
-  return (
-    <div
-      onClick={onOpenDossier}
-      className="group relative min-h-[470px] overflow-hidden bg-[#111113] lg:min-h-[620px] cursor-pointer"
-      title="Click to inspect full dossier"
-    >
-      {!imageFailed && member.image ? (
-        <Image
-          src={member.image}
-          alt={member.name}
-          fill
-          priority
-          onError={() => setImageFailed(true)}
-          className="object-cover grayscale-[15%] contrast-[1.08] transition-transform duration-700 group-hover:scale-105"
-          sizes="(max-width: 1024px) 100vw, 44vw"
-        />
-      ) : (
-        <PortraitFallback member={member} />
-      )}
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(16,16,16,0.78)_100%),linear-gradient(90deg,rgba(29,29,29,0.12),transparent_40%)]" />
-      <div className="absolute left-5 top-5 border border-[rgba(245,239,235,0.25)] bg-[rgba(29,29,29,0.45)] px-3 py-2 backdrop-blur-sm">
-        <p className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#f5efeb]/80">
-          {member.isHead ? "Division lead" : "Crew member"}
-        </p>
-      </div>
-      <div className="absolute bottom-5 left-5 flex items-center gap-2 font-mono text-[8px] uppercase tracking-[0.18em] text-[#f5efeb]/55">
-        <Compass className="h-3 w-3" />
-        Bennett Observatory
-      </div>
-      <div className="absolute bottom-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 px-2.5 py-1 rounded-full border border-[rgba(245,239,235,0.2)] font-mono text-[8px] tracking-widest text-[#f5efeb] uppercase flex items-center gap-1">
-        <Eye className="w-3 h-3 text-[#c84b31]" />
-        Inspect Dossier
-      </div>
     </div>
   );
 }
 
-function PortraitFallback({ member }: { member: TeamMember }) {
-  const initials = cleanName(member.name)
+// Compact MemberCard: Smaller, elegant, and refined
+function CompactMemberCard({
+  member,
+  onInspect,
+}: {
+  member: TeamMember;
+  onInspect?: () => void;
+}) {
+  const [imageFailed, setImageFailed] = useState(false);
+
+  const initials = member.name
+    .replace(/\[.*?\]/g, "")
+    .trim()
     .split(" ")
-    .map((word) => word[0])
+    .map((n) => n[0])
     .join("")
     .slice(0, 2)
     .toUpperCase();
 
   return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center bg-[radial-gradient(circle_at_center,#282828_0%,#151515_72%)]">
-      <span className="font-editorial-serif text-8xl text-[#d7d0c3]/60">
-        {initials}
-      </span>
-      <span className="mt-4 font-mono text-[8px] uppercase tracking-[0.24em] text-[#777266]">
-        Image unavailable
-      </span>
-    </div>
-  );
-}
+    <div
+      onClick={onInspect}
+      className="member-card-compact rounded-[18px] border border-[rgba(245,239,235,0.1)] bg-[#131316] p-3 sm:p-3.5 flex flex-col justify-between hover:border-[rgba(245,239,235,0.3)] transition-all duration-200 group hover:-translate-y-0.5 cursor-pointer shadow-md"
+    >
+      <div>
+        {/* Compact Photo Frame */}
+        <div className="relative aspect-[4/5] w-full mb-3 rounded-[14px] border border-[rgba(245,239,235,0.08)] bg-[#18181d] overflow-hidden">
+          {!imageFailed && member.image ? (
+            <Image
+              src={member.image}
+              alt={member.name}
+              fill
+              onError={() => setImageFailed(true)}
+              className="object-cover grayscale contrast-115 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+              quality={70}
+              loading="lazy"
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center p-3 bg-gradient-to-br from-[#18181e] to-[#0f0f12] text-center select-none">
+              <span className="font-editorial-serif text-3xl text-[#eae5d9]/60">
+                {initials}
+              </span>
+            </div>
+          )}
 
-function SocialLinks({ member }: { member: TeamMember }) {
-  const links = [
-    {
-      key: "instagram",
-      href: member.socials.instagram
-        ? member.socials.instagram.startsWith("http")
-          ? member.socials.instagram
-          : `https://instagram.com/${member.socials.instagram.replace("@", "")}`
-        : null,
-      label: "Instagram",
-      icon: <InstagramIcon className="h-4 w-4" />,
-    },
-    {
-      key: "linkedin",
-      href: member.socials.linkedin
-        ? member.socials.linkedin.startsWith("http")
-          ? member.socials.linkedin
-          : `https://linkedin.com/in/${member.socials.linkedin}`
-        : null,
-      label: "LinkedIn",
-      icon: <LinkedinIcon className="h-4 w-4" />,
-    },
-    {
-      key: "github",
-      href: member.socials.github ?? null,
-      label: "GitHub",
-      icon: <GithubIcon className="h-4 w-4" />,
-    },
-  ].filter((link) => link.href);
+          {member.isHead && (
+            <div className="absolute top-2 left-2 bg-[#eae5d9] text-[#1D1D1D] px-2 py-0.5 rounded-full font-mono text-[7px] font-bold tracking-widest uppercase shadow-sm">
+              LEAD
+            </div>
+          )}
+        </div>
 
-  return (
-    <div className="flex items-center gap-2">
-      {links.map((link) => (
-        <a
-          key={link.key}
-          href={link.href ?? undefined}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex h-9 w-9 items-center justify-center border border-[rgba(245,239,235,0.14)] text-[#a39e93] transition-colors hover:border-[#f5efeb] hover:text-[#f5efeb]"
-          aria-label={`${member.name} ${link.label}`}
-        >
-          {link.icon}
-        </a>
-      ))}
-      {links.length === 0 && (
-        <span className="flex h-9 items-center gap-2 font-mono text-[8px] uppercase tracking-[0.16em] text-[#777266]">
-          <Users className="h-3 w-3" />
-          No public links
+        {/* Role & Name */}
+        <div className="flex flex-col gap-0.5">
+          <span className="font-mono text-[8px] tracking-widest text-[#a39e93] uppercase truncate">
+            {member.role}
+          </span>
+          <h4 className="font-editorial-serif text-lg text-[#f5efeb] leading-snug group-hover:text-[#eae5d9] transition-colors truncate">
+            {member.name.replace(/\[.*?\]/g, "")}
+          </h4>
+        </div>
+
+        {/* Compact Quote */}
+        {member.quote && (
+          <p className="mt-2 font-mono text-[10px] text-[#8a847a] italic line-clamp-1 border-l border-[rgba(245,239,235,0.15)] pl-1.5">
+            &ldquo;{member.quote}&rdquo;
+          </p>
+        )}
+      </div>
+
+      {/* Footer with Mini Social Links */}
+      <div className="mt-3 pt-2 border-t border-[rgba(245,239,235,0.06)] flex items-center justify-between text-[#8a847a]">
+        <span className="font-mono text-[8px] tracking-wider uppercase flex items-center gap-1 group-hover:text-[#eae5d9]">
+          <Eye className="w-2.5 h-2.5 text-[#c84b31]" />
+          DOSSIER
         </span>
-      )}
+
+        <div
+          className="flex items-center gap-1.5"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {member.socials.instagram && (
+            <a
+              href={
+                member.socials.instagram.startsWith("http")
+                  ? member.socials.instagram
+                  : `https://instagram.com/${member.socials.instagram.replace("@", "")}`
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#8a847a] hover:text-[#f5efeb] p-0.5 transition-colors"
+              aria-label={`${member.name} Instagram`}
+            >
+              <InstagramIcon className="w-3 h-3" />
+            </a>
+          )}
+          {member.socials.linkedin && (
+            <a
+              href={
+                member.socials.linkedin.startsWith("http")
+                  ? member.socials.linkedin
+                  : `https://linkedin.com/in/${member.socials.linkedin}`
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#8a847a] hover:text-[#f5efeb] p-0.5 transition-colors"
+              aria-label={`${member.name} LinkedIn`}
+            >
+              <LinkedinIcon className="w-3 h-3" />
+            </a>
+          )}
+          {member.socials.github && (
+            <a
+              href={member.socials.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#8a847a] hover:text-[#f5efeb] p-0.5 transition-colors"
+              aria-label={`${member.name} GitHub`}
+            >
+              <GithubIcon className="w-3 h-3" />
+            </a>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
