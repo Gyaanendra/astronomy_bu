@@ -74,14 +74,16 @@ export function TeamShowcase() {
   // Fast GSAP stagger animation on filter change
   useEffect(() => {
     if (gridRef.current) {
+      const cards = gridRef.current.querySelectorAll(".member-card-compact");
+      gsap.killTweensOf(cards);
       gsap.fromTo(
-        gridRef.current.querySelectorAll(".member-card-compact"),
+        cards,
         { opacity: 0, y: 12 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.35,
-          stagger: 0.025,
+          duration: 0.32,
+          stagger: 0.02,
           ease: "power2.out",
         }
       );
@@ -294,7 +296,7 @@ function CompactMemberCard({
   return (
     <div
       onClick={onInspect}
-      className="member-card-compact rounded-[18px] border border-[rgba(245,239,235,0.1)] bg-[#131316] p-3 sm:p-3.5 flex flex-col justify-between hover:border-[rgba(245,239,235,0.3)] transition-all duration-200 group hover:-translate-y-0.5 cursor-pointer shadow-md"
+      className="member-card-compact rounded-[18px] border border-[rgba(245,239,235,0.1)] bg-[#131316] p-3 sm:p-3.5 flex flex-col justify-between hover:border-[rgba(245,239,235,0.3)] transition-[border-color,transform] duration-200 ease-out group hover:-translate-y-0.5 cursor-pointer shadow-md"
     >
       <div>
         {/* Compact Photo Frame */}

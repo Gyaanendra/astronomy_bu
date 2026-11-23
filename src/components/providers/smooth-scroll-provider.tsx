@@ -15,10 +15,10 @@ export function SmoothScrollProvider({
     // Register ScrollTrigger plugin
     gsap.registerPlugin(ScrollTrigger);
 
-    // Initialize Lenis with high-performance, snappy settings
+    // Initialize Lenis with native hardware vsync RAF (autoRaf: true)
     const lenis = new Lenis({
-      autoRaf: false,
-      duration: 0.75,
+      autoRaf: true,
+      duration: 0.7,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
@@ -28,19 +28,10 @@ export function SmoothScrollProvider({
       syncTouch: false,
     });
 
-    // Update ScrollTrigger on Lenis scroll
+    // Keep ScrollTrigger in sync on scroll
     lenis.on("scroll", ScrollTrigger.update);
 
-    // Sync Lenis RAF with GSAP ticker; lagSmoothing(0) prevents timestamp dilation
-    const updateTicker = (time: number) => {
-      lenis.raf(time * 1000);
-    };
-
-    gsap.ticker.add(updateTicker);
-    gsap.ticker.lagSmoothing(0);
-
     return () => {
-      gsap.ticker.remove(updateTicker);
       lenis.destroy();
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
