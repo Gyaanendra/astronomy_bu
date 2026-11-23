@@ -20,7 +20,9 @@ export function HeroSection() {
       gsap.registerPlugin(ScrollTrigger);
 
       // Respect prefers-reduced-motion
-      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const prefersReduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
       if (prefersReduced) return;
 
       // Entrance Timeline
@@ -38,7 +40,7 @@ export function HeroSection() {
             y: 40,
             duration: 1.1,
           },
-          "-=0.5"
+          "-=0.5",
         )
         .from(
           astralRef.current,
@@ -47,7 +49,7 @@ export function HeroSection() {
             scale: 0.92,
             duration: 1.4,
           },
-          "-=0.9"
+          "-=0.9",
         )
         .from(
           ctaRef.current,
@@ -56,7 +58,7 @@ export function HeroSection() {
             x: 20,
             duration: 0.8,
           },
-          "-=0.8"
+          "-=0.8",
         );
 
       // Scroll-driven subtle zero-G parallax
@@ -74,7 +76,7 @@ export function HeroSection() {
         });
       }
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (
@@ -104,10 +106,12 @@ export function HeroSection() {
             </div>
 
             <p className="font-mono text-[10px] sm:text-[11px] xl:text-xs tracking-[0.16em] text-[#a39e93] leading-relaxed max-w-md">
-              An inquiry into pattern-making in the sky, and what it means when structure breaks or disappears.
+              An inquiry into pattern-making in the sky, and what it means when
+              structure breaks or disappears.
             </p>
             <p className="font-mono text-[9px] sm:text-[10px] tracking-[0.2em] text-[#8a847a]">
-              Bennett University Observatory Archive · Station 28.4595° N, 77.5046° E
+              Bennett University Observatory Archive · Station 28.4595° N,
+              77.5046° E
             </p>
           </div>
         </div>

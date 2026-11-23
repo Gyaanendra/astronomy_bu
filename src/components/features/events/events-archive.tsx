@@ -21,7 +21,9 @@ import gsap from "gsap";
 export function EventsArchive() {
   const [selectedTenure, setSelectedTenure] = useState<string>("ALL");
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
-  const [activeModalEvent, setActiveModalEvent] = useState<EventItem | null>(null);
+  const [activeModalEvent, setActiveModalEvent] = useState<EventItem | null>(
+    null,
+  );
   const gridRef = useRef<HTMLDivElement>(null);
 
   const tenures = ["ALL", "2025-2026", "2024-2025", "2023-2024"];
@@ -34,8 +36,10 @@ export function EventsArchive() {
   ];
 
   const filteredEvents = eventsRegistry.filter((event) => {
-    const tenureMatch = selectedTenure === "ALL" || event.tenure === selectedTenure;
-    const catMatch = selectedCategory === "ALL" || event.category === selectedCategory;
+    const tenureMatch =
+      selectedTenure === "ALL" || event.tenure === selectedTenure;
+    const catMatch =
+      selectedCategory === "ALL" || event.category === selectedCategory;
     return tenureMatch && catMatch;
   });
 
@@ -51,7 +55,7 @@ export function EventsArchive() {
           duration: 0.45,
           stagger: 0.05,
           ease: "power2.out",
-        }
+        },
       );
     }
   }, [selectedTenure, selectedCategory]);
@@ -75,14 +79,18 @@ export function EventsArchive() {
             Past Events &amp; This Tenure
           </h1>
           <p className="mt-4 font-sans text-sm sm:text-base text-[#a39e93] max-w-3xl leading-relaxed">
-            A chronological timeline of observation nights, theoretical cosmology lectures, guest masterclasses, and inter-university competitions spanning 2023 to 2026.
+            A chronological timeline of observation nights, theoretical
+            cosmology lectures, guest masterclasses, and inter-university
+            competitions spanning 2023 to 2026.
           </p>
 
           {/* Filters */}
           <div className="mt-10 flex flex-wrap items-center justify-between gap-6 pt-6 border-t border-[rgba(245,239,235,0.08)]">
             {/* Tenure Selector */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="font-mono text-[11px] text-[#8a847a] mr-2">TENURE:</span>
+              <span className="font-mono text-[11px] text-[#8a847a] mr-2">
+                TENURE:
+              </span>
               {tenures.map((tenure) => (
                 <button
                   key={tenure}
@@ -100,7 +108,9 @@ export function EventsArchive() {
 
             {/* Category Selector */}
             <div className="flex flex-wrap items-center gap-1.5">
-              <span className="font-mono text-[11px] text-[#8a847a] mr-2">DISCIPLINE:</span>
+              <span className="font-mono text-[11px] text-[#8a847a] mr-2">
+                DISCIPLINE:
+              </span>
               {categories.map((cat) => (
                 <button
                   key={cat}
@@ -119,7 +129,10 @@ export function EventsArchive() {
         </div>
 
         {/* Timeline / Events Grid */}
-        <div ref={gridRef} className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div
+          ref={gridRef}
+          className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8"
+        >
           {filteredEvents.map((event) => (
             <EventCard
               key={event.id}
@@ -154,7 +167,8 @@ export function EventsArchive() {
                 {activeModalEvent.category}
               </span>
               <span className="font-mono text-[10px] text-[#8a847a] tracking-widest">
-                TENURE {activeModalEvent.tenure} // DOSSIER REF #{String(activeModalEvent.id).toUpperCase()}
+                TENURE {activeModalEvent.tenure} // DOSSIER REF #
+                {String(activeModalEvent.id).toUpperCase()}
               </span>
             </div>
 
@@ -166,7 +180,10 @@ export function EventsArchive() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6 p-5 rounded-[20px] bg-[#111113] border border-[rgba(245,239,235,0.1)] font-mono text-xs text-[#a39e93]">
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-[#eae5d9]" />
-                <span>DATE: {activeModalEvent.date} {activeModalEvent.time && `(${activeModalEvent.time})`}</span>
+                <span>
+                  DATE: {activeModalEvent.date}{" "}
+                  {activeModalEvent.time && `(${activeModalEvent.time})`}
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-[#eae5d9]" />

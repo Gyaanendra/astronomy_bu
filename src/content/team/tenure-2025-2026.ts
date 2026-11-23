@@ -7,7 +7,8 @@ export const currentTenure: TenureRecord = {
   departments: [
     {
       name: "Leadership",
-      description: "Directing astronomical expeditions, public vision, and academic collaborations.",
+      description:
+        "Directing astronomical expeditions, public vision, and academic collaborations.",
       members: [
         {
           id: "shardul-dhekane",
@@ -28,7 +29,8 @@ export const currentTenure: TenureRecord = {
           name: "Kaavya Kumar Yadav",
           role: "Secretary",
           department: "Leadership",
-          image: "/team/WhatsApp Image 2025-10-25 at 18.34.13_d286fdb_anonymous.webp",
+          image:
+            "/team/WhatsApp Image 2025-10-25 at 18.34.13_d286fdb_anonymous.webp",
           quote: "Curating the cosmos for the curious.",
           socials: {
             instagram: "https://www.instagram.com/_no.niceguy_",
@@ -42,7 +44,8 @@ export const currentTenure: TenureRecord = {
           role: "Joint Secretary",
           department: "Leadership",
           image: "/team/IMG_8751_anonymous.webp",
-          quote: "Traveling at light speed through space is impossible. But once you're travelling at light speed, you are capable of going way faster.",
+          quote:
+            "Traveling at light speed through space is impossible. But once you're travelling at light speed, you are capable of going way faster.",
           socials: {
             instagram: "https://www.instagram.com/abhi_ncd",
             linkedin: "https://www.linkedin.com/in/abhimanyunarang123",
@@ -53,7 +56,8 @@ export const currentTenure: TenureRecord = {
     },
     {
       name: "Tech & Research",
-      description: "Telescope telemetry, cosmology inquiries, and theoretical physics exploration.",
+      description:
+        "Telescope telemetry, cosmology inquiries, and theoretical physics exploration.",
       members: [
         {
           id: "vivan-joshi",
@@ -61,7 +65,8 @@ export const currentTenure: TenureRecord = {
           role: "Head of Tech",
           department: "Tech & Research",
           image: "/team/vivan_joshi.webp",
-          quote: "Leading technical initiatives and celestial telemetry development.",
+          quote:
+            "Leading technical initiatives and celestial telemetry development.",
           socials: {},
           isHead: true,
         },
@@ -71,7 +76,8 @@ export const currentTenure: TenureRecord = {
           role: "Head of Research",
           department: "Tech & Research",
           image: "/team/IMG_20251026_152602_anonymous.webp",
-          quote: "Crossing the fences of my backyard, I follow the trail leading to the river of cosmos.",
+          quote:
+            "Crossing the fences of my backyard, I follow the trail leading to the river of cosmos.",
           socials: {
             instagram: "https://instagram.com/_dhruvkukreja_",
           },
@@ -95,7 +101,8 @@ export const currentTenure: TenureRecord = {
           role: "Research Member",
           department: "Tech & Research",
           image: "/team/IMG-20251102-WA0005_anonymous.webp",
-          quote: "Contributing to deep space observational modeling and literature.",
+          quote:
+            "Contributing to deep space observational modeling and literature.",
           socials: {
             instagram: "https://www.instagram.com/vihanrrastogi",
             linkedin: "https://www.linkedin.com/in/vihan-rastogi-ab443b27a",
@@ -105,7 +112,8 @@ export const currentTenure: TenureRecord = {
     },
     {
       name: "Web & Development",
-      description: "Crafting digital observatories and interactive sky mapping architectures.",
+      description:
+        "Crafting digital observatories and interactive sky mapping architectures.",
       members: [
         {
           id: "aryan-singh",
@@ -138,7 +146,8 @@ export const currentTenure: TenureRecord = {
           name: "Aviral Srivastava",
           role: "Core Developer",
           department: "Web & Development",
-          image: "/team/WhatsApp Image 2025-10-23 at 02.55.11_cb870db_anonymous.webp",
+          image:
+            "/team/WhatsApp Image 2025-10-23 at 02.55.11_cb870db_anonymous.webp",
           quote: "Ain't down yet.",
           socials: {
             linkedin: "https://www.linkedin.com/in/aviral-professional",
@@ -150,7 +159,8 @@ export const currentTenure: TenureRecord = {
           name: "Mrigank Bhatnagar",
           role: "Developer",
           department: "Web & Development",
-          image: "/team/WhatsApp Image 2025-10-25 at 18.28.36_dc1786e_anonymous.webp",
+          image:
+            "/team/WhatsApp Image 2025-10-25 at 18.28.36_dc1786e_anonymous.webp",
           quote: "Believe you can and you are halfway there.",
           socials: {
             instagram: "https://instagram.com/_bhatnagar.mrigank_",
@@ -185,7 +195,8 @@ export const currentTenure: TenureRecord = {
     },
     {
       name: "Content",
-      description: "Editorial essays, stargazing guides, and public astronomical educational material.",
+      description:
+        "Editorial essays, stargazing guides, and public astronomical educational material.",
       members: [
         {
           id: "kanak-rana",
@@ -225,7 +236,8 @@ export const currentTenure: TenureRecord = {
     },
     {
       name: "Management",
-      description: "Orchestrating observation nights, campus permissions, and logistical operations.",
+      description:
+        "Orchestrating observation nights, campus permissions, and logistical operations.",
       members: [
         {
           id: "yaditi-arora",
@@ -233,7 +245,8 @@ export const currentTenure: TenureRecord = {
           role: "Head of Management",
           department: "Management",
           image: "/team/yaditi_arora.webp",
-          quote: "Managing club operations, event logistics, and field expeditions.",
+          quote:
+            "Managing club operations, event logistics, and field expeditions.",
           socials: {},
           isHead: true,
         },
@@ -243,7 +256,8 @@ export const currentTenure: TenureRecord = {
           role: "Management Member",
           department: "Management",
           image: "/team/IMG_0309_anonymous.webp",
-          quote: "The stars don’t shine despite the darkness, they shine because of it.",
+          quote:
+            "The stars don’t shine despite the darkness, they shine because of it.",
           socials: {
             instagram: "https://www.instagram.com/riyaaaa.ba",
             linkedin: "https://www.linkedin.com/in/kuuraskii",
@@ -255,7 +269,8 @@ export const currentTenure: TenureRecord = {
           role: "Management Member",
           department: "Management",
           image: "/team/IMG_20251020_212346_577 (1)_anonymous_page-0001.webp",
-          quote: "The Cosmos is within us. We're made of star stuff. We are a way for the Cosmos to know itself.",
+          quote:
+            "The Cosmos is within us. We're made of star stuff. We are a way for the Cosmos to know itself.",
           socials: {
             instagram: "https://www.instagram.com/ananddevbhadouriya",
             linkedin: "https://www.linkedin.com/in/anand-bhadouriya",
@@ -265,7 +280,8 @@ export const currentTenure: TenureRecord = {
     },
     {
       name: "PR & Outreach",
-      description: "University communications, community engagement, and public outreach.",
+      description:
+        "University communications, community engagement, and public outreach.",
       members: [
         {
           id: "yatishi-agarwal",
@@ -273,7 +289,8 @@ export const currentTenure: TenureRecord = {
           role: "Head of PR & Outreach",
           department: "PR & Outreach",
           image: "/team/IMG_0543_anonymous.webp",
-          quote: "If you dream of something that’s never happened, dare to do something you’ve never done.",
+          quote:
+            "If you dream of something that’s never happened, dare to do something you’ve never done.",
           socials: {
             instagram: "https://instagram.com/yatishi_dz",
           },
@@ -310,7 +327,8 @@ export const currentTenure: TenureRecord = {
           role: "Outreach Member",
           department: "PR & Outreach",
           image: "/team/IMG-20251020-WA0109_anonymous.webp",
-          quote: "I breathe music, with an Espresso in my hand and Wanderlust in my soul.",
+          quote:
+            "I breathe music, with an Espresso in my hand and Wanderlust in my soul.",
           socials: {
             instagram: "https://instagram.com/_duckitupmahi",
             linkedin: "https://linkedin.com/in/mahi-tiwari-33baa3359",
@@ -331,7 +349,8 @@ export const currentTenure: TenureRecord = {
     },
     {
       name: "Multimedia",
-      description: "Astrophotography, video logs, visual identity, and media archives.",
+      description:
+        "Astrophotography, video logs, visual identity, and media archives.",
       members: [
         {
           id: "arnav-tyagi",
@@ -374,7 +393,8 @@ export const currentTenure: TenureRecord = {
     },
     {
       name: "Finance",
-      description: "Club budgetary planning, equipment procurement, and sponsor relations.",
+      description:
+        "Club budgetary planning, equipment procurement, and sponsor relations.",
       members: [
         {
           id: "caesar-rudra-singh",
@@ -402,4 +422,3 @@ export const currentTenure: TenureRecord = {
     },
   ],
 };
-

@@ -17,10 +17,14 @@ export function getMoonPhase(date: Date = new Date()): MoonPhaseInfo {
   const synodicMonthMs = 29.53058867 * 24 * 60 * 60 * 1000;
 
   const diff = date.getTime() - refNewMoon;
-  const phase = ((diff % synodicMonthMs) + synodicMonthMs) % synodicMonthMs / synodicMonthMs;
+  const phase =
+    (((diff % synodicMonthMs) + synodicMonthMs) % synodicMonthMs) /
+    synodicMonthMs;
 
   // Approximate illumination based on cosine curve
-  const illumination = Math.round((1 - Math.cos(phase * 2 * Math.PI)) / 2 * 100);
+  const illumination = Math.round(
+    ((1 - Math.cos(phase * 2 * Math.PI)) / 2) * 100,
+  );
 
   let name = "New Moon";
   let icon = "🌑";
@@ -54,7 +58,10 @@ export function getMoonPhase(date: Date = new Date()): MoonPhaseInfo {
   return { phase, illumination, name, icon };
 }
 
-export function getLocalSiderealTime(date: Date = new Date(), longitudeDeg: number = 77.5046): string {
+export function getLocalSiderealTime(
+  date: Date = new Date(),
+  longitudeDeg: number = 77.5046,
+): string {
   // Calculate Julian Date
   const jd = date.getTime() / 86400000 + 2440587.5;
   const d = jd - 2451545.0;
@@ -73,4 +80,3 @@ export function getLocalSiderealTime(date: Date = new Date(), longitudeDeg: numb
 
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")} LST`;
 }
-

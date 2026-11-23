@@ -24,7 +24,9 @@ import gsap from "gsap";
 export function DualHorizonCalendar() {
   const [activeScope, setActiveScope] = useState<"all" | CalendarScope>("all");
   const [moon, setMoon] = useState<MoonPhaseInfo | null>(null);
-  const [activePassEvent, setActivePassEvent] = useState<CelestialEvent | null>(null);
+  const [activePassEvent, setActivePassEvent] = useState<CelestialEvent | null>(
+    null,
+  );
   const [attendeeName, setAttendeeName] = useState("");
   const [passGenerated, setPassGenerated] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
@@ -34,8 +36,12 @@ export function DualHorizonCalendar() {
   }, []);
 
   const displayedEvents: CelestialEvent[] = [
-    ...(activeScope === "all" || activeScope === "global" ? globalCelestialEvents : []),
-    ...(activeScope === "all" || activeScope === "bennett" ? bennettCampusEvents : []),
+    ...(activeScope === "all" || activeScope === "global"
+      ? globalCelestialEvents
+      : []),
+    ...(activeScope === "all" || activeScope === "bennett"
+      ? bennettCampusEvents
+      : []),
   ].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   // GSAP animation when scope changes
@@ -50,7 +56,7 @@ export function DualHorizonCalendar() {
           duration: 0.45,
           stagger: 0.04,
           ease: "power2.out",
-        }
+        },
       );
     }
   }, [activeScope]);
@@ -81,13 +87,17 @@ export function DualHorizonCalendar() {
             Cosmic Calendar
           </h1>
           <p className="mt-4 font-sans text-sm sm:text-base text-[#a39e93] max-w-3xl leading-relaxed">
-            A split observation engine tracking universal celestial phenomena alongside scheduled ground telescope observation sessions at Bennett University.
+            A split observation engine tracking universal celestial phenomena
+            alongside scheduled ground telescope observation sessions at Bennett
+            University.
           </p>
 
           {/* Scope Switcher: All vs Global vs Bennett */}
           <div className="mt-10 flex flex-wrap items-center justify-between gap-6 pt-6 border-t border-[rgba(245,239,235,0.08)]">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="font-mono text-[11px] text-[#8a847a] mr-2">HORIZON VIEW:</span>
+              <span className="font-mono text-[11px] text-[#8a847a] mr-2">
+                HORIZON VIEW:
+              </span>
               <button
                 onClick={() => setActiveScope("all")}
                 className={`px-4 py-2 rounded-full font-mono text-[11px] uppercase transition-all ${
@@ -194,7 +204,8 @@ export function DualHorizonCalendar() {
         <div className="mt-16 flex flex-col gap-6">
           <div className="flex items-center justify-between pb-3 border-b border-[rgba(245,239,235,0.08)]">
             <span className="font-mono text-xs tracking-archival text-[#a39e93]">
-              UPCOMING CELESTIAL TRANSITS ({displayedEvents.length} EVENTS LOADED)
+              UPCOMING CELESTIAL TRANSITS ({displayedEvents.length} EVENTS
+              LOADED)
             </span>
             <span className="font-mono text-[11px] text-[#8a847a]">
               CHRONOLOGICAL DUAL EPHEMERIS
@@ -216,7 +227,9 @@ export function DualHorizonCalendar() {
                     </span>
                   </div>
                   {item.time && (
-                    <span className="text-[#a39e93] text-xs mt-1">{item.time}</span>
+                    <span className="text-[#a39e93] text-xs mt-1">
+                      {item.time}
+                    </span>
                   )}
                   <div className="mt-3">
                     <span
@@ -226,7 +239,9 @@ export function DualHorizonCalendar() {
                           : "bg-[#eae5d9] text-[#1D1D1D]"
                       }`}
                     >
-                      {item.scope === "bennett" ? "CAMPUS OBSERVATION" : "GLOBAL CELESTIAL"}
+                      {item.scope === "bennett"
+                        ? "CAMPUS OBSERVATION"
+                        : "GLOBAL CELESTIAL"}
                     </span>
                   </div>
                 </div>
@@ -250,14 +265,22 @@ export function DualHorizonCalendar() {
                   <div className="flex flex-col gap-2">
                     {item.peakTime && (
                       <div>
-                        <span className="text-[#a39e93] block text-[10px]">PEAK VISIBILITY:</span>
-                        <span className="text-[#f5efeb] font-semibold">{item.peakTime}</span>
+                        <span className="text-[#a39e93] block text-[10px]">
+                          PEAK VISIBILITY:
+                        </span>
+                        <span className="text-[#f5efeb] font-semibold">
+                          {item.peakTime}
+                        </span>
                       </div>
                     )}
                     {item.optimalEquipment && (
                       <div>
-                        <span className="text-[#a39e93] block text-[10px]">RECOMMENDED GEAR:</span>
-                        <span className="text-[#eae5d9]">{item.optimalEquipment}</span>
+                        <span className="text-[#a39e93] block text-[10px]">
+                          RECOMMENDED GEAR:
+                        </span>
+                        <span className="text-[#eae5d9]">
+                          {item.optimalEquipment}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -301,7 +324,10 @@ export function DualHorizonCalendar() {
             </button>
 
             {!passGenerated ? (
-              <form onSubmit={handleGeneratePass} className="flex flex-col gap-4">
+              <form
+                onSubmit={handleGeneratePass}
+                className="flex flex-col gap-4"
+              >
                 <div className="flex items-center gap-2">
                   <span className="bg-[#eae5d9] text-[#1D1D1D] px-2.5 py-0.5 rounded-full font-mono text-[9px] font-bold tracking-widest uppercase">
                     CAMPUS STARRY NIGHT PASS
@@ -311,12 +337,18 @@ export function DualHorizonCalendar() {
                   {activePassEvent.title}
                 </h3>
                 <div className="p-4 rounded-[16px] bg-[#111113] border border-[rgba(245,239,235,0.08)] font-mono text-xs text-[#a39e93] flex flex-col gap-1.5">
-                  <p>DATE: {activePassEvent.date} {activePassEvent.time && `· ${activePassEvent.time}`}</p>
+                  <p>
+                    DATE: {activePassEvent.date}{" "}
+                    {activePassEvent.time && `· ${activePassEvent.time}`}
+                  </p>
                   <p>VENUE: {activePassEvent.visibilityOrLocation}</p>
                 </div>
 
                 <div className="flex flex-col gap-2 mt-2">
-                  <label htmlFor="student-name" className="font-mono text-xs text-[#eae5d9]">
+                  <label
+                    htmlFor="student-name"
+                    className="font-mono text-xs text-[#eae5d9]"
+                  >
                     STUDENT / ATTENDEE FULL NAME:
                   </label>
                   <input
@@ -350,7 +382,9 @@ export function DualHorizonCalendar() {
                 <div className="w-full p-5 rounded-[20px] bg-[#111113] border border-dashed border-[rgba(245,239,235,0.2)] font-mono text-xs text-[#eae5d9] flex flex-col gap-2 my-2 text-left">
                   <div className="flex justify-between">
                     <span className="text-[#8a847a]">EVENT:</span>
-                    <span className="text-right font-medium">{activePassEvent.title}</span>
+                    <span className="text-right font-medium">
+                      {activePassEvent.title}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#8a847a]">SCHEDULE:</span>
@@ -358,12 +392,15 @@ export function DualHorizonCalendar() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#8a847a]">ENTRY CODE:</span>
-                    <span className="text-[#d4af37] font-bold">BU-ASTRO-{Math.floor(100000 + Math.random() * 900000)}</span>
+                    <span className="text-[#d4af37] font-bold">
+                      BU-ASTRO-{Math.floor(100000 + Math.random() * 900000)}
+                    </span>
                   </div>
                 </div>
 
                 <p className="font-sans text-xs text-[#8a847a] mt-3">
-                  Please carry your Bennett ID card and arrive with a red flashlight to preserve night vision.
+                  Please carry your Bennett ID card and arrive with a red
+                  flashlight to preserve night vision.
                 </p>
 
                 <button

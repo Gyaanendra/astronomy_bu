@@ -4,16 +4,33 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { journalArticles } from "@/content/journal/articles";
 import { JournalArticle } from "@/types/journal.types";
-import { Clock, X, Sparkles, BookOpen, Share2, ArrowUpRight, Tag, Bookmark } from "lucide-react";
+import {
+  Clock,
+  X,
+  Sparkles,
+  BookOpen,
+  Share2,
+  ArrowUpRight,
+  Tag,
+  Bookmark,
+} from "lucide-react";
 import gsap from "gsap";
 
 export function JournalShowcase() {
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
-  const [activeArticle, setActiveArticle] = useState<JournalArticle | null>(null);
+  const [activeArticle, setActiveArticle] = useState<JournalArticle | null>(
+    null,
+  );
   const [copied, setCopied] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  const categories = ["ALL", "Astrophotography", "Cosmology", "Research", "Field Notes"];
+  const categories = [
+    "ALL",
+    "Astrophotography",
+    "Cosmology",
+    "Research",
+    "Field Notes",
+  ];
 
   const filteredArticles =
     selectedCategory === "ALL"
@@ -32,7 +49,7 @@ export function JournalShowcase() {
           duration: 0.45,
           stagger: 0.05,
           ease: "power2.out",
-        }
+        },
       );
     }
   }, [selectedCategory]);
@@ -56,7 +73,9 @@ export function JournalShowcase() {
             </span>
             <div className="flex items-center gap-2 font-mono text-[11px] text-[#8a847a]">
               <BookOpen className="w-3.5 h-3.5 text-[#eae5d9]" />
-              <span>{journalArticles.length} ESSAYS &amp; TECHNICAL DISPATCHES</span>
+              <span>
+                {journalArticles.length} ESSAYS &amp; TECHNICAL DISPATCHES
+              </span>
             </div>
           </div>
 
@@ -64,12 +83,16 @@ export function JournalShowcase() {
             Blogs &amp; Articles
           </h1>
           <p className="mt-4 font-sans text-sm sm:text-base text-[#a39e93] max-w-3xl leading-relaxed">
-            Astrophotography calibration guides, cosmological inquiries, optical maintenance field manuals, and nocturnal observation reflections from Bennett University astronomers.
+            Astrophotography calibration guides, cosmological inquiries, optical
+            maintenance field manuals, and nocturnal observation reflections
+            from Bennett University astronomers.
           </p>
 
           {/* Category Filter Pills */}
           <div className="mt-10 flex flex-wrap items-center gap-2 pt-6 border-t border-[rgba(245,239,235,0.08)]">
-            <span className="font-mono text-[11px] text-[#8a847a] mr-2">TOPIC:</span>
+            <span className="font-mono text-[11px] text-[#8a847a] mr-2">
+              TOPIC:
+            </span>
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -87,7 +110,10 @@ export function JournalShowcase() {
         </div>
 
         {/* Articles Grid */}
-        <div ref={gridRef} className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div
+          ref={gridRef}
+          className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-10"
+        >
           {filteredArticles.map((article) => (
             <ArticleCard
               key={article.id}
@@ -134,7 +160,9 @@ export function JournalShowcase() {
 
             <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-y border-[rgba(245,239,235,0.12)] font-mono text-xs text-[#8a847a]">
               <div className="flex items-center gap-3">
-                <span className="text-[#f5efeb] font-semibold">{activeArticle.author.name}</span>
+                <span className="text-[#f5efeb] font-semibold">
+                  {activeArticle.author.name}
+                </span>
                 <span>({activeArticle.author.role})</span>
               </div>
               <div className="flex items-center gap-4">
@@ -163,7 +191,14 @@ export function JournalShowcase() {
             {/* Article Content Paragraphs */}
             <div className="mt-8 flex flex-col gap-5 text-sm sm:text-base font-sans text-[#eae5d9]/90 leading-relaxed">
               {activeArticle.content.map((p, idx) => (
-                <p key={idx} className={idx === 0 ? "text-base sm:text-lg text-[#f5efeb] font-serif leading-relaxed italic border-l-2 border-[#eae5d9]/40 pl-4 py-1" : ""}>
+                <p
+                  key={idx}
+                  className={
+                    idx === 0
+                      ? "text-base sm:text-lg text-[#f5efeb] font-serif leading-relaxed italic border-l-2 border-[#eae5d9]/40 pl-4 py-1"
+                      : ""
+                  }
+                >
                   {p}
                 </p>
               ))}

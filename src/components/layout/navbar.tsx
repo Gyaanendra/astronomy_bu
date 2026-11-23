@@ -28,7 +28,10 @@ export function Navbar() {
             </span>
             <div className="flex flex-col">
               <span className="font-editorial-serif italic text-2xl sm:text-3xl tracking-tight text-[#f5efeb] group-hover:text-white transition-colors leading-none">
-                Astronomy<span className="font-sans font-normal text-xs tracking-[0.25em] text-[#a39e93] uppercase ml-1.5 align-middle">BU</span>
+                Astronomy
+                <span className="font-sans font-normal text-xs tracking-[0.25em] text-[#a39e93] uppercase ml-1.5 align-middle">
+                  BU
+                </span>
               </span>
               <span className="font-mono text-[9px] tracking-widest text-[#8a847a] uppercase mt-0.5">
                 Bennett University Observatory
@@ -93,8 +96,12 @@ export function Navbar() {
         <div className="fixed inset-0 z-50 bg-[#1D1D1D]/98 backdrop-blur-2xl flex flex-col justify-between p-8 sm:p-14 lg:p-20 animate-in fade-in duration-200">
           <div className="flex items-center justify-between border-b border-[rgba(245,239,235,0.12)] pb-6">
             <div className="flex items-center gap-3">
-              <span className="font-editorial-serif text-2xl text-[#f5efeb]">✱</span>
-              <span className="font-editorial-serif italic text-2xl text-[#f5efeb]">AstronomyBU</span>
+              <span className="font-editorial-serif text-2xl text-[#f5efeb]">
+                ✱
+              </span>
+              <span className="font-editorial-serif italic text-2xl text-[#f5efeb]">
+                AstronomyBU
+              </span>
             </div>
             <button
               type="button"
@@ -127,7 +134,9 @@ export function Navbar() {
                           : "text-[#a39e93] hover:text-[#f5efeb]"
                       }`}
                     >
-                      <span className="font-mono text-xs text-[#635e57]">[0{idx + 1}]</span>
+                      <span className="font-mono text-xs text-[#635e57]">
+                        [0{idx + 1}]
+                      </span>
                       <span>{link.label}</span>
                       <ArrowUpRight className="w-5 h-5 opacity-60" />
                     </Link>

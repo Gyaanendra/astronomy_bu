@@ -54,7 +54,9 @@ export function JournalSection() {
     () => {
       gsap.registerPlugin(ScrollTrigger);
 
-      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const prefersReduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
       if (prefersReduced) return;
 
       if (listRef.current) {
@@ -72,7 +74,7 @@ export function JournalSection() {
         });
       }
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (
@@ -91,7 +93,9 @@ export function JournalSection() {
           </div>
 
           <p className="font-mono text-xs xl:text-[13px] tracking-wide text-[#a39e93] leading-relaxed max-w-md md:text-right">
-            Traces and reflections from Noctra&apos;s gatherings — public meetings, discussions, and collaborations that unfold beneath the night sky.
+            Traces and reflections from Noctra&apos;s gatherings — public
+            meetings, discussions, and collaborations that unfold beneath the
+            night sky.
           </p>
         </div>
 

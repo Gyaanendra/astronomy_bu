@@ -94,7 +94,9 @@ export function MembershipSection() {
     () => {
       gsap.registerPlugin(ScrollTrigger);
 
-      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const prefersReduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
       if (prefersReduced) return;
 
       if (matrixRef.current) {
@@ -111,7 +113,7 @@ export function MembershipSection() {
         });
       }
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (
@@ -130,7 +132,10 @@ export function MembershipSection() {
           </div>
 
           <p className="font-mono text-xs xl:text-[13px] tracking-wide text-[#a39e93] leading-relaxed max-w-md md:text-right">
-            Ongoing access to Noctra&apos;s experiences, spaces, and seasonal programs without individual booking. It is structured as a gradual deepening of proximity — from occasional presence to active participation.
+            Ongoing access to Noctra&apos;s experiences, spaces, and seasonal
+            programs without individual booking. It is structured as a gradual
+            deepening of proximity — from occasional presence to active
+            participation.
           </p>
         </div>
 

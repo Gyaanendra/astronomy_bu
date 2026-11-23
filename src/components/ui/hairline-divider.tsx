@@ -4,7 +4,11 @@ interface HairlineDividerProps {
   label?: string;
 }
 
-export function HairlineDivider({ className = "", withCrosshair = false, label }: HairlineDividerProps) {
+export function HairlineDivider({
+  className = "",
+  withCrosshair = false,
+  label,
+}: HairlineDividerProps) {
   return (
     <div className={`relative w-full flex items-center ${className}`}>
       <div className="flex-1 border-t border-[rgba(245,239,235,0.12)]" />
@@ -24,4 +28,3 @@ export function HairlineDivider({ className = "", withCrosshair = false, label }
     </div>
   );
 }
-

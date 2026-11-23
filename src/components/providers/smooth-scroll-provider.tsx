@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import "lenis/dist/lenis.css";
+// Lenis styles are defined in app/globals.css to ensure reliable bundling
 
 export function SmoothScrollProvider({
   children,

@@ -1,4 +1,9 @@
-export type EventCategory = "Workshop" | "Exhibition" | "Competition" | "Lecture" | "Observation";
+export type EventCategory =
+  | "Workshop"
+  | "Exhibition"
+  | "Competition"
+  | "Lecture"
+  | "Observation";
 
 export interface EventItem {
   id: string | number;
@@ -19,4 +24,3 @@ export interface EventItem {
   highlighted?: boolean;
   upcoming?: boolean;
 }
-

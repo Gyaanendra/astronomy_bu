@@ -32,9 +32,7 @@ export const metadata: Metadata = {
       { url: "/favicon.ico" },
       { url: "/images/logo.png", type: "image/png" },
     ],
-    apple: [
-      { url: "/images/logo.png" },
-    ],
+    apple: [{ url: "/images/logo.png" }],
   },
   keywords: [
     "AstronomyBU",

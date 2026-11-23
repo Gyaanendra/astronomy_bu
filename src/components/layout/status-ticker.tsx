@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getMoonPhase, getLocalSiderealTime, MoonPhaseInfo } from "@/lib/astronomy";
+import {
+  getMoonPhase,
+  getLocalSiderealTime,
+  MoonPhaseInfo,
+} from "@/lib/astronomy";
 import { BENNETT_COORDINATES } from "@/lib/constants";
 
 export function StatusTicker() {
@@ -21,7 +25,7 @@ export function StatusTicker() {
           second: "2-digit",
           hour12: false,
           timeZone: "Asia/Kolkata",
-        }) + " IST"
+        }) + " IST",
       );
     };
 
@@ -36,7 +40,9 @@ export function StatusTicker() {
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-[#f5efeb] font-semibold">OBSERVATORY HORIZON</span>
+            <span className="text-[#f5efeb] font-semibold">
+              OBSERVATORY HORIZON
+            </span>
           </div>
           <span className="text-[#8a847a]">/</span>
           <span>{BENNETT_COORDINATES.name.toUpperCase()}</span>
@@ -48,16 +54,23 @@ export function StatusTicker() {
 
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
-            <span className="text-base leading-none">{moon ? moon.icon : "🌑"}</span>
-            <span className="text-[#f5efeb]">{moon ? `${moon.name.toUpperCase()} (${moon.illumination}%)` : "LUNAR SYNC..."}</span>
+            <span className="text-base leading-none">
+              {moon ? moon.icon : "🌑"}
+            </span>
+            <span className="text-[#f5efeb]">
+              {moon
+                ? `${moon.name.toUpperCase()} (${moon.illumination}%)`
+                : "LUNAR SYNC..."}
+            </span>
           </div>
           <span className="text-[#8a847a]">/</span>
           <span className="text-[#a39e93]">{localTime || "--:--:-- IST"}</span>
           <span className="hidden sm:inline text-[#8a847a]">/</span>
-          <span className="hidden sm:inline text-[#e8dfc8]">{siderealTime || "--:--:-- LST"}</span>
+          <span className="hidden sm:inline text-[#e8dfc8]">
+            {siderealTime || "--:--:-- LST"}
+          </span>
         </div>
       </div>
     </div>
   );
 }
-

@@ -7,7 +7,10 @@ interface StippleCanvasProps {
   density?: number; // count of stars/particles
 }
 
-export function StippleCanvas({ className = "", density = 180 }: StippleCanvasProps) {
+export function StippleCanvas({
+  className = "",
+  density = 180,
+}: StippleCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -18,12 +21,14 @@ export function StippleCanvas({ className = "", density = 180 }: StippleCanvasPr
     if (!ctx) return;
 
     let animationFrameId: number;
-    let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
+    let width = (canvas.width =
+      canvas.parentElement?.clientWidth || window.innerWidth);
     let height = (canvas.height = canvas.parentElement?.clientHeight || 450);
 
     const handleResize = () => {
       if (!canvas) return;
-      width = canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
+      width = canvas.width =
+        canvas.parentElement?.clientWidth || window.innerWidth;
       height = canvas.height = canvas.parentElement?.clientHeight || 450;
     };
 
@@ -43,13 +48,18 @@ export function StippleCanvas({ className = "", density = 180 }: StippleCanvasPr
     for (let i = 0; i < density; i++) {
       // Create a clustered horizontal band around the middle with natural Gaussian scatter
       const isBand = Math.random() > 0.4;
-      const ySpread = isBand ? height * 0.5 + (Math.random() - 0.5) * height * 0.4 : Math.random() * height;
+      const ySpread = isBand
+        ? height * 0.5 + (Math.random() - 0.5) * height * 0.4
+        : Math.random() * height;
       const baseAlpha = Math.random() * 0.6 + 0.15;
 
       points.push({
         x: Math.random() * width,
         y: ySpread,
-        radius: Math.random() < 0.85 ? Math.random() * 1.2 + 0.4 : Math.random() * 2 + 1.2,
+        radius:
+          Math.random() < 0.85
+            ? Math.random() * 1.2 + 0.4
+            : Math.random() * 2 + 1.2,
         alpha: baseAlpha,
         baseAlpha,
         speed: Math.random() * 0.02 + 0.005,
@@ -103,4 +113,3 @@ export function StippleCanvas({ className = "", density = 180 }: StippleCanvasPr
     />
   );
 }
-

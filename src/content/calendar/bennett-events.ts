@@ -10,7 +10,8 @@ export const bennettCampusEvents: CelestialEvent[] = [
     category: "Campus Stargazing",
     description:
       "Public telescope observation night at the Bennett cricket pavilion. We deploy club 8-inch Dobsonians to resolve the Trapezium cluster within M42 Orion Nebula, the reflection nebulosity of M45, and craters along the lunar terminator.",
-    visibilityOrLocation: "Bennett University Cricket Pavilion (South-West corner)",
+    visibilityOrLocation:
+      "Bennett University Cricket Pavilion (South-West corner)",
     peakTime: "21:30 IST",
     optimalEquipment: "Club Dobsonians provided / Bring red flashlight only",
     highlighted: true,
@@ -38,7 +39,8 @@ export const bennettCampusEvents: CelestialEvent[] = [
     description:
       "High-power lunar observation focusing on the shadow gradients across Tycho, Copernicus, and Montes Apenninus during First Quarter illumination phase.",
     visibilityOrLocation: "Academic Block A Terrace",
-    optimalEquipment: "High-magnification lunar filters & Barlow lenses provided",
+    optimalEquipment:
+      "High-magnification lunar filters & Barlow lenses provided",
   },
   {
     id: "bu-planetary-saturn-jupiter",
@@ -64,7 +66,8 @@ export const bennettCampusEvents: CelestialEvent[] = [
     description:
       "Overnight deep-sky tracking and tracking mount calibration drill. Learn polar alignment in Bortle 6.5 Greater Noida skies and automated intervalometer shooting routines.",
     visibilityOrLocation: "011 NCA Ground & Open Field",
-    optimalEquipment: "DSLR / Mirrorless Camera, Tripod, Fast Lens (f/2.8 or lower)",
+    optimalEquipment:
+      "DSLR / Mirrorless Camera, Tripod, Fast Lens (f/2.8 or lower)",
     highlighted: true,
   },
   {
