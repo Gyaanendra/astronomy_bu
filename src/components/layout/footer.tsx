@@ -23,10 +23,10 @@ export function Footer() {
           className="object-cover object-bottom filter contrast-110 brightness-95"
           sizes="100vw"
         />
-        
+
         {/* Top Fade Gradient: Smooth blend from page void into deep sky */}
         <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-[#1D1D1D] via-[#1D1D1D]/80 to-transparent pointer-events-none" />
-        
+
         {/* Bottom Contrast Scrim: Ensures the colossal wordmark and copyright pop with 100% contrast */}
         <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#1D1D1D] via-[#1D1D1D]/75 to-transparent pointer-events-none" />
       </div>
@@ -65,9 +65,14 @@ export function Footer() {
         <div className="pt-3 border-t border-[rgba(245,239,235,0.15)] flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-[11px] text-[#a39e93]">
           {/* Copyright & Inquiries */}
           <div className="flex items-center gap-3">
-            <span>© {new Date().getFullYear()} ASTRONOMYBU · BENNETT OBSERVATORY</span>
+            <span>
+              © {new Date().getFullYear()} ASTRONOMYBU · BENNETT OBSERVATORY
+            </span>
             <span className="hidden md:inline text-[#635e57]">/</span>
-            <a href="mailto:astronomy@bennett.edu.in" className="hidden md:inline text-[#f5efeb] hover:underline">
+            <a
+              href="mailto:astronomy@bennett.edu.in"
+              className="hidden md:inline text-[#f5efeb] hover:underline"
+            >
               astronomy@bennett.edu.in
             </a>
           </div>

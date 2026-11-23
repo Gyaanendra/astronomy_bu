@@ -121,7 +121,9 @@ export function AboutSection() {
     () => {
       gsap.registerPlugin(ScrollTrigger);
 
-      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const prefersReduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
       if (prefersReduced) return;
 
       // 1. Stats Entrance Stagger
@@ -172,7 +174,7 @@ export function AboutSection() {
         });
       }
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (
@@ -192,7 +194,14 @@ export function AboutSection() {
               About Us
             </h2>
             <p className="font-sans text-xs sm:text-sm text-[#a39e93] leading-relaxed max-w-lg">
-              AstronomyBU is Bennett University&apos;s premier astronomical society and space research collective. Operating since 2021 under the School of Computer Science &amp; Engineering, we help students and enthusiasts—from first-year undergraduates to senior researchers—explore, image, and understand deep space. Our team takes care of telescope tracking, sensor calibration, dark-sky expeditions, and observational telemetry until the research is complete.
+              AstronomyBU is Bennett University&apos;s premier astronomical
+              society and space research collective. Operating since 2021 under
+              the School of Computer Science &amp; Engineering, we help students
+              and enthusiasts—from first-year undergraduates to senior
+              researchers—explore, image, and understand deep space. Our team
+              takes care of telescope tracking, sensor calibration, dark-sky
+              expeditions, and observational telemetry until the research is
+              complete.
             </p>
           </div>
 
@@ -238,7 +247,8 @@ export function AboutSection() {
               Catalog
             </h3>
             <p className="font-sans text-xs sm:text-sm text-[#a39e93]">
-              A wide selection of optical telemetry and observation rigs for your research
+              A wide selection of optical telemetry and observation rigs for
+              your research
             </p>
           </div>
 
@@ -248,7 +258,10 @@ export function AboutSection() {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
           >
             {CATALOG.map((item) => (
-              <div key={item.title} className="group cursor-pointer flex flex-col">
+              <div
+                key={item.title}
+                className="group cursor-pointer flex flex-col"
+              >
                 {/* Rounded Image Container */}
                 <div className="relative w-full aspect-[4/5] rounded-[24px] sm:rounded-[32px] overflow-hidden bg-[#111113] shadow-2xl mb-4">
                   <Image
@@ -283,7 +296,8 @@ export function AboutSection() {
                 How we work
               </h3>
               <p className="font-sans text-xs sm:text-sm text-[#a39e93]">
-                We have made the process of working with us as simple and transparent as possible
+                We have made the process of working with us as simple and
+                transparent as possible
               </p>
             </div>
 

@@ -7,7 +7,8 @@ export const legacyTenure: TenureRecord = {
   departments: [
     {
       name: "Leadership",
-      description: "Pioneering the initial telescope observation sessions, diplomatic visits, and campus expansion.",
+      description:
+        "Pioneering the initial telescope observation sessions, diplomatic visits, and campus expansion.",
       members: [
         {
           id: "shardul-dhekane-24",
@@ -15,7 +16,8 @@ export const legacyTenure: TenureRecord = {
           role: "President / Founding Lead",
           department: "Leadership",
           image: "/team/shardul_dhekane.webp",
-          quote: "Establishing Bennett's first astronomical community under the northern skies.",
+          quote:
+            "Establishing Bennett's first astronomical community under the northern skies.",
           socials: {
             instagram: "https://instagram.com/probably_its_spirit",
             linkedin: "https://linkedin.com/in/shardul-dhekane",
@@ -28,7 +30,8 @@ export const legacyTenure: TenureRecord = {
           name: "Kaavya Kumar Yadav",
           role: "Vice President",
           department: "Leadership",
-          image: "/team/WhatsApp Image 2025-10-25 at 18.34.13_d286fdb_anonymous.webp",
+          image:
+            "/team/WhatsApp Image 2025-10-25 at 18.34.13_d286fdb_anonymous.webp",
           quote: "Mapping constellations across Greater Noida's horizons.",
           socials: {
             instagram: "https://www.instagram.com/_no.niceguy_",
@@ -42,7 +45,8 @@ export const legacyTenure: TenureRecord = {
           role: "Joint Secretary",
           department: "Leadership",
           image: "/team/IMG_8751_anonymous.webp",
-          quote: "Scaling the club's telescope fleet and outdoor stargazing operations.",
+          quote:
+            "Scaling the club's telescope fleet and outdoor stargazing operations.",
           socials: {
             instagram: "https://www.instagram.com/abhi_ncd",
             linkedin: "https://www.linkedin.com/in/abhimanyunarang123",
@@ -53,7 +57,8 @@ export const legacyTenure: TenureRecord = {
     },
     {
       name: "Tech & Research",
-      description: "Initial telescope setup, star mapping runs, and workshop curricula.",
+      description:
+        "Initial telescope setup, star mapping runs, and workshop curricula.",
       members: [
         {
           id: "dhruv-kukreja-24",
@@ -61,7 +66,8 @@ export const legacyTenure: TenureRecord = {
           role: "Research Lead",
           department: "Tech & Research",
           image: "/team/IMG_20251026_152602_anonymous.webp",
-          quote: "Constructing observational pipelines and telescope alignment drills.",
+          quote:
+            "Constructing observational pipelines and telescope alignment drills.",
           socials: {
             instagram: "https://instagram.com/_dhruvkukreja_",
           },
@@ -73,7 +79,8 @@ export const legacyTenure: TenureRecord = {
           role: "Telemetry Associate",
           department: "Tech & Research",
           image: "/team/IMG-20251026-WA0000_anonymous.webp",
-          quote: "Calibrating mounts and tracking long-exposure astrophotography targets.",
+          quote:
+            "Calibrating mounts and tracking long-exposure astrophotography targets.",
           socials: {
             instagram: "https://www.instagram.com/madhavdaipuria",
           },
@@ -82,7 +89,8 @@ export const legacyTenure: TenureRecord = {
     },
     {
       name: "Web & Development",
-      description: "First interactive web portals, orbital simulators, and stargazing RSVP systems.",
+      description:
+        "First interactive web portals, orbital simulators, and stargazing RSVP systems.",
       members: [
         {
           id: "aryan-singh-24",
@@ -103,7 +111,8 @@ export const legacyTenure: TenureRecord = {
           role: "UI/UX Lead",
           department: "Web & Development",
           image: "/team/IMG-20250913-WA0007_anonymous.webp",
-          quote: "Bringing minimal, dark editorial aesthetics to astronomical data.",
+          quote:
+            "Bringing minimal, dark editorial aesthetics to astronomical data.",
           socials: {
             instagram: "https://instagram.com/mokshh_1249",
           },
@@ -113,7 +122,8 @@ export const legacyTenure: TenureRecord = {
     },
     {
       name: "PR & Outreach",
-      description: "Managing inter-college delegations, Russian House mission, and social campaigns.",
+      description:
+        "Managing inter-college delegations, Russian House mission, and social campaigns.",
       members: [
         {
           id: "yatishi-agarwal-24",
@@ -121,7 +131,8 @@ export const legacyTenure: TenureRecord = {
           role: "Outreach Lead",
           department: "PR & Outreach",
           image: "/team/IMG_0543_anonymous.webp",
-          quote: "Connecting Bennett University with international space exploration dignitaries.",
+          quote:
+            "Connecting Bennett University with international space exploration dignitaries.",
           socials: {
             instagram: "https://instagram.com/yatishi_dz",
           },
@@ -142,7 +153,8 @@ export const legacyTenure: TenureRecord = {
     },
     {
       name: "Multimedia",
-      description: "Documenting the first Russian cosmonaut delegation and annual astrophotography exhibitions.",
+      description:
+        "Documenting the first Russian cosmonaut delegation and annual astrophotography exhibitions.",
       members: [
         {
           id: "arnav-tyagi-24",
@@ -150,7 +162,8 @@ export const legacyTenure: TenureRecord = {
           role: "Media Lead",
           department: "Multimedia",
           image: "/team/IMG_20251012_232107_anonymous.webp",
-          quote: "Capturing light particles traveling across millions of years.",
+          quote:
+            "Capturing light particles traveling across millions of years.",
           socials: {
             instagram: "https://instagram.com/arnav.t1210",
           },
@@ -162,7 +175,8 @@ export const legacyTenure: TenureRecord = {
           role: "Astrophotographer",
           department: "Multimedia",
           image: "/team/IMG_6431_anonymous.webp",
-          quote: "Preserving the beauty of distant galaxies on silicon sensors.",
+          quote:
+            "Preserving the beauty of distant galaxies on silicon sensors.",
           socials: {
             instagram: "https://www.instagram.com/dakshrao_rajput",
           },

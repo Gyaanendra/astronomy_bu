@@ -36,9 +36,7 @@ export const eventsRegistry: EventItem[] = [
     highlighted: true,
     upcoming: false,
     image: "https://i.ibb.co/4RM5fywM/Cosmology-Lecture2-Page-1.png",
-    photos: [
-      "https://i.ibb.co/4RM5fywM/Cosmology-Lecture2-Page-1.png",
-    ],
+    photos: ["https://i.ibb.co/4RM5fywM/Cosmology-Lecture2-Page-1.png"],
     registerLink: "https://luma.com/x4lhsoib",
   },
   {
@@ -56,10 +54,7 @@ export const eventsRegistry: EventItem[] = [
     highlighted: true,
     upcoming: false,
     image: "/images/assets/catalog-telescopes.jpg",
-    photos: [
-      "/images/assets/catalog-telescopes.jpg",
-      "/cool1.png",
-    ],
+    photos: ["/images/assets/catalog-telescopes.jpg", "/cool1.png"],
   },
   {
     id: "solar-symposium-2026",
@@ -75,9 +70,7 @@ export const eventsRegistry: EventItem[] = [
     highlighted: false,
     upcoming: false,
     image: "/images/assets/structure-eclipse.jpg",
-    photos: [
-      "/images/assets/structure-eclipse.jpg",
-    ],
+    photos: ["/images/assets/structure-eclipse.jpg"],
   },
   {
     id: "stellar-vision-2025",
@@ -98,7 +91,8 @@ export const eventsRegistry: EventItem[] = [
       "https://i.ibb.co/whpS2bwC/Screenshot-2025-01-31-025852.png",
       "https://i.ibb.co/WW8kLk10/Screenshot-2025-01-31-025746.png",
     ],
-    registerLink: "https://unstop.com/events/stellar-vision-uphoria-2025-bennett-university-bu-greater-noida-1367697",
+    registerLink:
+      "https://unstop.com/events/stellar-vision-uphoria-2025-bennett-university-bu-greater-noida-1367697",
   },
   {
     id: "cosmonauts-delhi",
@@ -137,9 +131,7 @@ export const eventsRegistry: EventItem[] = [
     highlighted: false,
     upcoming: false,
     image: "/cool1.png",
-    photos: [
-      "/cool1.png",
-    ],
+    photos: ["/cool1.png"],
     videoUrl: "/events/cosmology-lecture-2025/CosmologyEP1%20Story.mp4",
   },
   {
@@ -156,9 +148,7 @@ export const eventsRegistry: EventItem[] = [
     highlighted: false,
     upcoming: false,
     image: "https://i.ibb.co/TBJTv0CJ/photo1.jpg",
-    photos: [
-      "https://i.ibb.co/TBJTv0CJ/photo1.jpg",
-    ],
+    photos: ["https://i.ibb.co/TBJTv0CJ/photo1.jpg"],
   },
   {
     id: "spiti-expedition-2024",
@@ -174,10 +164,7 @@ export const eventsRegistry: EventItem[] = [
     highlighted: true,
     upcoming: false,
     image: "/images/assets/journal-gathering.jpg",
-    photos: [
-      "/images/assets/journal-gathering.jpg",
-      "/cool2.png",
-    ],
+    photos: ["/images/assets/journal-gathering.jpg", "/cool2.png"],
   },
   {
     id: "astro-3",
@@ -213,9 +200,7 @@ export const eventsRegistry: EventItem[] = [
     highlighted: true,
     upcoming: false,
     image: "/images/assets/journal-workshop.jpg",
-    photos: [
-      "/images/assets/journal-workshop.jpg",
-    ],
+    photos: ["/images/assets/journal-workshop.jpg"],
   },
   {
     id: "halloween-2024",
@@ -230,7 +215,8 @@ export const eventsRegistry: EventItem[] = [
       "Celestial lore and mythology night exploring ancient cultural interpretations of constellations, cometary omens, and the death of massive stars.",
     highlighted: false,
     upcoming: false,
-    image: "https://i.ibb.co/99vwdZ9N/Whats-App-Image-2025-01-31-at-3-16-37-AM.jpg",
+    image:
+      "https://i.ibb.co/99vwdZ9N/Whats-App-Image-2025-01-31-at-3-16-37-AM.jpg",
     photos: [
       "https://i.ibb.co/99vwdZ9N/Whats-App-Image-2025-01-31-at-3-16-37-AM.jpg",
       "https://i.ibb.co/G4FT1CzV/Whats-App-Image-2025-01-31-at-3-16-36-AM-1.jpg",

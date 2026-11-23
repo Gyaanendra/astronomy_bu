@@ -8,4 +8,3 @@ export const allCalendarEvents: CelestialEvent[] = [
 ].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
 export { globalCelestialEvents, bennettCampusEvents };
-

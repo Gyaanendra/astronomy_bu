@@ -5,7 +5,8 @@ export const journalArticles: JournalArticle[] = [
     id: "bortle-astrophotography-greater-noida",
     slug: "battling-bortle-6-astrophotography",
     title: "The Anatomy of a Deep-Sky Exposure",
-    subtitle: "Techniques for narrowband isolation and star calibration under suburban light pollution",
+    subtitle:
+      "Techniques for narrowband isolation and star calibration under suburban light pollution",
     date: "2026-02-14",
     author: {
       name: "Dhruv Kukreja",
@@ -28,7 +29,8 @@ export const journalArticles: JournalArticle[] = [
     id: "living-cosmic-archive",
     slug: "living-cosmic-archive-constellations",
     title: "Constellations as Cultural Architecture",
-    subtitle: "Why human civilizations project narratives onto unlinked coordinate matrices",
+    subtitle:
+      "Why human civilizations project narratives onto unlinked coordinate matrices",
     date: "2026-01-28",
     author: {
       name: "Kanak Rana",
@@ -50,7 +52,8 @@ export const journalArticles: JournalArticle[] = [
     id: "cosmology-dr-pranav-debrief",
     slug: "cosmology-dr-pratyush-pranav-inquiry",
     title: "Cosmological Inquiries with Dr. Pratyush Pranav",
-    subtitle: "Reflections from Episode 1: Space-time geometry, topological data analysis, and the early cosmos",
+    subtitle:
+      "Reflections from Episode 1: Space-time geometry, topological data analysis, and the early cosmos",
     date: "2025-11-25",
     author: {
       name: "Vivan Joshi",
@@ -72,7 +75,8 @@ export const journalArticles: JournalArticle[] = [
     id: "russian-cosmonauts-reflections",
     slug: "russian-cosmonauts-diplomatic-mission",
     title: "Dispatches from the Russian House: Meeting Orbital Cosmonauts",
-    subtitle: "First-hand debriefs on long-duration spaceflight, isolation psychological regimes, and EVA operations",
+    subtitle:
+      "First-hand debriefs on long-duration spaceflight, isolation psychological regimes, and EVA operations",
     date: "2025-04-20",
     author: {
       name: "Shardul Dhekane [𝙎𝙋𝙄𝙍𝙄𝙏]",
@@ -94,7 +98,8 @@ export const journalArticles: JournalArticle[] = [
     id: "dobsonian-collimation-manual",
     slug: "dobsonian-collimation-in-low-temperatures",
     title: "Field Manual: Laser Collimation of Fast Newtonians",
-    subtitle: "Maintaining sub-arcsecond mirror alignment during winter nocturnal thermal drops",
+    subtitle:
+      "Maintaining sub-arcsecond mirror alignment during winter nocturnal thermal drops",
     date: "2026-01-05",
     author: {
       name: "Aryan Singh",
@@ -116,7 +121,8 @@ export const journalArticles: JournalArticle[] = [
     id: "perseids-observational-analysis",
     slug: "perseids-observations-and-radio-scatter",
     title: "Observing Meteor Ionization Trails via FM Radio Scatter",
-    subtitle: "Combining optical vigil with radio astronomy to detect daytime and overcast meteor entries",
+    subtitle:
+      "Combining optical vigil with radio astronomy to detect daytime and overcast meteor entries",
     date: "2025-08-16",
     author: {
       name: "Saksham Yadav",
@@ -138,7 +144,8 @@ export const journalArticles: JournalArticle[] = [
     id: "jwst-spectroscopy-breakthrough",
     slug: "jwst-deep-field-atmospheric-biosignatures",
     title: "Decoding Exoplanet Atmospheres with JWST Transmission Spectra",
-    subtitle: "How infrared transit spectroscopy detects water vapor, carbon dioxide, and sulfur dioxide in alien skies",
+    subtitle:
+      "How infrared transit spectroscopy detects water vapor, carbon dioxide, and sulfur dioxide in alien skies",
     date: "2025-10-10",
     author: {
       name: "Dhruv Kukreja",

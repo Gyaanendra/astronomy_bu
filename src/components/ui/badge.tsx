@@ -6,10 +6,16 @@ interface BadgeProps {
   className?: string;
 }
 
-export function Badge({ children, variant = "bracket", className = "" }: BadgeProps) {
+export function Badge({
+  children,
+  variant = "bracket",
+  className = "",
+}: BadgeProps) {
   if (variant === "bracket") {
     return (
-      <span className={`font-mono text-[11px] tracking-wider text-[#a39e93] ${className}`}>
+      <span
+        className={`font-mono text-[11px] tracking-wider text-[#a39e93] ${className}`}
+      >
         [{children}]
       </span>
     );
@@ -43,4 +49,3 @@ export function Badge({ children, variant = "bracket", className = "" }: BadgePr
     </span>
   );
 }
-

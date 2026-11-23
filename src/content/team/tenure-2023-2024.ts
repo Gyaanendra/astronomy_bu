@@ -7,7 +7,8 @@ export const foundingTenure: TenureRecord = {
   departments: [
     {
       name: "Leadership",
-      description: "Founding council that established the Bennett University Observatory and constitution.",
+      description:
+        "Founding council that established the Bennett University Observatory and constitution.",
       members: [
         {
           id: "shardul-dhekane-23",
@@ -15,7 +16,8 @@ export const foundingTenure: TenureRecord = {
           role: "Founding Convener",
           department: "Leadership",
           image: "/team/shardul_dhekane.webp",
-          quote: "Constructing an altar for stargazers where once there was only silent sky.",
+          quote:
+            "Constructing an altar for stargazers where once there was only silent sky.",
           socials: {
             instagram: "https://instagram.com/probably_its_spirit",
             github: "https://github.com/probablyitsspirit",
@@ -28,7 +30,8 @@ export const foundingTenure: TenureRecord = {
           role: "Co-Convener",
           department: "Leadership",
           image: "/team/IMG_8751_anonymous.webp",
-          quote: "To observe the heavens is to humble oneself before the infinite.",
+          quote:
+            "To observe the heavens is to humble oneself before the infinite.",
           socials: {
             linkedin: "https://linkedin.com",
           },
@@ -38,7 +41,8 @@ export const foundingTenure: TenureRecord = {
     },
     {
       name: "Tech & Research",
-      description: "Commissioning first 8-inch Dobsonian telescopes and establishing nocturnal observing logs.",
+      description:
+        "Commissioning first 8-inch Dobsonian telescopes and establishing nocturnal observing logs.",
       members: [
         {
           id: "aarav-sharma-23",
@@ -58,7 +62,8 @@ export const foundingTenure: TenureRecord = {
           role: "Research Secretary",
           department: "Tech & Research",
           image: "/team/IMG_0309_anonymous.webp",
-          quote: "Every photon striking our sensor began its voyage before civilization awoke.",
+          quote:
+            "Every photon striking our sensor began its voyage before civilization awoke.",
           socials: {
             linkedin: "https://linkedin.com",
           },
@@ -67,7 +72,8 @@ export const foundingTenure: TenureRecord = {
     },
     {
       name: "Multimedia",
-      description: "First astrophotography test frames of lunar craters, Orion nebula, and Saturn's rings.",
+      description:
+        "First astrophotography test frames of lunar craters, Orion nebula, and Saturn's rings.",
       members: [
         {
           id: "rohan-mehta-23",

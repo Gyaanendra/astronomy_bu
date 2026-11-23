@@ -16,7 +16,7 @@ export const CLUB_INFO = {
     instagram: "https://instagram.com/astronomy_bu",
     linkedin: "https://linkedin.com/company/astronomy-bu",
     github: "https://github.com/probablyitsspirit",
-    unstop: "https://unstop.com/college-fairs/uphoria-2025-bennett-university-bu-greater-noida-292025",
+    unstop:
+      "https://unstop.com/college-fairs/uphoria-2025-bennett-university-bu-greater-noida-292025",
   },
 };
-

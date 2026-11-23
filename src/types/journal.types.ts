@@ -15,4 +15,3 @@ export interface JournalArticle {
   content: string[];
   tags: string[];
 }
-

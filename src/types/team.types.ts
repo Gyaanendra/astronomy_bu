@@ -37,4 +37,3 @@ export interface TenureRecord {
     members: TeamMember[];
   }[];
 }
-

@@ -50,7 +50,8 @@ export const globalCelestialEvents: CelestialEvent[] = [
     category: "Eclipse",
     description:
       "The first total solar eclipse visible from mainland Europe in over 26 years. Totality corridor spans Greenland, western Iceland, and northern Spain with over 2 minutes 18 seconds of coronal darkness.",
-    visibilityOrLocation: "Greenland, Iceland, Spain (Partial in Europe & N. Africa)",
+    visibilityOrLocation:
+      "Greenland, Iceland, Spain (Partial in Europe & N. Africa)",
     peakTime: "17:47 UTC Maximum Totality",
     optimalEquipment: "ISO 12312-2 Certified Solar Filters",
     highlighted: true,

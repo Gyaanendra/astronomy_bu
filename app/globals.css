@@ -2,10 +2,10 @@
 
 :root {
   /* Archival Nocturne Design Tokens */
-  --background: #1D1D1D;
+  --background: #1d1d1d;
   --foreground: #f5efeb;
 
-  --color-void: #1D1D1D;
+  --color-void: #1d1d1d;
   --color-surface-base: #252525;
   --color-surface-elevated: #2c2c2c;
   --color-surface-sunken: #151515;
@@ -16,7 +16,7 @@
   --color-bone-pure: #fcfbf9;
   --color-bone-primary: #f5efeb;
   --color-bone-muted: #a39e93;
-  --color-bone-faint: #8a847a;       /* Captions, numbers, coordinates (AA on void) */
+  --color-bone-faint: #8a847a; /* Captions, numbers, coordinates (AA on void) */
 
   --color-accent-bone: #eae5d9;
   --color-accent-starlight: #d4af37;
@@ -35,6 +35,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--color-void);
   color: var(--color-bone-primary);
@@ -47,8 +51,8 @@ body {
 
 /* Custom Selection */
 ::selection {
-  background: #eae5d9;
-  color: #1D1D1D;
+  background: #c84b31;
+  color: #fcfbf9;
 }
 
 /* Serif font utility */
@@ -138,21 +142,73 @@ body {
   }
 }
 
-/* Custom archival scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+/* Custom Archival Orange Scrollbar for Chromium, Firefox & WebKit */
+:root,
+html,
+body,
+* {
+  scrollbar-color: #c84b31 #141416 !important;
+  scrollbar-width: thin !important;
 }
 
-::-webkit-scrollbar-track {
-  background: #1D1D1D;
+::-webkit-scrollbar,
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 9px !important;
+  height: 9px !important;
+  background-color: #141416 !important;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #27272a;
-  border-radius: 0px;
+::-webkit-scrollbar-track,
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track {
+  background: #141416 !important;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+::-webkit-scrollbar-thumb,
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  background-color: #c84b31 !important;
+  background-image: linear-gradient(180deg, #c84b31, #b53d24) !important;
+  border-radius: 9999px !important;
+  border: 2px solid #141416 !important;
+}
+
+::-webkit-scrollbar-thumb:hover,
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #e05d42 !important;
+  background-image: linear-gradient(180deg, #e05d42, #c84b31) !important;
+}
+
+::-webkit-scrollbar-corner {
+  background: #141416 !important;
+}
+
+/* Lenis Smooth Scroll Base Styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch],
+.lenis [data-lenis-prevent-vertical],
+.lenis [data-lenis-prevent-horizontal] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+.lenis.lenis-autoToggle {
+  transition-property: overflow;
+  transition-duration: 1ms;
+  transition-behavior: allow-discrete;
 }

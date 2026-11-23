@@ -60,7 +60,9 @@ export function ArchiveSection() {
     () => {
       gsap.registerPlugin(ScrollTrigger);
 
-      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const prefersReduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
       if (prefersReduced) return;
 
       if (gridRef.current) {
@@ -79,7 +81,7 @@ export function ArchiveSection() {
         });
       }
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (
@@ -98,7 +100,9 @@ export function ArchiveSection() {
           </div>
 
           <p className="font-mono text-xs xl:text-[13px] tracking-wide text-[#a39e93] leading-relaxed max-w-md md:text-right">
-            A curated collection of celestial references—myths, symbols, and visual fragments that trace how the night sky has been interpreted across cultures.
+            A curated collection of celestial references—myths, symbols, and
+            visual fragments that trace how the night sky has been interpreted
+            across cultures.
           </p>
         </div>
 

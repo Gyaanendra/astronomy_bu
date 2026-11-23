@@ -84,7 +84,8 @@ export function MilkyWayBand({ className = "" }: { className?: string }) {
         alpha *= edgeFade;
 
         if (alpha > 0.02) {
-          const radius = random() < 0.94 ? random() * 0.8 + 0.35 : random() * 1.4 + 0.7;
+          const radius =
+            random() < 0.94 ? random() * 0.8 + 0.35 : random() * 1.4 + 0.7;
           ctx.beginPath();
           ctx.arc(x, y, radius, 0, Math.PI * 2);
           ctx.fillStyle = `rgba(244, 239, 230, ${alpha})`;
@@ -105,7 +106,7 @@ export function MilkyWayBand({ className = "" }: { className?: string }) {
         { rx: 0.47, ry: -50, r: 3.5, a: 0.8 },
         { rx: 0.55, ry: -88, r: 6.5, a: 0.9 },
         { rx: 0.63, ry: -52, r: 5.2, a: 0.85 },
-        { rx: 0.70, ry: -72, r: 8.0, a: 0.98 }, // Large disc
+        { rx: 0.7, ry: -72, r: 8.0, a: 0.98 }, // Large disc
         { rx: 0.79, ry: -48, r: 3.8, a: 0.75 },
         { rx: 0.86, ry: -62, r: 5.5, a: 0.85 },
         { rx: 0.93, ry: -42, r: 3.2, a: 0.7 },
@@ -132,7 +133,7 @@ export function MilkyWayBand({ className = "" }: { className?: string }) {
         { rx: 0.65, ry: 62, r: 6.0, a: 0.85 },
         { rx: 0.72, ry: 82, r: 4.2, a: 0.8 },
         { rx: 0.81, ry: 56, r: 7.0, a: 0.9 },
-        { rx: 0.90, ry: 78, r: 3.5, a: 0.7 },
+        { rx: 0.9, ry: 78, r: 3.5, a: 0.7 },
       ];
 
       for (const node of starNodes) {
@@ -176,7 +177,9 @@ export function MilkyWayBand({ className = "" }: { className?: string }) {
   }, []);
 
   return (
-    <div className={`w-screen relative left-1/2 -translate-x-1/2 overflow-hidden pointer-events-none select-none my-8 ${className}`}>
+    <div
+      className={`w-screen relative left-1/2 -translate-x-1/2 overflow-hidden pointer-events-none select-none my-8 ${className}`}
+    >
       <canvas
         ref={canvasRef}
         style={{ width: "100%", height: "320px" }}
