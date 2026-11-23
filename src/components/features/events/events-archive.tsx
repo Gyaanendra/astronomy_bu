@@ -20,11 +20,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 export function EventsArchive() {
   const [selectedTenure, setSelectedTenure] = useState<string>("ALL");
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
-  const [selectedStatus, setSelectedStatus] = useState<string>("ALL");
-
-  const [tenureDropdownOpen, setTenureDropdownOpen] = useState(false);
-  const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
-  const [statusDropdownOpen, setStatusDropdownOpen] = useState(false);
 
   const [activeModalEvent, setActiveModalEvent] = useState<EventItem | null>(null);
   const [copied, setCopied] = useState(false);
@@ -40,28 +35,12 @@ export function EventsArchive() {
     "Exhibition",
     "Competition",
   ];
-  const statuses = ["ALL", "HIGHLIGHTED", "PAST"];
-
-  // Close dropdowns on outside click
-  useEffect(() => {
-    function handleClickOutside() {
-      setTenureDropdownOpen(false);
-      setCategoryDropdownOpen(false);
-      setStatusDropdownOpen(false);
-    }
-    window.addEventListener("click", handleClickOutside);
-    return () => window.removeEventListener("click", handleClickOutside);
-  }, []);
 
   // Filter actual events
   const filteredEvents = eventsRegistry.filter((event) => {
     const tenureMatch = selectedTenure === "ALL" || event.tenure === selectedTenure;
     const catMatch = selectedCategory === "ALL" || event.category === selectedCategory;
-    const statusMatch =
-      selectedStatus === "ALL" ||
-      (selectedStatus === "HIGHLIGHTED" && event.highlighted) ||
-      (selectedStatus === "PAST" && !event.upcoming);
-    return tenureMatch && catMatch && statusMatch;
+    return tenureMatch && catMatch;
   });
 
   // Entrance animations on grid change
@@ -93,7 +72,7 @@ export function EventsArchive() {
         }
       );
     },
-    { scope: containerRef, dependencies: [selectedTenure, selectedCategory, selectedStatus] }
+    { scope: containerRef, dependencies: [selectedTenure, selectedCategory] }
   );
 
   const handleShare = () => {
@@ -125,185 +104,69 @@ export function EventsArchive() {
   return (
     <div
       ref={containerRef}
-      className="w-full bg-[#161616] text-[#f5efeb] font-sans selection:bg-[#eae5d9] selection:text-[#1D1D1D]"
+      className="w-full bg-[#1D1D1D] text-[#f5efeb] font-sans selection:bg-[#eae5d9] selection:text-[#1D1D1D]"
     >
-      {/* Header with Deep-Space Texture */}
-      <div className="relative w-full border-b border-[rgba(245,239,235,0.12)] pt-16 sm:pt-24 pb-14 px-6 sm:px-12 lg:px-20 xl:px-24 overflow-hidden">
-        {/* Background Atmospheric Space Texture */}
-        <div className="absolute inset-0 pointer-events-none opacity-25">
-          <Image
-            src="/images/assets/footer-bg.webp"
-            alt="Space atmosphere"
-            fill
-            className="object-cover object-top filter grayscale contrast-125"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#161616]/40 via-[#161616]/75 to-[#161616]" />
-        </div>
-
-        <div className="relative z-10 max-w-[1800px] mx-auto">
-          {/* Top Title Row: Giant PROGRAMS on left, Blurb on right */}
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
-            <div>
-              <span className="font-mono text-[10px] sm:text-[11px] tracking-archival text-[#8a847a] uppercase block mb-3">
-                ASTRONOMYBU // SESSIONS, WORKSHOPS &amp; CHRONICLES
-              </span>
-              <h1 className="font-editorial-serif italic text-5xl sm:text-7xl lg:text-8xl tracking-tight text-[#f5efeb] leading-tight select-none">
-                Events &amp; Tenure
-              </h1>
+      {/* Header matching exact original design */}
+      <div className="w-full pt-16 sm:pt-24 pb-12 px-6 sm:px-12 lg:px-20 xl:px-24 border-b border-[rgba(245,239,235,0.12)]">
+        <div className="w-full max-w-[1800px] mx-auto">
+          {/* Top metadata line */}
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-3">
+            <span className="font-mono text-[10px] tracking-archival text-[#a39e93] uppercase">
+              CATEGORY // 03 · CHRONICLES &amp; TENURE LOGS
+            </span>
+            <div className="flex items-center gap-2 font-mono text-[11px] text-[#8a847a]">
+              <span className="w-2 h-2 rounded-full bg-[#eae5d9] animate-ping" />
+              <span>{filteredEvents.length} ARCHIVAL LOGS CATALOGED</span>
             </div>
-
-            <p className="font-mono text-xs sm:text-[13px] tracking-wide text-[#a39e93] leading-relaxed max-w-md lg:text-left uppercase">
-              A ROTATING SERIES OF DOME SESSIONS, OBSERVATION EXPEDITIONS, AND
-              ASTRONOMICAL WORKSHOPS FROM BENNETT UNIVERSITY.
-            </p>
           </div>
 
-          {/* Dropdown Filters Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-6 pt-8 border-t border-[rgba(245,239,235,0.12)]">
-            <div
-              className="flex flex-wrap items-center gap-3"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* TENURE DROPDOWN */}
-              <div className="relative">
+          {/* Main Title */}
+          <h1 className="font-editorial-serif italic text-5xl sm:text-7xl lg:text-8xl text-[#f5efeb]">
+            Past Events &amp; This Tenure
+          </h1>
+
+          {/* Subtitle / Paragraph */}
+          <p className="mt-4 font-sans text-sm sm:text-base text-[#a39e93] max-w-3xl leading-relaxed">
+            A chronological timeline of observation nights, theoretical cosmology lectures, guest masterclasses, and inter-university competitions spanning 2023 to 2026.
+          </p>
+
+          {/* Filters Bar */}
+          <div className="mt-10 flex flex-wrap items-center justify-between gap-6 pt-6 border-t border-[rgba(245,239,235,0.08)]">
+            {/* Tenure Selector */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-mono text-[11px] text-[#8a847a] mr-2">TENURE:</span>
+              {tenures.map((tenure) => (
                 <button
-                  onClick={() => {
-                    setTenureDropdownOpen(!tenureDropdownOpen);
-                    setCategoryDropdownOpen(false);
-                    setStatusDropdownOpen(false);
-                  }}
-                  className="px-4 py-2 border border-[rgba(245,239,235,0.2)] text-[#f5efeb] font-mono text-[11px] tracking-wider uppercase flex items-center gap-2 hover:border-[#f5efeb] transition-colors cursor-pointer"
+                  key={tenure}
+                  onClick={() => setSelectedTenure(tenure)}
+                  className={`px-3.5 py-1.5 rounded-full font-mono text-[11px] uppercase transition-all cursor-pointer ${
+                    selectedTenure === tenure
+                      ? "bg-[#eae5d9] text-[#1D1D1D] font-bold shadow-sm"
+                      : "border border-[rgba(245,239,235,0.15)] text-[#a39e93] hover:text-[#f5efeb] hover:border-[rgba(245,239,235,0.3)]"
+                  }`}
                 >
-                  <span>
-                    {selectedTenure === "ALL"
-                      ? "TENURE"
-                      : `TENURE: ${selectedTenure}`}
-                  </span>
-                  <ChevronDown className="w-3 h-3 text-[#a39e93]" />
+                  {tenure === "ALL" ? "ALL TENURES" : tenure}
                 </button>
-
-                {tenureDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-1.5 w-44 bg-[#1e1e20] border border-[rgba(245,239,235,0.15)] shadow-xl z-30 py-1 font-mono text-[11px]">
-                    {tenures.map((t) => (
-                      <button
-                        key={t}
-                        onClick={() => {
-                          setSelectedTenure(t);
-                          setTenureDropdownOpen(false);
-                        }}
-                        className={`w-full text-left px-3 py-1.5 hover:bg-white/10 transition-colors uppercase ${
-                          selectedTenure === t
-                            ? "text-[#d4af37] font-bold"
-                            : "text-[#a39e93]"
-                        }`}
-                      >
-                        {t === "ALL" ? "ALL TENURES" : t}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* DISCIPLINE / CATEGORY DROPDOWN */}
-              <div className="relative">
-                <button
-                  onClick={() => {
-                    setCategoryDropdownOpen(!categoryDropdownOpen);
-                    setTenureDropdownOpen(false);
-                    setStatusDropdownOpen(false);
-                  }}
-                  className="px-4 py-2 border border-[rgba(245,239,235,0.2)] text-[#f5efeb] font-mono text-[11px] tracking-wider uppercase flex items-center gap-2 hover:border-[#f5efeb] transition-colors cursor-pointer"
-                >
-                  <span>
-                    {selectedCategory === "ALL"
-                      ? "DISCIPLINE"
-                      : `DISCIPLINE: ${selectedCategory}`}
-                  </span>
-                  <ChevronDown className="w-3 h-3 text-[#a39e93]" />
-                </button>
-
-                {categoryDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-1.5 w-44 bg-[#1e1e20] border border-[rgba(245,239,235,0.15)] shadow-xl z-30 py-1 font-mono text-[11px]">
-                    {categories.map((c) => (
-                      <button
-                        key={c}
-                        onClick={() => {
-                          setSelectedCategory(c);
-                          setCategoryDropdownOpen(false);
-                        }}
-                        className={`w-full text-left px-3 py-1.5 hover:bg-white/10 transition-colors uppercase ${
-                          selectedCategory === c
-                            ? "text-[#d4af37] font-bold"
-                            : "text-[#a39e93]"
-                        }`}
-                      >
-                        {c === "ALL" ? "ALL DISCIPLINES" : c}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* STATUS / THEME DROPDOWN */}
-              <div className="relative">
-                <button
-                  onClick={() => {
-                    setStatusDropdownOpen(!statusDropdownOpen);
-                    setTenureDropdownOpen(false);
-                    setCategoryDropdownOpen(false);
-                  }}
-                  className="px-4 py-2 border border-[rgba(245,239,235,0.2)] text-[#f5efeb] font-mono text-[11px] tracking-wider uppercase flex items-center gap-2 hover:border-[#f5efeb] transition-colors cursor-pointer"
-                >
-                  <span>
-                    {selectedStatus === "ALL"
-                      ? "STATUS"
-                      : `STATUS: ${selectedStatus}`}
-                  </span>
-                  <ChevronDown className="w-3 h-3 text-[#a39e93]" />
-                </button>
-
-                {statusDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-1.5 w-44 bg-[#1e1e20] border border-[rgba(245,239,235,0.15)] shadow-xl z-30 py-1 font-mono text-[11px]">
-                    {statuses.map((s) => (
-                      <button
-                        key={s}
-                        onClick={() => {
-                          setSelectedStatus(s);
-                          setStatusDropdownOpen(false);
-                        }}
-                        className={`w-full text-left px-3 py-1.5 hover:bg-white/10 transition-colors uppercase ${
-                          selectedStatus === s
-                            ? "text-[#d4af37] font-bold"
-                            : "text-[#a39e93]"
-                        }`}
-                      >
-                        {s === "ALL" ? "ALL STATUSES" : s}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {(selectedTenure !== "ALL" ||
-                selectedCategory !== "ALL" ||
-                selectedStatus !== "ALL") && (
-                <button
-                  onClick={() => {
-                    setSelectedTenure("ALL");
-                    setSelectedCategory("ALL");
-                    setSelectedStatus("ALL");
-                  }}
-                  className="font-mono text-[11px] text-[#8a847a] hover:text-[#f5efeb] underline ml-2"
-                >
-                  RESET
-                </button>
-              )}
+              ))}
             </div>
 
-            <span className="font-mono text-xs text-[#8a847a] tracking-wider">
-              {filteredEvents.length} RECORDED ARCHIVAL ENTRIES
-            </span>
+            {/* Category Selector */}
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="font-mono text-[11px] text-[#8a847a] mr-2">DISCIPLINE:</span>
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-3 py-1 rounded-full font-mono text-[10px] uppercase transition-all cursor-pointer ${
+                    selectedCategory === cat
+                      ? "border border-[#f5efeb] text-[#f5efeb] bg-[#222225]"
+                      : "text-[#8a847a] hover:text-[#a39e93] border border-transparent"
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
