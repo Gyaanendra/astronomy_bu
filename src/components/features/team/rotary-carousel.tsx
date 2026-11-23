@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import Image from "next/image";
 import { TeamMember } from "@/types/team.types";
 import {
@@ -10,7 +10,6 @@ import {
   Sparkles,
   MoveHorizontal,
 } from "lucide-react";
-import gsap from "gsap";
 
 interface RotaryCarouselProps {
   members: TeamMember[];
@@ -27,28 +26,18 @@ export function RotaryCarousel({
 }: RotaryCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [imageFailures, setImageFailures] = useState<Record<string, boolean>>({});
+  const [dragOffset, setDragOffset] = useState<number>(0);
+  const [isDragging, setIsDragging] = useState(false);
   const [containerWidth, setContainerWidth] = useState(1200);
 
-  // References for direct GPU transform manipulation (0 React overhead during animation)
+  const dragStartX = useRef<number>(0);
+  const currentDragDelta = useRef<number>(0);
+  const rafId = useRef<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const cardElementsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const progressRef = useRef<{ current: number }>({ current: 0 });
-  const isDraggingRef = useRef<boolean>(false);
-  const pointerStartX = useRef<number>(0);
-  const pointerStartProgress = useRef<number>(0);
-  const lastPointerX = useRef<number>(0);
-  const lastPointerTime = useRef<number>(0);
-  const pointerVelocity = useRef<number>(0);
+  const isWheelingRef = useRef<boolean>(false);
+  const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const count = members.length;
-
-  // Responsive dimensions & spacing
-  const isMobile = containerWidth < 640;
-  const isTablet = containerWidth >= 640 && containerWidth < 1050;
-  const spacing = isMobile ? 180 : isTablet ? 250 : 310;
-  const angleMultiplier = isMobile ? 8.2 : isTablet ? 9.5 : 10.8;
-
-  // Resize listener
+  // Resize listener for responsive spacing
   useEffect(() => {
     const updateWidth = () => {
       if (containerRef.current) {
@@ -60,201 +49,45 @@ export function RotaryCarousel({
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
-  // Update card 3D transforms mathematically without triggering React re-renders
-  const updateCards = useCallback(
-    (p: number) => {
-      if (count === 0) return;
-
-      for (let i = 0; i < count; i++) {
-        const el = cardElementsRef.current[i];
-        if (!el) continue;
-
-        // Circular wrapped distance
-        let diff = (i - p) % count;
-        if (diff > count / 2) diff -= count;
-        if (diff < -count / 2) diff += count;
-
-        const absDiff = Math.abs(diff);
-
-        // Outside the visible orbital arc: completely hide to save GPU resources
-        if (absDiff > 3.4) {
-          el.style.visibility = "hidden";
-          el.style.opacity = "0";
-          el.style.pointerEvents = "none";
-          continue;
-        }
-
-        el.style.visibility = "visible";
-        el.style.pointerEvents = "auto";
-
-        const isCenter = absDiff < 0.45;
-
-        // Continuous trigonometry coordinates
-        const translateX = diff * spacing;
-        const translateY = isCenter
-          ? -10 * (1 - absDiff / 0.45)
-          : Math.pow(absDiff, 1.45) * 19 - 8;
-        const translateZ = isCenter
-          ? 38 * (1 - absDiff / 0.45)
-          : -absDiff * 38;
-        const rotateZ = diff * angleMultiplier;
-        const rotateY = -diff * 6.2;
-        const scale = isCenter
-          ? 1.05 - absDiff * 0.05
-          : Math.max(0.72, 1 - absDiff * 0.075);
-        const zIndex = Math.round(50 - absDiff * 8);
-
-        // Opacity falls smoothly to 0 at the orbital horizon (ZERO edge-popping!)
-        const opacity =
-          absDiff <= 2.2
-            ? 1
-            : Math.max(0, 1 - Math.pow((absDiff - 2.2) / 1.2, 1.4));
-
-        el.style.transform = `translate3d(${translateX}px, ${translateY}px, ${translateZ}px) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${scale})`;
-        el.style.zIndex = String(zIndex);
-        el.style.opacity = String(opacity);
-
-        // Center card visual styling toggle
-        if (isCenter) {
-          el.classList.add("carousel-card-center");
-        } else {
-          el.classList.remove("carousel-card-center");
-        }
-      }
-    },
-    [count, spacing, angleMultiplier],
-  );
-
-  // Sync active index & center callback
-  const syncActiveState = useCallback(
-    (targetP: number) => {
-      if (count === 0) return;
-      const normalized = ((Math.round(targetP) % count) + count) % count;
-      setActiveIndex(normalized);
-      if (members[normalized]) {
-        onCenterMember?.(members[normalized]);
-      }
-    },
-    [count, members, onCenterMember],
-  );
-
-  // Initial and reactive card placement
+  // Sync activeIndex if activeMemberId changes from outside
   useEffect(() => {
-    updateCards(progressRef.current.current);
-  }, [updateCards, containerWidth]);
-
-  // Sync when activeMemberId changes externally
-  useEffect(() => {
-    if (activeMemberId && count > 0) {
+    if (activeMemberId && members.length > 0) {
       const idx = members.findIndex((m) => m.id === activeMemberId);
-      if (idx !== -1) {
-        let diff = (idx - progressRef.current.current) % count;
-        if (diff > count / 2) diff -= count;
-        if (diff < -count / 2) diff += count;
-
-        gsap.killTweensOf(progressRef.current);
-        const target = progressRef.current.current + diff;
-        gsap.to(progressRef.current, {
-          current: target,
-          duration: 0.48,
-          ease: "power3.out",
-          onUpdate: () => updateCards(progressRef.current.current),
-          onComplete: () => syncActiveState(target),
-        });
-      }
+      if (idx !== -1) setActiveIndex(idx);
     }
-  }, [activeMemberId, count, members, updateCards, syncActiveState]);
+  }, [activeMemberId, members]);
 
-  // Navigate to next or previous card with silky GSAP momentum
-  const navigateBy = useCallback(
-    (direction: -1 | 1) => {
-      if (count === 0) return;
-      gsap.killTweensOf(progressRef.current);
-      const target = Math.round(progressRef.current.current) + direction;
-
-      gsap.to(progressRef.current, {
-        current: target,
-        duration: 0.46,
-        ease: "power3.out",
-        onUpdate: () => updateCards(progressRef.current.current),
-        onComplete: () => syncActiveState(target),
-      });
-    },
-    [count, updateCards, syncActiveState],
-  );
-
-  // Keyboard navigation
+  // Keep index within bounds
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") navigateBy(-1);
-      if (e.key === "ArrowRight") navigateBy(1);
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [navigateBy]);
-
-  // Frictionless pointer drag handling
-  const handlePointerDown = (e: React.PointerEvent) => {
-    if (e.button !== 0) return; // Only primary mouse button
-    isDraggingRef.current = true;
-    pointerStartX.current = e.clientX;
-    pointerStartProgress.current = progressRef.current.current;
-    lastPointerX.current = e.clientX;
-    lastPointerTime.current = performance.now();
-    pointerVelocity.current = 0;
-
-    gsap.killTweensOf(progressRef.current);
-    if (containerRef.current) {
-      containerRef.current.style.cursor = "grabbing";
+    if (activeIndex >= members.length && members.length > 0) {
+      setActiveIndex(0);
     }
-  };
+  }, [members.length, activeIndex]);
 
-  const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDraggingRef.current) return;
-    const now = performance.now();
-    const dt = now - lastPointerTime.current;
-    const deltaX = e.clientX - pointerStartX.current;
-
-    if (dt > 8) {
-      pointerVelocity.current = (e.clientX - lastPointerX.current) / dt;
-      lastPointerX.current = e.clientX;
-      lastPointerTime.current = now;
-    }
-
-    // Direct 1-to-1 tracking
-    progressRef.current.current = pointerStartProgress.current - deltaX / spacing;
-    updateCards(progressRef.current.current);
-  };
-
-  const handlePointerUp = () => {
-    if (!isDraggingRef.current) return;
-    isDraggingRef.current = false;
-    if (containerRef.current) {
-      containerRef.current.style.cursor = "grab";
-    }
-
-    // Calculate natural momentum based on release velocity
-    const velocity = pointerVelocity.current; // px per ms
-    const flingMomentum = -velocity * 120 / spacing;
-    const clampedFling = Math.max(-1.5, Math.min(1.5, flingMomentum));
-    const target = Math.round(progressRef.current.current + clampedFling);
-
-    gsap.to(progressRef.current, {
-      current: target,
-      duration: Math.min(0.65, Math.max(0.35, 0.42 + Math.abs(velocity) * 0.1)),
-      ease: "power3.out",
-      onUpdate: () => updateCards(progressRef.current.current),
-      onComplete: () => syncActiveState(target),
+  const handlePrev = useCallback(() => {
+    if (members.length === 0) return;
+    setActiveIndex((prev) => {
+      const next = (prev - 1 + members.length) % members.length;
+      onCenterMember?.(members[next]);
+      return next;
     });
-  };
+  }, [members, onCenterMember]);
 
-  // Horizontal wheel / trackpad gestures
+  const handleNext = useCallback(() => {
+    if (members.length === 0) return;
+    setActiveIndex((prev) => {
+      const next = (prev + 1) % members.length;
+      onCenterMember?.(members[next]);
+      return next;
+    });
+  }, [members, onCenterMember]);
+
+  // High performance, silky smooth horizontal trackpad/wheel navigation
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    let wheelDebounce: NodeJS.Timeout | null = null;
-    let accumulated = 0;
+    let accumulatedDelta = 0;
 
     const onWheel = (e: WheelEvent) => {
       const isHorizontal =
@@ -264,17 +97,21 @@ export function RotaryCarousel({
       if (isHorizontal || isShift) {
         e.preventDefault();
         const delta = isHorizontal ? e.deltaX : e.deltaY;
-        accumulated += delta;
+        accumulatedDelta += delta;
 
-        if (Math.abs(accumulated) >= 28) {
-          const step = accumulated > 0 ? 1 : -1;
-          accumulated = 0;
-          navigateBy(step);
+        if (!isWheelingRef.current && Math.abs(accumulatedDelta) >= 32) {
+          isWheelingRef.current = true;
+          if (accumulatedDelta > 0) {
+            handleNext();
+          } else {
+            handlePrev();
+          }
+          accumulatedDelta = 0;
 
-          if (wheelDebounce) clearTimeout(wheelDebounce);
-          wheelDebounce = setTimeout(() => {
-            accumulated = 0;
-          }, 180);
+          if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
+          wheelTimeoutRef.current = setTimeout(() => {
+            isWheelingRef.current = false;
+          }, 200);
         }
       }
     };
@@ -282,30 +119,68 @@ export function RotaryCarousel({
     container.addEventListener("wheel", onWheel, { passive: false });
     return () => {
       container.removeEventListener("wheel", onWheel);
-      if (wheelDebounce) clearTimeout(wheelDebounce);
+      if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
     };
-  }, [navigateBy]);
+  }, [handleNext, handlePrev]);
 
-  // Click card handler: if center -> open dossier; if off-center -> glide to center
-  const handleCardClick = (index: number, member: TeamMember) => {
-    let diff = (index - progressRef.current.current) % count;
-    if (diff > count / 2) diff -= count;
-    if (diff < -count / 2) diff += count;
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") handlePrev();
+      if (e.key === "ArrowRight") handleNext();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handlePrev, handleNext]);
 
-    if (Math.abs(diff) < 0.35) {
-      onSelectMember(member);
-    } else {
-      gsap.killTweensOf(progressRef.current);
-      const target = Math.round(progressRef.current.current + diff);
-      gsap.to(progressRef.current, {
-        current: target,
-        duration: 0.48,
-        ease: "power3.out",
-        onUpdate: () => updateCards(progressRef.current.current),
-        onComplete: () => syncActiveState(target),
+  // RAF-throttled drag tracking: 120fps smooth without saturating React renders
+  const handleTouchStart = (e: React.TouchEvent | React.MouseEvent) => {
+    setIsDragging(true);
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    dragStartX.current = clientX;
+    currentDragDelta.current = 0;
+    setDragOffset(0);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent | React.MouseEvent) => {
+    if (!isDragging) return;
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    currentDragDelta.current = clientX - dragStartX.current;
+
+    if (!rafId.current) {
+      rafId.current = requestAnimationFrame(() => {
+        setDragOffset(currentDragDelta.current);
+        rafId.current = null;
       });
     }
   };
+
+  const handleTouchEnd = () => {
+    if (!isDragging) return;
+    if (rafId.current) {
+      cancelAnimationFrame(rafId.current);
+      rafId.current = null;
+    }
+    setIsDragging(false);
+    const delta = currentDragDelta.current;
+    if (delta > 42) {
+      handlePrev();
+    } else if (delta < -42) {
+      handleNext();
+    }
+    setDragOffset(0);
+    currentDragDelta.current = 0;
+  };
+
+  // Safe non-overlapping offset range according to member count (prevents duplicate React keys)
+  const visibleOffsets = useMemo(() => {
+    const count = members.length;
+    if (count <= 1) return [0];
+    if (count === 2) return [0, 1];
+    if (count <= 4) return [-1, 0, 1];
+    if (count <= 6) return [-2, -1, 0, 1, 2];
+    return [-3, -2, -1, 0, 1, 2, 3];
+  }, [members.length]);
 
   if (!members || members.length === 0) {
     return (
@@ -319,14 +194,24 @@ export function RotaryCarousel({
 
   const activeMember = members[activeIndex] || members[0];
 
+  const isMobile = containerWidth < 640;
+  const isTablet = containerWidth >= 640 && containerWidth < 1050;
+  const spacing = isMobile ? 180 : isTablet ? 250 : 310;
+  const angleMultiplier = isMobile ? 8.5 : isTablet ? 9.8 : 11;
+
+  // Normalized drag fraction between -0.75 and 0.75
+  const dragFraction = Math.max(-0.75, Math.min(0.75, dragOffset / spacing));
+
   return (
     <div
       ref={containerRef}
-      className="relative w-full max-w-[1700px] mx-auto flex flex-col items-center select-none pt-2 pb-6 overflow-hidden cursor-grab touch-none"
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
+      className="relative w-full max-w-[1700px] mx-auto flex flex-col items-center select-none pt-2 pb-6 overflow-hidden cursor-grab active:cursor-grabbing"
+      onMouseDown={handleTouchStart}
+      onMouseMove={handleTouchMove}
+      onMouseUp={handleTouchEnd}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Sleek top telemetry row */}
       <div className="w-full flex items-center justify-between px-4 sm:px-8 mb-4 z-20">
@@ -346,7 +231,7 @@ export function RotaryCarousel({
           <div className="flex items-center gap-1.5">
             <button
               type="button"
-              onClick={() => navigateBy(-1)}
+              onClick={handlePrev}
               className="w-9 h-9 rounded-full border border-[rgba(245,239,235,0.18)] bg-[#19191c] hover:bg-[#eae5d9] hover:text-[#1D1D1D] text-[#f5efeb] flex items-center justify-center transition-colors cursor-pointer"
               aria-label="Previous profile"
             >
@@ -354,7 +239,7 @@ export function RotaryCarousel({
             </button>
             <button
               type="button"
-              onClick={() => navigateBy(1)}
+              onClick={handleNext}
               className="w-9 h-9 rounded-full border border-[rgba(245,239,235,0.18)] bg-[#19191c] hover:bg-[#eae5d9] hover:text-[#1D1D1D] text-[#f5efeb] flex items-center justify-center transition-colors cursor-pointer"
               aria-label="Next profile"
             >
@@ -374,8 +259,27 @@ export function RotaryCarousel({
           <div className="w-[600px] sm:w-[900px] lg:w-[1200px] h-[600px] sm:h-[900px] lg:h-[1200px] rounded-full border border-dashed border-[rgba(245,239,235,0.14)] translate-y-[120px]" />
         </div>
 
-        {/* All member cards rendered once with permanent DOM stability */}
-        {members.map((member, index) => {
+        {/* Rotary Card Fan with STABLE KEYS and True GPU Interpolation */}
+        {visibleOffsets.map((offset) => {
+          const itemIndex = (activeIndex + offset + members.length) % members.length;
+          const member = members[itemIndex];
+          if (!member) return null;
+
+          // Effective offset with drag fraction
+          const effOffset = offset + dragFraction;
+          const absEffOffset = Math.abs(effOffset);
+          const isCenter = Math.abs(effOffset) < 0.45;
+
+          // True 3D turntable coordinates
+          const translateX = effOffset * spacing;
+          const translateY = isCenter ? -10 : Math.pow(absEffOffset, 1.45) * 19;
+          const translateZ = isCenter ? 35 : -absEffOffset * 38;
+          const rotateZ = effOffset * angleMultiplier;
+          const rotateY = -effOffset * 6.0;
+          const scale = isCenter ? 1.05 : Math.max(0.78, 1 - absEffOffset * 0.072);
+          const zIndex = Math.round(50 - absEffOffset * 5);
+          const opacity = absEffOffset > 2.5 ? Math.max(0, 1 - (absEffOffset - 2.5) * 1.5) : 1;
+
           const imageFailed = imageFailures[member.id];
           const initials = member.name
             .replace(/\[.*?\]/g, "")
@@ -389,16 +293,29 @@ export function RotaryCarousel({
           return (
             <div
               key={member.id}
-              ref={(el) => {
-                cardElementsRef.current[index] = el;
+              onClick={() => {
+                if (Math.abs(effOffset) < 0.35) {
+                  onSelectMember(member);
+                } else {
+                  setActiveIndex(itemIndex);
+                  onCenterMember?.(members[itemIndex]);
+                }
               }}
-              onClick={() => handleCardClick(index, member)}
               style={{
+                transform: `translate3d(${translateX}px, ${translateY}px, ${translateZ}px) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${scale})`,
+                zIndex,
+                opacity,
                 transformStyle: "preserve-3d",
                 backfaceVisibility: "hidden",
-                willChange: "transform, opacity",
+                willChange: isDragging ? "transform" : "auto",
+                transition: isDragging
+                  ? "none"
+                  : "transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
               }}
-              className="carousel-card absolute w-[260px] sm:w-[310px] md:w-[350px] lg:w-[380px] h-[390px] sm:h-[460px] md:h-[520px] rounded-[28px] p-5 sm:p-6 flex flex-col justify-between cursor-pointer group select-none border border-[rgba(245,239,235,0.12)] bg-[#121215] hover:border-[rgba(245,239,235,0.3)] shadow-lg"
+              className={`absolute w-[260px] sm:w-[310px] md:w-[350px] lg:w-[380px] h-[390px] sm:h-[460px] md:h-[520px] rounded-[28px] p-5 sm:p-6 flex flex-col justify-between cursor-pointer group select-none ${isCenter
+                  ? "border-2 border-[#eae5d9] bg-[#161619] shadow-[0_18px_45px_rgba(0,0,0,0.85)] ring-1 ring-[rgba(245,239,235,0.2)]"
+                  : "border border-[rgba(245,239,235,0.12)] bg-[#111114]/90 hover:border-[rgba(245,239,235,0.3)] shadow-lg"
+                }`}
             >
               {/* Card Header: Division & Lead status */}
               <div className="flex items-center justify-between pb-2 border-b border-[rgba(245,239,235,0.08)]">
@@ -413,12 +330,12 @@ export function RotaryCarousel({
                   </span>
                 ) : (
                   <span className="font-mono text-[8px] sm:text-[9px] text-[#8a847a] tracking-wider">
-                    #{String(index + 1).padStart(2, "0")}
+                    #{String(itemIndex + 1).padStart(2, "0")}
                   </span>
                 )}
               </div>
 
-              {/* Card Portrait Frame */}
+              {/* Card Portrait Frame with Optimized Image Loading */}
               <div className="relative my-2.5 w-full flex-1 rounded-[18px] overflow-hidden border border-[rgba(245,239,235,0.1)] bg-[#18181d]">
                 {!imageFailed && member.image ? (
                   <Image
@@ -428,9 +345,13 @@ export function RotaryCarousel({
                     onError={() =>
                       setImageFailures((prev) => ({ ...prev, [member.id]: true }))
                     }
-                    className="carousel-card-img object-cover transition-all duration-300 contrast-105 grayscale-[15%] group-hover:grayscale-0 group-hover:contrast-115"
+                    className={`object-cover transition-all duration-300 ${isCenter
+                        ? "contrast-110 grayscale-[10%] group-hover:grayscale-0"
+                        : "contrast-100 grayscale opacity-80"
+                      }`}
                     sizes="(max-width: 768px) 260px, 380px"
-                    loading="lazy"
+                    priority={isCenter}
+                    loading={isCenter ? "eager" : "lazy"}
                     quality={75}
                   />
                 ) : (
@@ -458,14 +379,15 @@ export function RotaryCarousel({
                   {member.name.replace(/\[.*?\]/g, "")}
                 </h3>
 
-                {/* Inspect Pill only visible when centered */}
-                <div className="carousel-card-center-indicator mt-2 pt-1.5 border-t border-[rgba(245,239,235,0.1)] flex items-center justify-between text-[#eae5d9]">
-                  <span className="font-mono text-[9px] tracking-widest uppercase font-bold flex items-center gap-1.5">
-                    <Eye className="w-3 h-3 text-[#c84b31]" />
-                    INSPECT DOSSIER
-                  </span>
-                  <span className="font-mono text-xs text-[#a39e93]">↗</span>
-                </div>
+                {isCenter && (
+                  <div className="mt-2 pt-1.5 border-t border-[rgba(245,239,235,0.1)] flex items-center justify-between text-[#eae5d9]">
+                    <span className="font-mono text-[9px] tracking-widest uppercase font-bold flex items-center gap-1.5">
+                      <Eye className="w-3 h-3 text-[#c84b31]" />
+                      INSPECT DOSSIER
+                    </span>
+                    <span className="font-mono text-xs text-[#a39e93]">↗</span>
+                  </div>
+                )}
               </div>
             </div>
           );

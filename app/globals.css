@@ -184,26 +184,3 @@ html.lenis body {
   transition-duration: 1ms;
   transition-behavior: allow-discrete;
 }
-
-/* Rotary Orbital Carousel Smooth Styles */
-.carousel-card {
-  transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-.carousel-card-center {
-  border-color: #eae5d9 !important;
-  border-width: 2px !important;
-  background-color: #161619 !important;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85) !important;
-}
-
-.carousel-card .carousel-card-center-indicator {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-
-.carousel-card-center .carousel-card-center-indicator {
-  opacity: 1;
-  pointer-events: auto;
-}
