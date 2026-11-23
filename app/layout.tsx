@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { StatusTicker } from "@/components/layout/status-ticker";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
@@ -55,6 +54,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${cormorant.variable} ${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
+      <head />
       <body
         suppressHydrationWarning
         className="min-h-full flex flex-col bg-[#1D1D1D] text-[#f5efeb] selection:bg-[#eae5d9] selection:text-[#1D1D1D]"
