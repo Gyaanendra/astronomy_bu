@@ -146,10 +146,10 @@ export function EventsArchive() {
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
             <div>
               <span className="font-mono text-[10px] sm:text-[11px] tracking-archival text-[#8a847a] uppercase block mb-3">
-                ASTRONOMYBU // SESSIONS, WORKSHOPS &amp; TENURE CHRONICLES
+                ASTRONOMYBU // SESSIONS, WORKSHOPS &amp; CHRONICLES
               </span>
-              <h1 className="font-editorial-serif text-6xl sm:text-8xl lg:text-9xl tracking-tighter text-[#f5efeb] leading-none uppercase select-none">
-                PROGRAMS
+              <h1 className="font-editorial-serif italic text-5xl sm:text-7xl lg:text-8xl tracking-tight text-[#f5efeb] leading-tight select-none">
+                Events &amp; Tenure
               </h1>
             </div>
 
