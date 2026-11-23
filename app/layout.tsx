@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
+import { BackToTop } from "@/components/ui/back-to-top";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-serif",
@@ -57,7 +58,7 @@ export default function RootLayout({
       <head />
       <body
         suppressHydrationWarning
-        className="min-h-full flex flex-col bg-[#1D1D1D] text-[#f5efeb] selection:bg-[#eae5d9] selection:text-[#1D1D1D]"
+        className="min-h-full flex flex-col bg-[#1D1D1D] text-[#f5efeb] selection:bg-[#c84b31] selection:text-[#fcfbf9]"
       >
         <SmoothScrollProvider>
           {/* Unified Archival Header with built-in ephemeris telemetry */}
@@ -68,6 +69,9 @@ export default function RootLayout({
 
           {/* Archival Editorial Footer */}
           <Footer />
+
+          {/* Floating Back to Top Button */}
+          <BackToTop />
         </SmoothScrollProvider>
       </body>
     </html>

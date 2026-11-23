@@ -51,8 +51,8 @@ body {
 
 /* Custom Selection */
 ::selection {
-  background: #eae5d9;
-  color: #1d1d1d;
+  background: #c84b31;
+  color: #fcfbf9;
 }
 
 /* Serif font utility */
@@ -142,23 +142,28 @@ body {
   }
 }
 
-/* Custom archival scrollbar */
+/* Custom archival orange scrollbar */
+* {
+  scrollbar-color: #c84b31 #171719;
+  scrollbar-width: thin;
+}
+
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1d1d1d;
+  background: #171719;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
-  border-radius: 0px;
+  background: #c84b31;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: #e05d42;
 }
 
 /* Lenis Smooth Scroll Base Styles */
