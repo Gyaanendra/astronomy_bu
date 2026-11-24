@@ -78,17 +78,21 @@ export function TeamShowcase() {
   // biome-ignore lint/correctness/useExhaustiveDependencies: animation triggers on filter changes
   useEffect(() => {
     if (gridRef.current) {
-      gsap.fromTo(
-        gridRef.current.querySelectorAll(".member-card-compact"),
-        { opacity: 0, y: 12 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.35,
-          stagger: 0.025,
-          ease: "power2.out",
-        },
-      );
+      const cards = gridRef.current.querySelectorAll(".member-card-compact");
+      if (cards.length > 0) {
+        gsap.killTweensOf(cards);
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 12 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.32,
+            stagger: 0.02,
+            ease: "power2.out",
+          },
+        );
+      }
     }
   }, [selectedTenureYear, selectedDept]);
 
