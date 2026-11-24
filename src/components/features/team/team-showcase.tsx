@@ -1,29 +1,29 @@
 "use client";
 
-import { useState, useRef, useEffect, useMemo } from "react";
-import Image from "next/image";
-import { allTenures } from "@/content/team";
-import { Department, TeamMember } from "@/types/team.types";
-import {
-  Sparkles,
-  Users,
-  ShieldCheck,
-  Eye,
-} from "lucide-react";
-import { InstagramIcon, LinkedinIcon, GithubIcon } from "@/components/ui/icons";
-import { RotaryCarousel } from "./rotary-carousel";
-import { ChernobylDossierModal } from "./chernobyl-dossier-modal";
 import gsap from "gsap";
+import { Eye, ShieldCheck, Sparkles, Users } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { GithubIcon, InstagramIcon, LinkedinIcon } from "@/components/ui/icons";
+import { allTenures } from "@/content/team";
+import type { Department, TeamMember } from "@/types/team.types";
+import { ChernobylDossierModal } from "./chernobyl-dossier-modal";
+import { RotaryCarousel } from "./rotary-carousel";
 
 export function TeamShowcase() {
-  const [selectedTenureYear, setSelectedTenureYear] = useState<string>("2025-2026");
+  const [selectedTenureYear, setSelectedTenureYear] =
+    useState<string>("2025-2026");
   const [selectedDept, setSelectedDept] = useState<string>("ALL");
-  const [selectedDossierMember, setSelectedDossierMember] = useState<TeamMember | null>(null);
+  const [selectedDossierMember, setSelectedDossierMember] =
+    useState<TeamMember | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
   // Retrieve current tenure object
   const currentTenureData = useMemo(() => {
-    return allTenures.find((t) => t.tenureYear === selectedTenureYear) || allTenures[0];
+    return (
+      allTenures.find((t) => t.tenureYear === selectedTenureYear) ||
+      allTenures[0]
+    );
   }, [selectedTenureYear]);
 
   // All distinct departments available across the entire club
@@ -45,10 +45,13 @@ export function TeamShowcase() {
 
   // When switching tenures, if selectedDept is not present in that tenure, safely reset to ALL
   useEffect(() => {
-    if (selectedDept !== "ALL" && !existingDeptNamesInTenure.includes(selectedDept as Department)) {
+    if (
+      selectedDept !== "ALL" &&
+      !existingDeptNamesInTenure.includes(selectedDept as Department)
+    ) {
       setSelectedDept("ALL");
     }
-  }, [selectedTenureYear, existingDeptNamesInTenure, selectedDept]);
+  }, [existingDeptNamesInTenure, selectedDept]);
 
   // Departments filtered for display
   const filteredDepartments = useMemo(() => {
@@ -67,11 +70,12 @@ export function TeamShowcase() {
   const totalTenureMembers = useMemo(() => {
     return currentTenureData.departments.reduce(
       (acc, d) => acc + d.members.length,
-      0
+      0,
     );
   }, [currentTenureData]);
 
   // Fast GSAP stagger animation on filter change
+  // biome-ignore lint/correctness/useExhaustiveDependencies: animation triggers on filter changes
   useEffect(() => {
     if (gridRef.current) {
       gsap.fromTo(
@@ -83,7 +87,7 @@ export function TeamShowcase() {
           duration: 0.35,
           stagger: 0.025,
           ease: "power2.out",
-        }
+        },
       );
     }
   }, [selectedTenureYear, selectedDept]);
@@ -91,7 +95,6 @@ export function TeamShowcase() {
   return (
     <div className="w-full py-8 sm:py-12 px-4 sm:px-8 lg:px-12 bg-[#1D1D1D] text-[#f5efeb]">
       <div className="w-full max-w-[1700px] mx-auto">
-
         {/* ========================================================================= */}
         {/* CLEAN, UNCLUTTERED TOP HEADER */}
         {/* ========================================================================= */}
@@ -110,11 +113,15 @@ export function TeamShowcase() {
             <div className="flex items-center gap-3 font-mono text-[11px] text-[#a39e93]">
               <span className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-[rgba(245,239,235,0.12)] bg-[#17171a]">
                 <Users className="w-3.5 h-3.5 text-[#c84b31]" />
-                <strong className="text-[#f5efeb]">{totalTenureMembers}</strong> Curators
+                <strong className="text-[#f5efeb]">{totalTenureMembers}</strong>{" "}
+                Curators
               </span>
               <span className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-[rgba(245,239,235,0.12)] bg-[#17171a]">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#eae5d9]" />
-                <strong className="text-[#f5efeb]">{currentTenureData.departments.length}</strong> Divisions
+                <strong className="text-[#f5efeb]">
+                  {currentTenureData.departments.length}
+                </strong>{" "}
+                Divisions
               </span>
             </div>
           </div>
@@ -123,16 +130,19 @@ export function TeamShowcase() {
           <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[rgba(245,239,235,0.06)]">
             {/* Tenure Switcher */}
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[10px] text-[#8a847a] mr-1 uppercase">TENURE:</span>
+              <span className="font-mono text-[10px] text-[#8a847a] mr-1 uppercase">
+                TENURE:
+              </span>
               {allTenures.map((t) => (
                 <button
                   key={t.tenureYear}
                   type="button"
                   onClick={() => setSelectedTenureYear(t.tenureYear)}
-                  className={`px-3.5 py-1 rounded-full font-mono text-[10px] sm:text-[11px] tracking-wider uppercase transition-colors cursor-pointer ${selectedTenureYear === t.tenureYear
+                  className={`px-3.5 py-1 rounded-full font-mono text-[10px] sm:text-[11px] tracking-wider uppercase transition-colors cursor-pointer ${
+                    selectedTenureYear === t.tenureYear
                       ? "bg-[#eae5d9] text-[#1D1D1D] font-bold shadow-sm"
                       : "border border-[rgba(245,239,235,0.14)] text-[#a39e93] hover:text-[#f5efeb] hover:border-[rgba(245,239,235,0.3)] bg-[#17171a]"
-                    }`}
+                  }`}
                 >
                   {t.tenureYear}
                 </button>
@@ -141,19 +151,24 @@ export function TeamShowcase() {
 
             {/* Division Filter Pills */}
             <div className="flex flex-wrap items-center gap-1.5">
-              <span className="font-mono text-[10px] text-[#8a847a] mr-1 uppercase">DIVISION:</span>
+              <span className="font-mono text-[10px] text-[#8a847a] mr-1 uppercase">
+                DIVISION:
+              </span>
               <button
                 type="button"
                 onClick={() => setSelectedDept("ALL")}
-                className={`px-2.5 py-1 rounded-full font-mono text-[9px] uppercase transition-colors cursor-pointer ${selectedDept === "ALL"
+                className={`px-2.5 py-1 rounded-full font-mono text-[9px] uppercase transition-colors cursor-pointer ${
+                  selectedDept === "ALL"
                     ? "border border-[#f5efeb] text-[#f5efeb] bg-[#222225] font-bold"
                     : "text-[#8a847a] hover:text-[#a39e93] border border-transparent"
-                  }`}
+                }`}
               >
                 ALL ({totalTenureMembers})
               </button>
               {allDepartmentNames.map((dept) => {
-                const deptInTenure = currentTenureData.departments.find((d) => d.name === dept);
+                const deptInTenure = currentTenureData.departments.find(
+                  (d) => d.name === dept,
+                );
                 const count = deptInTenure ? deptInTenure.members.length : 0;
                 const isAvailable = count > 0;
 
@@ -167,15 +182,18 @@ export function TeamShowcase() {
                     type="button"
                     disabled={!isAvailable}
                     onClick={() => setSelectedDept(dept)}
-                    className={`px-2.5 py-1 rounded-full font-mono text-[9px] uppercase transition-colors cursor-pointer ${selectedDept === dept
+                    className={`px-2.5 py-1 rounded-full font-mono text-[9px] uppercase transition-colors cursor-pointer ${
+                      selectedDept === dept
                         ? "border border-[#f5efeb] text-[#f5efeb] bg-[#222225] font-bold"
                         : isAvailable
                           ? "text-[#8a847a] hover:text-[#a39e93] border border-transparent"
                           : "text-[#55504a] border border-transparent cursor-not-allowed opacity-35"
-                      }`}
+                    }`}
                   >
                     {dept}
-                    {isAvailable && <span className="opacity-60 ml-1">({count})</span>}
+                    {isAvailable && (
+                      <span className="opacity-60 ml-1">({count})</span>
+                    )}
                   </button>
                 );
               })}
@@ -204,7 +222,7 @@ export function TeamShowcase() {
           <div className="flex items-center justify-between pb-2 border-b border-[rgba(245,239,235,0.08)]">
             <div>
               <p className="font-mono text-[9px] tracking-archival text-[#8a847a] uppercase">
-                Archival Catalog // Full Roster
+                Archival Catalog {"//"} Full Roster
               </p>
               <h2 className="font-editorial-serif italic text-3xl sm:text-4xl text-[#f5efeb]">
                 Divisions &amp; Officers
@@ -219,7 +237,10 @@ export function TeamShowcase() {
             <div
               key={dept.name}
               className="flex flex-col gap-5"
-              style={{ contentVisibility: "auto", containIntrinsicSize: "320px" }}
+              style={{
+                contentVisibility: "auto",
+                containIntrinsicSize: "320px",
+              }}
             >
               {/* Department Subheader */}
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-2.5 border-b border-[rgba(245,239,235,0.08)]">
@@ -250,7 +271,8 @@ export function TeamShowcase() {
           {filteredDepartments.length === 0 && (
             <div className="py-16 text-center border border-[rgba(245,239,235,0.1)] rounded-[20px] bg-[#141416]">
               <p className="font-mono text-xs text-[#8a847a]">
-                NO CURATORS FOUND FOR THIS DIVISION IN THE {selectedTenureYear} ARCHIVE.
+                NO CURATORS FOUND FOR THIS DIVISION IN THE {selectedTenureYear}{" "}
+                ARCHIVE.
               </p>
             </div>
           )}
@@ -292,109 +314,113 @@ function CompactMemberCard({
     .toUpperCase();
 
   return (
-    <div
-      onClick={onInspect}
-      className="member-card-compact rounded-[18px] border border-[rgba(245,239,235,0.1)] bg-[#131316] p-3 sm:p-3.5 flex flex-col justify-between hover:border-[rgba(245,239,235,0.3)] transition-all duration-200 group hover:-translate-y-0.5 cursor-pointer shadow-md"
-    >
-      <div>
-        {/* Compact Photo Frame */}
-        <div className="relative aspect-[4/5] w-full mb-3 rounded-[14px] border border-[rgba(245,239,235,0.08)] bg-[#18181d] overflow-hidden">
-          {!imageFailed && member.image ? (
-            <Image
-              src={member.image}
-              alt={member.name}
-              fill
-              onError={() => setImageFailed(true)}
-              className="object-cover grayscale contrast-115 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300"
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-              quality={70}
-              loading="lazy"
-            />
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center p-3 bg-gradient-to-br from-[#18181e] to-[#0f0f12] text-center select-none">
-              <span className="font-editorial-serif text-3xl text-[#eae5d9]/60">
-                {initials}
-              </span>
-            </div>
-          )}
+    <div className="member-card-compact relative rounded-[18px] border border-[rgba(245,239,235,0.1)] bg-[#131316] p-3 sm:p-3.5 flex flex-col justify-between hover:border-[rgba(245,239,235,0.3)] transition-all duration-200 group hover:-translate-y-0.5 shadow-md">
+      {/* Invisible button spanning the entire card for keyboard and mouse access to the dossier */}
+      <button
+        type="button"
+        onClick={onInspect}
+        className="absolute inset-0 z-0 w-full h-full rounded-[18px] cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#eae5d9]/40"
+        aria-label={`Inspect dossier for ${member.name.replace(/\[.*?\]/g, "")}`}
+      />
 
-          {member.isHead && (
-            <div className="absolute top-2 left-2 bg-[#eae5d9] text-[#1D1D1D] px-2 py-0.5 rounded-full font-mono text-[7px] font-bold tracking-widest uppercase shadow-sm">
-              LEAD
-            </div>
+      <div className="relative z-1 pointer-events-none flex flex-col justify-between h-full">
+        <div>
+          {/* Compact Photo Frame */}
+          <div className="relative aspect-[4/5] w-full mb-3 rounded-[14px] border border-[rgba(245,239,235,0.08)] bg-[#18181d] overflow-hidden">
+            {!imageFailed && member.image ? (
+              <Image
+                src={member.image}
+                alt={member.name}
+                fill
+                onError={() => setImageFailed(true)}
+                className="object-cover grayscale contrast-115 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                quality={70}
+                loading="lazy"
+              />
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center p-3 bg-gradient-to-br from-[#18181e] to-[#0f0f12] text-center select-none">
+                <span className="font-editorial-serif text-3xl text-[#eae5d9]/60">
+                  {initials}
+                </span>
+              </div>
+            )}
+
+            {member.isHead && (
+              <div className="absolute top-2 left-2 bg-[#eae5d9] text-[#1D1D1D] px-2 py-0.5 rounded-full font-mono text-[7px] font-bold tracking-widest uppercase shadow-sm">
+                LEAD
+              </div>
+            )}
+          </div>
+
+          {/* Role & Name */}
+          <div className="flex flex-col gap-0.5">
+            <span className="font-mono text-[8px] tracking-widest text-[#a39e93] uppercase truncate">
+              {member.role}
+            </span>
+            <h4 className="font-editorial-serif text-lg text-[#f5efeb] leading-snug group-hover:text-[#eae5d9] transition-colors truncate">
+              {member.name.replace(/\[.*?\]/g, "")}
+            </h4>
+          </div>
+
+          {/* Compact Quote */}
+          {member.quote && (
+            <p className="mt-2 font-mono text-[10px] text-[#8a847a] italic line-clamp-1 border-l border-[rgba(245,239,235,0.15)] pl-1.5">
+              &ldquo;{member.quote}&rdquo;
+            </p>
           )}
         </div>
 
-        {/* Role & Name */}
-        <div className="flex flex-col gap-0.5">
-          <span className="font-mono text-[8px] tracking-widest text-[#a39e93] uppercase truncate">
-            {member.role}
+        {/* Footer with Mini Social Links */}
+        <div className="mt-3 pt-2 border-t border-[rgba(245,239,235,0.06)] flex items-center justify-between text-[#8a847a]">
+          <span className="font-mono text-[8px] tracking-wider uppercase flex items-center gap-1 group-hover:text-[#eae5d9]">
+            <Eye className="w-2.5 h-2.5 text-[#c84b31]" />
+            DOSSIER
           </span>
-          <h4 className="font-editorial-serif text-lg text-[#f5efeb] leading-snug group-hover:text-[#eae5d9] transition-colors truncate">
-            {member.name.replace(/\[.*?\]/g, "")}
-          </h4>
-        </div>
 
-        {/* Compact Quote */}
-        {member.quote && (
-          <p className="mt-2 font-mono text-[10px] text-[#8a847a] italic line-clamp-1 border-l border-[rgba(245,239,235,0.15)] pl-1.5">
-            &ldquo;{member.quote}&rdquo;
-          </p>
-        )}
-      </div>
-
-      {/* Footer with Mini Social Links */}
-      <div className="mt-3 pt-2 border-t border-[rgba(245,239,235,0.06)] flex items-center justify-between text-[#8a847a]">
-        <span className="font-mono text-[8px] tracking-wider uppercase flex items-center gap-1 group-hover:text-[#eae5d9]">
-          <Eye className="w-2.5 h-2.5 text-[#c84b31]" />
-          DOSSIER
-        </span>
-
-        <div
-          className="flex items-center gap-1.5"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {member.socials.instagram && (
-            <a
-              href={
-                member.socials.instagram.startsWith("http")
-                  ? member.socials.instagram
-                  : `https://instagram.com/${member.socials.instagram.replace("@", "")}`
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#8a847a] hover:text-[#f5efeb] p-0.5 transition-colors"
-              aria-label={`${member.name} Instagram`}
-            >
-              <InstagramIcon className="w-3 h-3" />
-            </a>
-          )}
-          {member.socials.linkedin && (
-            <a
-              href={
-                member.socials.linkedin.startsWith("http")
-                  ? member.socials.linkedin
-                  : `https://linkedin.com/in/${member.socials.linkedin}`
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#8a847a] hover:text-[#f5efeb] p-0.5 transition-colors"
-              aria-label={`${member.name} LinkedIn`}
-            >
-              <LinkedinIcon className="w-3 h-3" />
-            </a>
-          )}
-          {member.socials.github && (
-            <a
-              href={member.socials.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#8a847a] hover:text-[#f5efeb] p-0.5 transition-colors"
-              aria-label={`${member.name} GitHub`}
-            >
-              <GithubIcon className="w-3 h-3" />
-            </a>
-          )}
+          <div className="flex items-center gap-1.5 pointer-events-auto">
+            {member.socials.instagram && (
+              <a
+                href={
+                  member.socials.instagram.startsWith("http")
+                    ? member.socials.instagram
+                    : `https://instagram.com/${member.socials.instagram.replace("@", "")}`
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#8a847a] hover:text-[#f5efeb] p-0.5 transition-colors"
+                aria-label={`${member.name} Instagram`}
+              >
+                <InstagramIcon className="w-3 h-3" />
+              </a>
+            )}
+            {member.socials.linkedin && (
+              <a
+                href={
+                  member.socials.linkedin.startsWith("http")
+                    ? member.socials.linkedin
+                    : `https://linkedin.com/in/${member.socials.linkedin}`
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#8a847a] hover:text-[#f5efeb] p-0.5 transition-colors"
+                aria-label={`${member.name} LinkedIn`}
+              >
+                <LinkedinIcon className="w-3 h-3" />
+              </a>
+            )}
+            {member.socials.github && (
+              <a
+                href={member.socials.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#8a847a] hover:text-[#f5efeb] p-0.5 transition-colors"
+                aria-label={`${member.name} GitHub`}
+              >
+                <GithubIcon className="w-3 h-3" />
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </div>

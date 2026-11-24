@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { ChevronLeft, ChevronRight, Radio, Sparkles, X } from "lucide-react";
 import Image from "next/image";
-import { TeamMember, Department } from "@/types/team.types";
-import { X, ChevronLeft, ChevronRight, Radio, Sparkles } from "lucide-react";
-import { InstagramIcon, LinkedinIcon, GithubIcon } from "@/components/ui/icons";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { GithubIcon, InstagramIcon, LinkedinIcon } from "@/components/ui/icons";
+import type { Department, TeamMember } from "@/types/team.types";
 
 interface ChernobylDossierModalProps {
   member: TeamMember;
@@ -25,6 +25,21 @@ export function ChernobylDossierModal({
   >({});
   const sideRailRef = useRef<HTMLDivElement>(null);
 
+  const currentIndex = allMembers.findIndex((m) => m.id === member.id);
+  const safeIndex = currentIndex === -1 ? 0 : currentIndex;
+
+  const handlePrev = useCallback(() => {
+    const prevIdx = (safeIndex - 1 + allMembers.length) % allMembers.length;
+    onSelectMember(allMembers[prevIdx]);
+    setImageFailed(false);
+  }, [allMembers, safeIndex, onSelectMember]);
+
+  const handleNext = useCallback(() => {
+    const nextIdx = (safeIndex + 1) % allMembers.length;
+    onSelectMember(allMembers[nextIdx]);
+    setImageFailed(false);
+  }, [allMembers, safeIndex, onSelectMember]);
+
   // Close on ESC, Navigate with Left/Right Arrow
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -34,7 +49,7 @@ export function ChernobylDossierModal({
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [member, allMembers]);
+  }, [onClose, handlePrev, handleNext]);
 
   // Lock background scroll when open
   useEffect(() => {
@@ -43,21 +58,6 @@ export function ChernobylDossierModal({
       document.body.style.overflow = "auto";
     };
   }, []);
-
-  const currentIndex = allMembers.findIndex((m) => m.id === member.id);
-  const safeIndex = currentIndex === -1 ? 0 : currentIndex;
-
-  const handlePrev = () => {
-    const prevIdx = (safeIndex - 1 + allMembers.length) % allMembers.length;
-    onSelectMember(allMembers[prevIdx]);
-    setImageFailed(false);
-  };
-
-  const handleNext = () => {
-    const nextIdx = (safeIndex + 1) % allMembers.length;
-    onSelectMember(allMembers[nextIdx]);
-    setImageFailed(false);
-  };
 
   // Auto-scroll side rail to keep active member visible
   useEffect(() => {
@@ -157,7 +157,13 @@ export function ChernobylDossierModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-5 lg:p-7 bg-black/92 backdrop-blur-sm animate-in fade-in duration-200">
       {/* Outer Click Boundary */}
-      <div className="absolute inset-0" onClick={onClose} />
+      <button
+        type="button"
+        aria-label="Close modal overlay"
+        className="absolute inset-0 w-full h-full cursor-default bg-transparent border-0"
+        onClick={onClose}
+        tabIndex={-1}
+      />
 
       {/* Main Expansive Chernobyl Stage Container */}
       <div
@@ -275,7 +281,7 @@ export function ChernobylDossierModal({
                   &ldquo;{member.quote}&rdquo;
                 </p>
                 <p className="font-mono text-[9px] text-[#a39e93] tracking-widest mt-2 uppercase">
-                  — LOGGED TRANSCRIPT // BU ARCHIVES
+                  — LOGGED TRANSCRIPT {"//"} BU ARCHIVES
                 </p>
               </div>
             )}
@@ -408,14 +414,15 @@ export function ChernobylDossierModal({
                 .toUpperCase();
 
               return (
-                <div
+                <button
+                  type="button"
                   key={other.id}
                   data-member-id={other.id}
                   onClick={() => {
                     onSelectMember(other);
                     setImageFailed(false);
                   }}
-                  className={`group flex items-center justify-between gap-3 p-2.5 sm:p-3 rounded-[16px] transition-all duration-200 cursor-pointer ${
+                  className={`w-full text-left group flex items-center justify-between gap-3 p-2.5 sm:p-3 rounded-[16px] transition-all duration-200 cursor-pointer ${
                     isActive
                       ? "bg-[#1d1d23] border border-[#c84b31] shadow-md"
                       : "bg-[#131317]/80 hover:bg-[#1a1a20] border border-[rgba(245,239,235,0.06)] hover:border-[rgba(245,239,235,0.2)]"
@@ -477,7 +484,7 @@ export function ChernobylDossierModal({
                       </div>
                     )}
                   </div>
-                </div>
+                </button>
               );
             })}
           </div>

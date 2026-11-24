@@ -1,15 +1,15 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import Image from "next/image";
-import { TeamMember } from "@/types/team.types";
 import {
   ChevronLeft,
   ChevronRight,
   Eye,
-  Sparkles,
   MoveHorizontal,
+  Sparkles,
 } from "lucide-react";
+import Image from "next/image";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { TeamMember } from "@/types/team.types";
 
 interface RotaryCarouselProps {
   members: TeamMember[];
@@ -25,7 +25,9 @@ export function RotaryCarousel({
   onCenterMember,
 }: RotaryCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [imageFailures, setImageFailures] = useState<Record<string, boolean>>({});
+  const [imageFailures, setImageFailures] = useState<Record<string, boolean>>(
+    {},
+  );
   const [containerWidth, setContainerWidth] = useState(1200);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -187,7 +189,8 @@ export function RotaryCarousel({
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-[#c84b31] animate-pulse" />
           <span className="font-mono text-[10px] sm:text-[11px] tracking-widest text-[#a39e93] uppercase font-bold">
-            ORBIT DOSSIER [{String(activeIndex + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}]
+            ORBIT DOSSIER [{String(activeIndex + 1).padStart(2, "0")} /{" "}
+            {String(count).padStart(2, "0")}]
           </span>
         </div>
 
@@ -271,7 +274,7 @@ export function RotaryCarousel({
             translateZ = -55;
             rotateZ = offset * 16;
             rotateY = -offset * 12;
-            scale = 0.80;
+            scale = 0.8;
             zIndex = 10;
             opacity = 0.55;
           }
@@ -287,7 +290,8 @@ export function RotaryCarousel({
             .toUpperCase();
 
           return (
-            <div
+            <button
+              type="button"
               key={member.id}
               onClick={() => {
                 if (isCenter) {
@@ -304,9 +308,15 @@ export function RotaryCarousel({
                 transformStyle: "preserve-3d",
                 backfaceVisibility: "hidden",
                 willChange: "transform, opacity",
-                transition: "transform 0.38s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.28s ease",
+                transition:
+                  "transform 0.38s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.28s ease",
               }}
-              className={`absolute w-[260px] sm:w-[310px] md:w-[350px] lg:w-[380px] h-[390px] sm:h-[460px] md:h-[520px] rounded-[28px] p-5 sm:p-6 flex flex-col justify-between cursor-pointer group select-none ${
+              aria-label={
+                isCenter
+                  ? `Inspect dossier for ${member.name.replace(/\[.*?\]/g, "")}`
+                  : `Rotate to ${member.name.replace(/\[.*?\]/g, "")}`
+              }
+              className={`text-left absolute w-[260px] sm:w-[310px] md:w-[350px] lg:w-[380px] h-[390px] sm:h-[460px] md:h-[520px] rounded-[28px] p-5 sm:p-6 flex flex-col justify-between cursor-pointer group select-none focus:outline-none focus:ring-2 focus:ring-[#eae5d9]/50 ${
                 isCenter
                   ? "border-2 border-[#eae5d9] bg-[#161619] shadow-[0_18px_45px_rgba(0,0,0,0.85)] ring-1 ring-[rgba(245,239,235,0.2)]"
                   : "border border-[rgba(245,239,235,0.12)] bg-[#121215] hover:border-[rgba(245,239,235,0.3)] shadow-lg"
@@ -338,7 +348,10 @@ export function RotaryCarousel({
                     alt={member.name}
                     fill
                     onError={() =>
-                      setImageFailures((prev) => ({ ...prev, [member.id]: true }))
+                      setImageFailures((prev) => ({
+                        ...prev,
+                        [member.id]: true,
+                      }))
                     }
                     className={`object-cover transition-all duration-300 ${
                       isCenter
@@ -385,7 +398,7 @@ export function RotaryCarousel({
                   </div>
                 )}
               </div>
-            </div>
+            </button>
           );
         })}
       </div>
